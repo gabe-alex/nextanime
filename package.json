@@ -1,13 +1,27 @@
 {
-  "name": "adonis-app",
-  "version": "2.0.0",
-  "description": "Adonisjs application template",
+  "name": "nextanime",
+  "description": "Anime recommendations website",
+  "version": "0.0.1",
+  "author": "Gabriel Alecu",
+  "license": "MIT",
+  "keywords": [
+    "anime",
+    "recommendations",
+    "series",
+    "movies"
+  ],
+  "homepage": "http://nextanime.net",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabe-alex/nextanime.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gabe-alex/nextanime/issues"
+  },
   "main": "server.js",
   "scripts": {
     "start": "node --harmony_proxies server.js"
   },
-  "author": "adonisjs",
-  "license": "MIT",
   "dependencies": {
     "adonis-ace": "^2.0.7",
     "adonis-commands": "^2.0.3",
