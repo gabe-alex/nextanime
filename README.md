@@ -1,0 +1,2 @@
+# nextanime
+Anime recommendations website
