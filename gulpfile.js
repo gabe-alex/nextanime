@@ -6,11 +6,13 @@ var gulp = require('gulp'),
   cleanCSS = require('gulp-clean-css'),
   server = require( 'gulp-develop-server' );
 
+
 var config = {
   bowerDir: './bower_components',
   sassPath: './resources/sass',
   assetsDir: './public'
 };
+
 
 gulp.task('css', function () {
   return gulp.src(config.sassPath + '/style.scss')
@@ -49,4 +51,4 @@ gulp.task( 'server:start', function() {
 
 gulp.task('build', ['css', 'js']);
 gulp.task('start:dev', ['build', 'server:start', 'watch']);
-gulp.task('default', ['build']);
+gulp.task('default', ['start:dev']);
