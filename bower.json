@@ -1,0 +1,28 @@
+{
+  "name": "nextanime",
+  "description": "Anime recommendations website",
+  "main": "server.js",
+  "authors": [
+    "Gabriel Alecu",
+    "Bogdan Onete"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "anime",
+    "recommendations",
+    "series",
+    "movies"
+  ],
+  "homepage": "http://nextanime.net",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass": "^3.3.6"
+  }
+}

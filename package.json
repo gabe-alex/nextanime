@@ -3,6 +3,9 @@
   "description": "Anime recommendations website",
   "version": "0.0.1",
   "author": "Gabriel Alecu",
+  "contributors": [
+    "Bogdan Onete"
+  ],
   "license": "MIT",
   "keywords": [
     "anime",
@@ -22,6 +25,9 @@
   "scripts": {
     "start": "node --harmony_proxies server.js"
   },
+  "autoload": {
+    "App": "./app"
+  },
   "dependencies": {
     "adonis-ace": "^2.0.7",
     "adonis-commands": "^2.0.3",
@@ -32,8 +38,12 @@
     "mysql": "^2.10.2",
     "ouch": "^0.2.0-beta"
   },
-  "autoload": {
-    "App": "./app"
-  },
-  "devDependencies": {}
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-clean-css": "^2.0.4",
+    "gulp-develop-server": "^0.5.1",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-sass": "^2.2.0"
+  }
 }

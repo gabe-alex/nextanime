@@ -24,3 +24,13 @@ lib-cov
 
 # Mac Only
 .DS_Store
+
+#IntelliJ
+.idea/
+
+#Bower components
+bower_components/
+
+#Generated files
+public/js/
+public/css/
