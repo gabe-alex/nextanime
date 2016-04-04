@@ -1,0 +1,96 @@
+
+{# resources/views/adonis.html #}
+
+
+{% extends 'LicentaUserPage' %}
+<!--{% extends 'LicentaMainPage' %}
+{% extends 'LicentaAnimePage' %}
+{% extends 'LicentaUserPage' %}-->
+
+
+{% block testing %}
+<p>Das ist mein fhaking tezt</p>
+{% endblock %}
+
+{% block recommendations %}
+<!--{% for i in recommend %}--><!--de creat lista recommend-->
+var range = [0,1,2,3]
+{% for i in range %}
+	<div>
+		<div class="btn-group">
+			<button type="button" onclick="addToUserAnimeList()">Add</button>
+			<button type="button" onclick="removeFromRec()">X</button>
+		</div>
+		<a href="LicentaAnimePage.html"><img src="../../public/images/scenicanime.jpeg" id="recImage" alt="Some problem"></a>
+		<p>Name of anime</p>
+	</div>
+	<br>
+{% endif %}
+{% endblock %}
+
+
+var genreList = [Action,Adventure,Shounen,Horror,Slice of Life,Historical,Mystery,Drama,Supernatural,Sci-Fi,Ecchi,Fantasy,Game,Comedy,Vampire,School,Police,Psychological,Martial Arts,Super Powers,Romance,Seinen,Harem,Military,Thriller,Space,Dementia,Mecha,Parody,Shoujo,Demon,Sports,Kid,Cars]
+var i = 0;
+{% block genres %}
+  {% for genre in genreList %}
+
+    <div class="row">
+      <div class="col-xs-3"><input type="checkbox" value="{{genre}}">{{genre}}</div>
+      i++;
+
+      {% if i%3 == 0 %}
+        </div>
+      {% endif %}
+      {% if i%3 == 0 %}
+        </div>
+      {% endif %}
+
+      {% if i%4 == 0 %}
+      <div class="row">
+        <div class="col-xs-3"><input type="checkbox" value="{{genre}}">{{genre}}</div>
+        i = 0;
+        {% endif %}
+
+  {% endfor %}
+{% endblock %}
+
+
+
+var rangeEntries = [0,1,2,3,4]
+
+{% block latestEntries %}
+	{% for i in range %}
+		<div class="row">
+			<div class="col-xs-3">
+				<a href="AnimePage.html"><img src="../../public/images/scenicanime.jpeg" id="latest_entry_image" alt="Some problem"></a>
+			</div>
+			<div class="col-xs-9">
+				<a href="LicentaAnimePage.html">name of anime</a>
+				<p>Chapters/Volumes :</p>
+				<p>Date</p>
+			</div>
+		</div><br>
+	{% endfor %}
+{% endblock %}
+
+{{ test }} //24
+{{test2}} //lol
+
+{% if user.logged "true" %}
+	<li>
+		<a href="#" id="log_out"><span class="glyphicon glyphicon-log-out"></span> Log Out</a>
+	</li>
+	<li>
+		<a href="#" data-toggle="modal" data-target="#myModal3" id="change_acc"><span class="glyphicon glyphicon-transfer"></span> Change Account</a>
+	</li>
+{% else %}
+	<li>
+		<a href="#" data-toggle="modal" data-target="#myModal1" id="log_in"><span class="glyphicon glyphicon-log-in"></span> Log In</a>
+	</li>
+
+	<li>
+		<a href="#" data-toggle="modal" data-target="#myModal2" id="sign_up"><span class="glyphicon glyphicon-edit"></span> Sign up</a>
+	</li>
+{% endif %}
+
+      const view = response.view('LicentaUserPage.html')
