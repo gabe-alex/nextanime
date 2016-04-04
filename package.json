@@ -35,6 +35,7 @@
     "adonis-framework": "^2.0.9",
     "adonis-lucid": "^2.0.5",
     "adonis-middleware": "^1.0.5",
+    "co-better-body": "^1.0.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-clean-css": "^2.0.4",
