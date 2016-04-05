@@ -34,6 +34,7 @@ var i = 0;
 {% block genres %}
   {% for genre in genreList %}
 
+    {% if i%4 == 0  %}
     <div class="row">
       <div class="col-xs-3"><input type="checkbox" value="{{genre}}">{{genre}}</div>
       i++;
@@ -41,20 +42,11 @@ var i = 0;
       {% if i%3 == 0 %}
         </div>
       {% endif %}
-      {% if i%3 == 0 %}
-        </div>
-      {% endif %}
 
-      {% if i%4 == 0 %}
-      <div class="row">
-        <div class="col-xs-3"><input type="checkbox" value="{{genre}}">{{genre}}</div>
-        i = 0;
-        {% endif %}
+    {% endif %}
 
   {% endfor %}
 {% endblock %}
-
-
 
 var rangeEntries = [0,1,2,3,4]
 
@@ -93,4 +85,6 @@ var rangeEntries = [0,1,2,3,4]
 	</li>
 {% endif %}
 
-      const view = response.view('LicentaUserPage.html')
+      <!--const view = response.view('LicentaUserPage.html')-->
+
+
