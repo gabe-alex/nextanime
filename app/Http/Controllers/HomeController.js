@@ -3,28 +3,28 @@
 class HomeController {
 
   * index (request, response) {
-    const view = yield response.view('adonis')
+    const view = yield response.view('PageTemplateLicenta')
     response.send(view)
 	/*
 	let testvar = 24
     response.send(view, {test: testvar, test2: 'lol'})*/
   }
-  
+
   * mainpage (request, response) {
-    const view = yield response.view('LicentaMainPage')
-    response.send(view)
-  }
-  
-  * animepage (request, response) {
-    const view = yield response.view('LicentaAnimePage')
-    response.send(view)
-  }
-  
-  * userprofile (request, response) {
-    const view = yield response.view('LicentaUserPage')
+    const view = yield response.view('MainPageLicenta')
     response.send(view)
   }
 
+  * animepage (request, response) {
+    const view = yield response.view('AnimePageLicenta')
+    response.send(view)
+  }
+
+  * userprofile (request, response) {
+    const view = yield response.view('UserProfileLicenta')
+    response.send(view)
+  }
+  
 }
 
 module.exports = HomeController

@@ -1,0 +1,91 @@
+
+{# resources/views/AnimePageLicenta.html #}
+
+
+{% extends 'PageTemplateLicenta' %}
+
+{# loginsignup/recomandari , trebuie un if #}
+{% block leftcolumn %}
+  {% set range = [0,1,2,3] %}
+  <div class="col-xs-2">
+  <h4>Recommendations</h4>
+  {% for i in range %}
+      <div>
+        <div class="btn-group">
+          <button type="button" onclick="addToUserAnimeList()">Add</button>
+          <button type="button" onclick="removeFromRec()">X</button>
+        </div>
+        <a href="AnimePageLicenta.html"><img src="../../public/images/scenicanime.jpeg" id="recImage" alt="Some problem"></a>
+        <p>Name of anime</p>
+      </div>
+      <br>
+  {% endif %}
+  </div>
+{% endblock %}
+
+
+{# Anime Details #}
+{% block centercolumn %}
+
+  <div class="col-xs-7">
+    <div class = "col-xs-4">
+    	<a href="#"><img src="images/scenicanime.jpeg" id="curImage" alt="Some problem"></a>
+   </div>
+    <div class = "col-xs-8">
+    	<p>Name : <a href="#">Gate</a></p>
+    	<p>English : </p>
+    	<p>Author : <a href="#">Chosokabe</a></p>
+    	<p>Studios : </p>
+    	<p>Status :
+    		<select id="selectStatus">
+    			<option value="nothing">Nothing</option>
+    			<option value="reading">Reading</option>
+    			<option value="plantoread">Plan to read</option>
+    			<option value="completed">Completed</option>
+    			<option value="dropped">Dropped</option>
+    		</select>
+    	</p>
+    	<p>Chapters/Volumes : <input  type="text" size="2"> / <input  type="text" size="2"></p> <!-- mai am de lucru -->
+    	<p>Completion : <progress value="60" max="100"></progress></p>
+    	<p>Rating : </p>
+    	<p>Your rating :
+    		<select id="selectRating">
+    			<option value="0">0</option>
+    			<option value="1">1</option>
+    			<option value="2">2</option>
+    			<option value="3">3</option>
+    			<option value="4">4</option>
+    			<option value="5">5</option>
+    			<option value="6">6</option>
+    			<option value="7">7</option>
+    			<option value="8">8</option>
+    			<option value="9">9</option>
+    			<option value="10">10</option>
+    		</select>
+    	</p>
+    	<button type="button" onclick="addToUserAnimeList()">Add to list</button>
+    </div>
+
+    <div>
+    	<h3>Original Material</h3><br>
+    	<p>Material : LN/VN/Manga/Game/etc</p><br>
+    	<h3>Description</h3><br>
+    	<p>BLablablablbalbalabbabalabl</p><br>
+    	<h3>Actors</h3><br>
+    	<ul>
+    		<li><a href="#"><img src="images/scenicanime.jpeg" id="charImage" alt="Some problem"></a>Character/Actor</li><br>
+    		<li><a href="#"><img src="images/scenicanime.jpeg" id="charImage" alt="Some problem"></a>Character/Actor</li><br>
+    		<li><a href="#"><img src="images/scenicanime.jpeg" id="charImage" alt="Some problem"></a>Character/Actor</li><br>
+    	</ul>
+    </div>
+  </div>
+{% endblock %}
+
+
+{# FB #}
+{% block rightcolumn %}
+  <h4>Latest news</h4>
+  <iframe src="https://www.facebook.com/bogdangabriel.onete">
+  	<p>Technical difficulties or your browser does not support iframes.</p>
+ </iframe>
+{% endblock %}
