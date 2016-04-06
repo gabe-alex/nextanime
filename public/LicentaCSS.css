@@ -74,5 +74,11 @@ body
 .genreTab{
   width : auto;
 }
-
-
+.userProfBtn{
+  width : auto;
+  text-align : center;
+  align-self : center;
+}
+.addx{
+  align-self : center;
+}
