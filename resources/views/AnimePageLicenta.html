@@ -50,15 +50,20 @@
 {# Anime Details #}
 {% block centralcolumn %}
 
+  {% set name="Gate : Jieitai Kanochi Nite" %}
+  {% set english="A fucking Gate" %}
+  {% set author="Chosokabe" %}
+  {% set studio="Monkey Business" %}
+  {% set rating="8.5" %}
   <div class="col-xs-6">
     <div class = "col-xs-4">
     	<a href="#"><img src="images/scenicanime.jpeg" id="curImage" alt="Some problem"></a>
    </div>
     <div class = "col-xs-8">
-    	<p>Name : <a href="#">Gate</a></p>
-    	<p>English : </p>
-    	<p>Author : <a href="#">Chosokabe</a></p>
-    	<p>Studios : </p>
+    	<p>Name : <a href="#">{{ name }}</a></p>
+    	<p>English : {{ english }}</p>
+    	<p>Author : <a href="#">{{ author }}</a></p>
+    	<p>Studios : {{ studio }}</p>
     	<p>Status :
     		<select id="selectStatus">
     			<option value="nothing">Nothing</option>
@@ -70,7 +75,7 @@
     	</p>
     	<p>Chapters/Volumes : <input  type="text" size="2"> / <input  type="text" size="2"></p> <!-- mai am de lucru -->
     	<p>Completion : <progress value="60" max="100"></progress></p>
-    	<p>Rating : </p>
+    	<p>Rating : {{ rating }}</p>
     	<p>Your rating :
     		<select id="selectRating">
     			<option value="0">0</option>
