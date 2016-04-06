@@ -32,5 +32,6 @@ lib-cov
 bower_components/
 
 #Generated files
-public/js/
 public/css/
+public/js/
+public/fonts/
