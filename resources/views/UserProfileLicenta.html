@@ -6,10 +6,10 @@
 
 {# lista genuri , in progress #}
 {% block genres %}
-  {% set genre = ["action","adventure","shounen","horro","slice_of_life","historical","mystery","drama",
-  "supernatural","sci_fi","ecchi ","fantasy","game","comedy","vampire","schoololice","psychological",
-  "martial_arts","super_power","romance","seinen","harem ","military","thriller","space",
-  "dementia","mecha","parody","shoujo","kids","demons","sports","cars"] %}
+  {% set genre = ["Action","Adventure","Shounen","Horro","Slice_of_life","Historical","Mystery","Drama",
+  "Supernatural","Sci fi","Ecchi ","Fantasy","Game","Comedy","Vampire","School","Plolice","Psychological",
+  "Martial arts","Super power","Romance","Seinen","Harem ","Military","Thriller","Space",
+  "Dementia","Mecha","Parody","Shoujo","Kids","Demons","Sports","Cars"] %}
   {% set counter = 1 %}
 
    <div class="row">
@@ -82,12 +82,11 @@
 
     <div class = "col-xs-8">
 
-    	<h4 align="left">Status :</h4><br>
     	<h4 align="left">Description</h4><br>
     	<div class="row">
     		<div class="col-xs-4">Name : {{ name }}</div>
     		<div class="col-xs-4">Age : {{ age }}</div>
-    		<div class="col-xs-4">Country : {{ Country }}</div>
+    		<div class="col-xs-4">Country : {{ country }}</div>
     	</div>
     	<textarea rows="5" cols="50">{{ description }}</textarea>
 
@@ -104,7 +103,6 @@
     <iframe src="https://www.facebook.com/bogdangabriel.onete">
       <p>Technical difficulties or your browser does not support iframes.</p>
     </iframe>
-
 
     <h3>Lists</h3>
     <a href="UserAnimeList.html"><h4>Anime List</h4></a><br>
