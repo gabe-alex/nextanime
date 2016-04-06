@@ -63,5 +63,6 @@ body
 .scroll {
   width: 500px;
   height: 500px;
-  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
