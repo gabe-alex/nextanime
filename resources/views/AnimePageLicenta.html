@@ -55,6 +55,11 @@
   {% set author="Chosokabe" %}
   {% set studio="Monkey Business" %}
   {% set rating="8.5" %}
+  {% set material="LN/VN/Manga/Game" %}
+  {% set description="something about it" %}
+  {% set characters="Nisan Cascai" %}
+  {% set actors="Liam Nee-san" %}
+
   <div class="col-xs-6">
     <div class = "col-xs-4">
     	<a href="#"><img src="images/scenicanime.jpeg" id="curImage" alt="Some problem"></a>
@@ -99,14 +104,14 @@
 
     <div>
     	<h3>Original Material</h3><br>
-    	<p>Material : LN/VN/Manga/Game/etc</p><br>
+    	<p>Material : {{ material }}</p><br>
     	<h3>Description</h3><br>
-    	<p>BLablablablbalbalabbabalabl</p><br>
+    	<p>{{ description }}</p><br>
     	<h3>Actors</h3><br>
     	<ul>
-    		<li><a href="#"><img src="images/scenicanime.jpeg" id="charImage" alt="Some problem"></a>Character/Actor</li><br>
-    		<li><a href="#"><img src="images/scenicanime.jpeg" id="charImage" alt="Some problem"></a>Character/Actor</li><br>
-    		<li><a href="#"><img src="images/scenicanime.jpeg" id="charImage" alt="Some problem"></a>Character/Actor</li><br>
+    		<li><a href="#"><img src="images/scenicanime.jpeg" id="charImage" alt="Some problem"></a>{{characters}}/{{ actors }}</li><br>
+    		<li><a href="#"><img src="images/scenicanime.jpeg" id="charImage" alt="Some problem"></a>{{characters}}/{{ actors }}</li><br>
+    		<li><a href="#"><img src="images/scenicanime.jpeg" id="charImage" alt="Some problem"></a>{{characters}}/{{ actors }}</li><br>
     	</ul>
     </div>
   </div>
