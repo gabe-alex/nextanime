@@ -64,7 +64,7 @@ body
   width: auto;
   height: 500px;
   overflow-x: hidden;
-  overflow-y: visible; /*sau scroll*/
+  overflow-y: scroll; /*sau visible*/
 }
 
 
