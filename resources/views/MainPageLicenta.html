@@ -18,7 +18,7 @@
         <div class="col-xs-3"><input type="checkbox" value={{i}}>{{i}}</div> {# sa vad cum dau escape la " " #}
         counter++;
       {% endif %}
-      {% if counter%4 = 0 %} {# sau daca am ajuns la capat de lista #}
+      {% if counter%4 == 0 %} {# sau daca am ajuns la capat de lista #}
         </div>
         counter++;
         <div class="row">
