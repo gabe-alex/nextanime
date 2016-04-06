@@ -61,7 +61,7 @@ body
 	width : 90px;
 }
 .scroll {
-  width: 500px;
+  width: auto;
   height: 500px;
   overflow-x: hidden;
   overflow-y: visible; /*sau scroll*/
