@@ -35,12 +35,14 @@
     "adonis-framework": "^2.0.9",
     "adonis-lucid": "^2.0.5",
     "adonis-middleware": "^1.0.5",
+    "adonis-validation-provider": "^2.0.2",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-clean-css": "^2.0.4",
     "gulp-develop-server": "^0.5.1",
     "gulp-sass": "^2.2.0",
     "mysql": "^2.10.2",
-    "ouch": "^0.2.0-beta"
+    "ouch": "^0.2.0-beta",
+    "raccoon": "github:gabe-alex/recommendationRaccoon"
   }
 }
