@@ -63,8 +63,9 @@ body
 .scroll {
   width: auto;
   height: 800px;
-  overflow-x: hidden;
-  overflow-y: auto; /*sau scroll*/
+  /*overflow-x: hidden;
+  overflow-y: auto; *//*sau scroll*/
+  overflow-y: auto;
 }
 
 
