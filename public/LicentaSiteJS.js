@@ -57,9 +57,10 @@ $(document).ready(function()
 			imgId = 0;
 		}
 
-		$("#topimage").fadeTo("slow",0,function()
-    { //inverseaza ordinea intre fadeTo(slow,0) si document.getElementById().src = ...
-      $("#topimage").attr('src', list[imgId]);//nimic nou
+		$("#topimage").fadeTo("slow",0,function() //pentru a putea merge in ordinea corecta, am inclus attr in fadeTo
+    {
+      $("#topimage").attr('src', list[imgId]);//inverseaza ordinea intre fadeTo(slow,0) si document.getElementById().src = ...
+                                              //deoarece avem jquerry + javascript amestecate
     });
 		$("#topimage").fadeTo("slow",1);
 	},3000);
