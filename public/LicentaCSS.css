@@ -63,14 +63,16 @@ body
 .scroll {
   width: auto;
   height: 800px;
-  /*overflow-x: hidden;
-  overflow-y: auto; *//*sau scroll*/
-  overflow : auto;
+  overflow-x: hidden;
+  overflow-y: auto; /*sau scroll*/
+
 }
 #friendImage{
   width : 40px;
   height : 40px;
 }
-
+.genreTab{
+  width : auto;
+}
 
 

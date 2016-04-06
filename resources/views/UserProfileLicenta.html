@@ -15,7 +15,7 @@
    <div class="row">
     {% for i in genre %}
       {% if counter%4 <= 3 %}
-        <div class="col-xs-3"><input type="checkbox" value={{i}}>{{i}}</div>
+        <div class="col-xs-3 genreTab"><input type="checkbox" value={{i}}>{{i}}</div>
         {# counter se incrementeaza automat #}
       {% endif %}
       {% if counter%4 == 0 %} {# sau daca am ajuns la capat de lista#}
