@@ -40,9 +40,9 @@
     <h2> {{ username }}'s Profile</h2>
     <div class = "col-xs-4">
     	<a href="#"><img src="images/noraNOPE.png" id="curImage" alt="Some problem"></a>
-    	<button type="button" onclick="addToFriendList()" class="userProfBtn"><span class="glyphicon glyphicon-plus"></span> Friend Request</button><br>
-    	<button type="button" onclick="sendMessage()" class="userProfBtn"><span class="glyphicon glyphicon-envelope"></span> Message</button><br>
-    	<button type="button" onclick="recFriend()" class="userProfBtn"><span class="glyphicon glyphicon-hand-right"></span> Recommend Friend</button><br>
+    	<button type="button" onclick="addToFriendList()"><span class="glyphicon glyphicon-plus"></span> Friend Request</button><br>
+    	<button type="button" onclick="sendMessage()"><span class="glyphicon glyphicon-envelope"></span> Message</button><br>
+    	<button type="button" onclick="recFriend()"><span class="glyphicon glyphicon-hand-right"></span> Recommend Friend</button><br>
     	<h4>Friends<h4>
     	{% for friend in friendsList %}
         <a href="#"><img src="images/noraNOPE.png" id="friendImage" alt="Some problem" title={{ friend }}></a>
