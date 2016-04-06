@@ -36,6 +36,11 @@ gulp.task('js', function(){
     .pipe(gulp.dest(config.assetsDir+'/js'))
 });
 
+gulp.task('fonts', function(){
+  return gulp.src(config.bowerDir + '/bootstrap-sass/assets/fonts/bootstrap/*')
+    .pipe(gulp.dest(config.assetsDir+'/fonts/bootstrap'))
+});
+
 gulp.task('watch', function() {
   gulp.watch(config.sassPath + '/**/*.scss', ['css']);
   gulp.watch( [ './app/**/*.js' ], server.restart );
@@ -49,6 +54,6 @@ gulp.task( 'server:start', function() {
 });
 
 
-gulp.task('build', ['css', 'js']);
+gulp.task('build', ['css', 'js', 'fonts']);
 gulp.task('start:dev', ['build', 'server:start', 'watch']);
 gulp.task('default', ['start:dev']);

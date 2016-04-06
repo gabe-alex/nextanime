@@ -13,10 +13,12 @@
 const Route = use('Route')
 
 Route.get('/', 'HomeController.index')
-
 Route.get('/mainpage', 'HomeController.mainpage')
-
 Route.get('/animepage', 'HomeController.animepage')
-
 Route.get('/userprofile', 'HomeController.userprofile')
 
+Route.get('/register', 'RegistrationController.index')
+Route.post('/register', 'RegistrationController.submit')
+
+Route.get('/login', 'LoginController.index')
+Route.post('/login', 'LoginController.submit')

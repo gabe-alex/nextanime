@@ -9,10 +9,7 @@ class User extends Lucid {
   static get softDeletes () {
     return false
   }
-  static get hidden () {
-    return ['password']
-  }
-  
+
   anime () {
     return this.belongsToMany('App/Model/Anime', 'users_anime')
   }
