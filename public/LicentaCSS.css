@@ -45,9 +45,13 @@ body
 #search{
 	width : 300px;
 }
-#curImage{
+#userImage{
 	height : 260px;
-	width : 175px;
+	width : 200px;
+}
+#animeProfileImage{
+  height : 260px;
+  width : 175px;
 }
 #charImage{
 	height : 50px;
@@ -75,10 +79,13 @@ body
   width : auto;
 }
 .userProfBtn{
-  width : auto;
+  width : 200px;
+  height : 30px;
   text-align : center;
-  align-self : center;
 }
 .addx{
   align-self : center;
+}
+#animeBtn{
+  align-self : right;
 }
