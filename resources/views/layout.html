@@ -25,15 +25,21 @@
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li class="active"><a href="/">Home</a></li>
-        <li><a href="#about">Reccomendations</a></li>
+        <li><a href="/recommendations">Recommendations</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-          <a href="/login"><span class="glyphicon glyphicon-log-in"></span> Log In</a>
-        </li>
-        <li>
-          <a href="/register"><span class="glyphicon glyphicon-edit"></span> Register</a>
-        </li>
+        {% if user %}
+          <li>
+            <a href="/library">{{ user.username }}</a>
+          </li>
+        {% else %}
+          <li>
+            <a href="/login"><span class="glyphicon glyphicon-log-in"></span> Log In</a>
+          </li>
+          <li>
+            <a href="/register"><span class="glyphicon glyphicon-edit"></span> Register</a>
+          </li>
+        {% endif %}
       </ul>
     </div>
   </div>
