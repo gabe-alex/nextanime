@@ -76,7 +76,7 @@ gulp.task('bower:install', function() {
   return bower({ cmd: 'install'});
 });
 
-gulp.task('build', ['css', 'js', 'fonts']);
-gulp.task('install', ['env-setup', 'bower:install', 'build']);
+gulp.task('build', ['bower:install', 'css', 'js', 'fonts']);
+gulp.task('install', ['env-setup', 'bower:install']);
 gulp.task('start:dev', ['build', 'server:start', 'watch']);
 gulp.task('default', ['start:dev']);
