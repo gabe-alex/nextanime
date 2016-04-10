@@ -23,7 +23,7 @@
   },
   "main": "server.js",
   "scripts": {
-    "postInstall": "gulp install",
+    "postinstall": "gulp install",
     "start": "node --harmony_proxies server.js"
   },
   "autoload": {
