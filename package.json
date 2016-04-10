@@ -23,10 +23,15 @@
   },
   "main": "server.js",
   "scripts": {
+    "postInstall": "gulp install",
     "start": "node --harmony_proxies server.js"
   },
   "autoload": {
     "App": "./app"
+  },
+  "engines": {
+    "node": ">=4.0",
+    "npm": ">=3.0"
   },
   "dependencies": {
     "adonis-ace": "^2.0.7",
@@ -40,8 +45,11 @@
     "generator-async": "^0.1.4",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
+    "gulp-bower": "0.0.13",
     "gulp-clean-css": "^2.0.4",
     "gulp-develop-server": "^0.5.1",
+    "gulp-if": "^2.0.0",
+    "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.2.0",
     "lodash": "^4.9.0",
     "mysql": "^2.10.2",
