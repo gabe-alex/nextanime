@@ -35,6 +35,3 @@ bower_components/
 public/css/
 public/js/
 public/fonts/
-
-#Heroku
-Procfile

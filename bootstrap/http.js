@@ -95,7 +95,7 @@ module.exports = function () {
       */
       const Server = use('Server')
       const Env = use('Env')
-      Server.listen(Env.get('APP_HOST'), Env.get('APP_PORT'))
+      Server.listen(Env.get('APP_HOST'), Env.get('PORT') || Env.get('APP_PORT'))
     })
     .catch(console.error)
 }
