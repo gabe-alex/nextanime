@@ -23,8 +23,9 @@
   },
   "main": "server.js",
   "scripts": {
-    "postinstall": "./ace migration:run && gulp install && gulp build",
-    "start": "node --harmony_proxies server.js"
+    "postinstall": "npm run-script ace migration:run && gulp install && gulp build",
+    "start": "node --harmony_proxies server.js",
+    "ace": "node --harmony_proxies ace"
   },
   "autoload": {
     "App": "./app"
