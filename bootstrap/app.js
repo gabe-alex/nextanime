@@ -1,5 +1,7 @@
 'use strict'
 
+const path = require('path')
+
 /*
 |--------------------------------------------------------------------------
 | Providers
@@ -29,7 +31,8 @@ const providers = [
   'adonis-middleware/providers/AppMiddlewareProvider',
   'adonis-validation-provider/providers/ValidatorProvider',
   'adonis-lucid/providers/CollectionProvider',
-  'adonis-framework/providers/HashProvider'
+  'adonis-framework/providers/HashProvider',
+  path.join(__dirname,'../providers/Recommendation/RecommendationProvider.js')
 ]
 
 /*
@@ -75,7 +78,8 @@ const aliases = {
   Ansi: 'Adonis/Src/Ansi',
   Validator: 'Adonis/Addons/Validator',
   Collection: 'Adonis/Src/Collection',
-  Hash : 'Adonis/Src/Hash'
+  Hash : 'Adonis/Src/Hash',
+  Recommendation: 'App/Recommendation'
 }
 
 /*

@@ -4,7 +4,11 @@ var gulp = require('gulp'),
   sass = require('gulp-sass'),
   autoprefixer = require('gulp-autoprefixer'),
   cleanCSS = require('gulp-clean-css'),
-  server = require( 'gulp-develop-server' );
+  server = require( 'gulp-develop-server' ),
+  rename = require('gulp-rename'),
+  bower = require('gulp-bower'),
+  gulpif = require('gulp-if'),
+  fs = require('fs');
 
 
 var config = {
@@ -38,7 +42,7 @@ gulp.task('js', function(){
 
 gulp.task('fonts', function(){
   return gulp.src(config.bowerDir + '/bootstrap-sass/assets/fonts/bootstrap/*')
-    .pipe(gulp.dest(config.assetsDir+'/fonts/bootstrap'))
+    .pipe(gulp.dest(config.assetsDir+'/fonts/bootstrap'));
 });
 
 gulp.task('watch', function() {
@@ -53,7 +57,26 @@ gulp.task( 'server:start', function() {
   });
 });
 
+function fileExists(file) {
+  try {
+    fs.statSync(file);
+    return true;
+  } catch(err) {
+    return false;
+  }
+}
 
-gulp.task('build', ['css', 'js', 'fonts']);
+gulp.task('env-setup', function() {
+  return gulp.src('./.env.example')
+    .pipe(rename('.env'))
+    .pipe(gulpif(function() {return !fileExists('.env') },gulp.dest('.')))
+});
+
+gulp.task('bower:install', function() {
+  return bower({ cmd: 'install'});
+});
+
+gulp.task('build', ['bower:install', 'css', 'js', 'fonts']);
+gulp.task('install', ['env-setup', 'bower:install']);
 gulp.task('start:dev', ['build', 'server:start', 'watch']);
 gulp.task('default', ['start:dev']);

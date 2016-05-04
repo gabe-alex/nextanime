@@ -1,0 +1,24 @@
+{% set title = 'Library' %}
+
+{% extends 'layout' %}
+
+{% block content %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Anime</th>
+        <th>Status</th>
+        <th>Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for a in anime %}
+      <tr>
+        <td>{{ a.display_title }}</td>
+        <td>{{ a._pivot_status }}</td>
+        <td>{{ a._pivot_rating }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

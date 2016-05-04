@@ -49,7 +49,7 @@ module.exports = {
       password: Env.get('MYSQL_PASSWORD', ''),
       database: Env.get('MYSQL_DATABASE', 'nextanime')
     }
-  }
+  },
 
 /*
 |--------------------------------------------------------------------------
@@ -59,4 +59,11 @@ module.exports = {
 |  Feel free to define as many connections you like to define.
 |
 */
+
+  redis: {
+    connection: {
+      host: Env.get('REDIS_HOST', 'localhost'),
+      port: Env.get('REDIS_PORT', 6379)
+    }
+  }
 }
