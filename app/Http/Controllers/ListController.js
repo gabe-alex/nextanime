@@ -12,7 +12,7 @@ class ListController {
         const englishTitleAnime = (yield anime.english_title().fetch()).value()
         const descriptionAnime = (yield anime.description().fetch()).value()
         ListService.insertDisplayTitles(userAnime)
-        yield response.sendView('animebase', {anime: anime.attributes})
+        yield response.sendView('animedatabase', {anime: anime.attributes})
       } else {
         forget('anime')
         response.redirect('/mainpage')
