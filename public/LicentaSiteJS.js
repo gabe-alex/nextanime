@@ -63,7 +63,7 @@ $(document).ready(function()
                                               //deoarece avem jquerry + javascript amestecate
     });
 		$("#topimage").fadeTo("slow",1);
-	},3000);
+	},1000*5); //5 secunde
 
 
 	/*

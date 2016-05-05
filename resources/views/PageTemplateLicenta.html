@@ -6,14 +6,15 @@
 	<title>NextAnime</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!--
+	{#
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 	<script id="facebook-jssdk" src="/connect.facebook.net/en_US/sdk.js#xfbml=1&appId=250769461611065&version=v2.3"></script>
 	<script src="http://a.mhcdn.net/media/js/fb_dialog.js?v=20160203150507"></script>
-	<script src="http://a.mhcdn.net/media/js/comments.js?v=20160203150507"></script>-->
+	<script src="http://a.mhcdn.net/media/js/comments.js?v=20160203150507"></script>
+	#}
 	<link href="lib/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="LicentaCSS.css">
 </head>
@@ -58,13 +59,13 @@
 							<div class="input-group">
 								<input type="search" class="form-control" placeholder="Search" ng-model="searchTerm" id="search">
 								<div class="input-group-btn">
-
+                  {#
 									<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
 									<div class="dropdown-menu" id="dropdownMenu">
 										{% block genres %}
                     {% endblock %}
 									</div>
-
+                  #}
 									<button class="btn btn-default" type="submit" ng-click="search(searchTerm)"><span class="glyphicon glyphicon-search"></span></button> <!--ng-click e din angular-->
 								</div>
 							</div>
@@ -197,7 +198,7 @@
 
 		</div>
 	</div>
-
+  <p></p>
 	<footer id="lowerlinks">
 		<a href="https://www.facebook.com/"><img src="images/facebook-logo.jpg" name="facebook_picture" class="social_media_logo" alt="Some problem"></a>
 		<a href="https://www.gmail.com/"><img src="images/google+-logo.png" name="gmail_picture" class="social_media_logo" alt="Some problem"></a>
@@ -208,10 +209,10 @@
 
 </div>
 
-<!--<script src="lib/angular-1.4.8/angular.min.js"></script>
+  {# <script src="lib/angular-1.4.8/angular.min.js"></script>
   <script src="lib/angular-1.4.8/angular-route.min.js"></script>
   <script src="lib/jquery-1.11.3.min.js"></script>
-  <script src="lib/bootstrap-3.3.6/js/bootstrap.min.js"></script>-->
+  <script src="lib/bootstrap-3.3.6/js/bootstrap.min.js"></script> #}
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="LicentaSiteJS.js"></script>
