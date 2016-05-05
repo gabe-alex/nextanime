@@ -125,6 +125,41 @@ $(document).ready(function()
 		document.getElementById("signup_form").reset();
   	}
 
+  /*function colOnAnimePage(){
+    var id_of_image = document.a.id;
+    console.log(id_of_image);
+    if(id_of_image == rec_anime_col)
+    {
+      response.view('animepage', {h3: 'Recommended'})
+    }
+    if(id_of_image == top_anime_col)
+    {
+      response.view('animepage', {h3: 'Top Anime'})
+    }
+    if(id_of_image == coming_soon_col)
+    {
+      response.view('animepage', {h3: 'Coming Soon'})
+    }
+  }*/
+
+  $(document).ready(function() {
+    if($('#rec_anime_col').attr('id'))
+    {
+      response.view('animepage', {h3: 'Recommended'});
+    }
+  });
+  $(document).ready(function() {
+    if($('#top_anime_col').attr('id'))
+    {
+      response.view('animepage', {h3: 'Top Anime'});
+    }
+  });
+  $(document).ready(function() {
+    if($('#coming_soon_col').attr('id'))
+    {
+      response.view('animepage', {h3: 'Coming Soon'});
+    }
+  });
 });
 
 
