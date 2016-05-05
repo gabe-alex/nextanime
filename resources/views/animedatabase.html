@@ -1,0 +1,24 @@
+{% set title = 'Anime DB' %}
+
+{% extends 'layout' %}
+
+{% block content %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>English Titile</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for a in anime %}
+      <tr>
+        <td>{{ a.display_title }}</td>
+        <td>{{ a.display_english_title }}</td>
+        <td>{{ a.display_description }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

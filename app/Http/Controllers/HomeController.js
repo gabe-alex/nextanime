@@ -24,7 +24,10 @@ class HomeController {
     const view = yield response.view('UserProfileLicenta')
     response.send(view)
   }
-  
+  * animedatabase (request, response) {
+    const view = yield response.view('animedatabase')
+    response.send(view)
+  }
 }
 
 module.exports = HomeController

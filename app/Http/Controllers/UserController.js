@@ -10,7 +10,7 @@ class UserController {
       const user = yield User.find(userId)
       if (user) {
         const userAnime = (yield user.anime().fetch()).value()
-        AnimeService.insertDisplayTitles(userAnime)
+        AnimeService.insertDisplayTitles(userAnime) 
         yield response.sendView('library', {user: user.attributes, anime: userAnime})
       } else {
         forget('user_id')

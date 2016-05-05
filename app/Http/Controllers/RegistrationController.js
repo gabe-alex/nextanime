@@ -52,7 +52,7 @@ class RegistrationController {
         errors.username = validationErrorMessages.username.unique
       }
 
-      if(new Collection(errors).isEmpty()) {
+      if(!new Collection(errors).isEmpty()) {
         const view = yield response.view('register', {params: params, errors: errors})
         return response.badRequest(view)
       }
