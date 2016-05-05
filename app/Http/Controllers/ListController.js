@@ -7,7 +7,7 @@ class ListController {
   *library (request, response) {
     const userId =  yield request.session.get('user_id')
     if(userId) {
-      const anime = yield Anime.all()
+      const anime = yield List.all()
       if (anime) {
         const titleAnime = (yield anime.title().fetch()).value()
         const englishTitleAnime = (yield anime.english_title().fetch()).value()
