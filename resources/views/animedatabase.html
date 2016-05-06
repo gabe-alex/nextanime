@@ -14,9 +14,9 @@
     <tbody>
     {% for a in anime %}
       <tr>
-        <td>{{ a.display_title }}</td>
-        <td>{{ a.display_english_title }}</td>
-        <td>{{ a.display_description }}</td>
+        <td>{{ a.display_title }}</td> {# display_title = romaji_title || title #}
+        <td>{{ a.english_title }}</td>
+        <td>{{ a.description }}</td>
       </tr>
     {% endfor %}
     </tbody>
