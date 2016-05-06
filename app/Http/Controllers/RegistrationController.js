@@ -5,7 +5,7 @@ const Validator = use('Validator'),
   User = use('App/Model/User'),
   Hash = use('Hash')
 
-const validationErrorMessages = {
+const validationErrorMessages = { // obiect in js / map
   'username' : {
     'required': "Username is required.",
     'unique': "Username is already taken."

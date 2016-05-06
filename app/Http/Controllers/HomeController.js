@@ -21,7 +21,7 @@ class HomeController {
   }
 
   * userprofile (request, response) {
-    const view = yield response.view('UserProfileLicenta')
+    const view = yield response.view('user_profile')
     response.send(view)
   }
   * animedatabase (request, response) {
