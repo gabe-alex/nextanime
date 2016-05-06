@@ -33,7 +33,11 @@ class UserController {
         }).value()
         AnimeService.insertDisplayTitles(watching)
         yield response.sendView('user_profile', {user: user.attributes, watching: watching})
+      } else {
+        response.redirect('/')
       }
+    } else {
+      response.redirect('/')
     }
   }
 }

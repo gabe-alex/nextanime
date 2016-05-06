@@ -15,7 +15,7 @@ const Route = use('Route')
 Route.get('/', 'HomeController.index')
 Route.get('/mainpage', 'HomeController.mainpage')
 Route.get('/animepage', 'HomeController.animepage')
-Route.get('/userprofile', 'HomeController.user_profile')
+Route.get('/userprofile', 'UserController.user_profile')
 
 Route.get('/register', 'RegistrationController.index')
 Route.post('/register', 'RegistrationController.submit')

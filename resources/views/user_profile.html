@@ -1,5 +1,5 @@
 
-{# resources/views/UserProfileLicenta.html #}
+{# resources/views/user_profile.html #}
 
 
 {% extends 'PageTemplateLicenta' %}
@@ -83,6 +83,21 @@
 
     <div class = "col-xs-4">
     	<!-- de cercetat mai mult carousel-->
+      <h4> Watching </h4>
+      {% for w in watching %}
+            <tr>
+              <td>{{ a.display_title }}</td>
+              <td>{{ a._pivot_status }}</td>
+              <td>{{ a._pivot_rating }}</td>
+            </tr>
+            <a href="/animepage" id="watching_anime_col"><img src="images/scenicanime.jpeg" class="recImage" alt="Some problem"></a>
+            <p></p>
+            <p>{{ w.display_title }}</p>
+            <p>Nr of eps</p>
+            <p>{{ w._pivot_rating }}</p>
+      {% endfor %}
+
+
     </div>
 
     <div class = "col-xs-8">
