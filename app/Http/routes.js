@@ -25,4 +25,7 @@ Route.post('/login', 'LoginController.submit')
 
 Route.get('/library', 'UserController.library')
 Route.get('/animedatabase', 'ListController.animedatabase')
+Route.post('/library/add', 'UserController.library_add')
+Route.post('/library/remove', 'UserController.library_remove')
+
 Route.get('/recommendations', 'RecommendationsController.index')
