@@ -3,14 +3,6 @@
 class HomeController {
 
   * index (request, response) {
-    const view = yield response.view('PageTemplateLicenta')
-    response.send(view)
-	/*
-	let testvar = 24
-    response.send(view, {test: testvar, test2: 'lol'})*/
-  }
-
-  * mainpage (request, response) {
     const view = yield response.view('MainPageLicenta')
     response.send(view)
   }
