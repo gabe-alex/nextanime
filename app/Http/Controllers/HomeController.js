@@ -1,9 +1,17 @@
 'use strict'
 
+const User = use('App/Model/User');
+
 class HomeController {
 
   * index (request, response) {
-    const view = yield response.view('index')
+    let user;
+    const userId =  yield request.session.get('user_id')
+    if(userId) {
+      user = yield User.find(userId)
+    }
+
+    const view = yield response.view('index', {user: user.attributes})
     response.send(view)
   }
 
