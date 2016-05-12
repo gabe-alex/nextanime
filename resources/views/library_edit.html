@@ -1,0 +1,44 @@
+
+<form class="form-horizontal" method="post" action="/library/save" role="form">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">{{ "Edit "+current_anime.display_title if current_anime.display_title else "Add Anime" }} </h4>
+  </div>
+  <div class="modal-body">
+    {{ csrfField | safe }}
+    {% if current_anime.id %}
+      <input type="hidden" name="anime" value="{{ current_anime.id }}" />
+    {% else %}
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="anime">Anime</label>
+      <div class="col-sm-10">
+        <select class="form-control" name="anime" required>
+          {% for a in available_anime %}
+            <option value="{{ a.id }}">{{ a.display_title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    {% endif %}
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="status">Status</label>
+      <div class="col-sm-10">
+        <select class="form-control" name="status" required>
+          {% for name, label in status_types %}
+            <option value="{{ name }}" {{ "selected" if current_anime._pivot_status==name else "" }}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="rating">Rating</label>
+      <div class="col-sm-10">
+        <input class="form-control" name="rating" type="number" min="1" max="10" step="1" value="{{ current_anime._pivot_rating if current_anime._pivot_rating else "5" }}">
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+    <input class="btn btn-primary" type="submit" value="{{ "Edit " if current_anime.display_title else "Add" }}">
+  </div>
+</form>

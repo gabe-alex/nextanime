@@ -19,10 +19,11 @@
         <td>{{ a._pivot_status }}</td>
         <td>{{ a._pivot_rating }}</td>
         <td>
-          <form method="post" action="/library/remove" role="form">
+          <form class="form-inline" method="post" action="/library/remove" role="form">
             {{ csrfField | safe }}
             <input type="hidden" name="id" value="{{ a.id }}" />
-            <input class="btn btn-warning" type="submit" value="Remove" />
+            <a class="btn btn-warning" data-id="{{ a.id }}" data-toggle="modal" data-target="#add_edit">Edit</a>
+            <input class="btn btn-danger" type="submit" value="Remove" />
           </form>
         </td>
       </tr>
@@ -30,51 +31,23 @@
     </tbody>
   </table>
 
-  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#add_anime">Add Anime</button>
+  <a class="btn btn-info btn-lg" data-toggle="modal" data-target="#add_edit">Add Anime</a>
 
-  <div id="add_anime" class="modal fade" role="dialog">
+  <div id="add_edit" class="modal fade" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form class="form-horizontal" method="post" action="/library/add" role="form">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Add Anime</h4>
-          </div>
-          <div class="modal-body">
-            {{ csrfField | safe }}
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="anime">Anime</label>
-              <div class="col-sm-10">
-                <select class="form-control" name="anime" required>
-                  {% for a in available_anime %}
-                    <option value="{{ a.id }}">{{ a.display_title }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="status">Status</label>
-              <div class="col-sm-10">
-                <select class="form-control" name="status" required>
-                  {% for name, label in status_types %}
-                    <option value="{{ name }}">{{ label }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="rating">Rating</label>
-              <div class="col-sm-10">
-                <input class="form-control" name="rating" type="number" min="1" max="10" step="1">
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
-            <input class="btn btn-primary" type="submit" value="Add">
-          </div>
-        </form>
-      </div>
+
+    </div>
     </div>
   </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $('#add_edit').on('show.bs.modal', function(e) {
+    //get data-id attribute of the clicked element
+    var entryId = $(e.relatedTarget).data('id');
+    $('#add_edit .modal-content').load('/library/edit/'+entryId);
+  });
+</script>
 {% endblock %}

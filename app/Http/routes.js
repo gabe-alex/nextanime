@@ -24,8 +24,10 @@ Route.get('/login', 'LoginController.index')
 Route.post('/login', 'LoginController.submit')
 
 Route.get('/library', 'UserController.library')
-Route.get('/animedatabase', 'ListController.animedatabase')
-Route.post('/library/add', 'UserController.library_add')
+Route.get('/library/edit/:id', 'UserController.library_edit_view')
+Route.post('/library/save', 'UserController.library_save')
 Route.post('/library/remove', 'UserController.library_remove')
+
+Route.get('/animedatabase', 'ListController.animedatabase')
 
 Route.get('/recommendations', 'RecommendationsController.index')
