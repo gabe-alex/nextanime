@@ -5,13 +5,14 @@ const User = use('App/Model/User');
 class HomeController {
 
   * index (request, response) {
-    let user;
+    let userData;
     const userId =  yield request.session.get('user_id')
     if(userId) {
-      user = yield User.find(userId)
+      const user = yield User.find(userId)
+      userData = user.attributes
     }
 
-    const view = yield response.view('index', {user: user.attributes})
+    const view = yield response.view('index', {user: userData})
     response.send(view)
   }
 

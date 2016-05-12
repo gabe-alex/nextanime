@@ -21,6 +21,7 @@ Route.post('/register', 'RegistrationController.submit')
 
 Route.get('/login', 'LoginController.index')
 Route.post('/login', 'LoginController.submit')
+Route.get('/logout', 'LoginController.logout')
 
 Route.get('/library', 'UserController.library')
 Route.get('/library/edit/:id', 'UserController.library_edit_view')

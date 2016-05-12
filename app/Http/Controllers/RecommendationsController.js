@@ -15,7 +15,7 @@ class RecommendationsController {
         AnimeService.insertDisplayTitles(recs)
         yield response.sendView('recommendations', {user: user.attributes, anime: recs})
       } else {
-        forget('user_id')
+        yield request.session.forget('user_id')
         response.redirect('/login')
       }
     } else {
