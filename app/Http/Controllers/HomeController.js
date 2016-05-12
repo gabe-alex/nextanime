@@ -3,12 +3,12 @@
 class HomeController {
 
   * index (request, response) {
-    const view = yield response.view('MainPageLicenta')
+    const view = yield response.view('index')
     response.send(view)
   }
 
   * animepage (request, response) {
-    const view = yield response.view('AnimePageLicenta')
+    const view = yield response.view('anime')
     response.send(view)
   }
 
