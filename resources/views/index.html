@@ -1,0 +1,107 @@
+{# resources/views/index.html #}
+
+{% extends 'layout' %}
+
+{% block content %}
+  <div class="row">
+    {% set range = [0,1,2,3,4] %}
+
+    {# loginsignup/recomandari , trebuie un if #}
+    <div class="col-xs-4">
+      <h3>Recommendations</h3>
+      <br>
+      {% if user %}
+          {% for i in range %}
+            <div class="row">
+             <div class="col-xs-4">
+               <div class="btn-group">
+
+                <a href="/animepage" id="rec_anime_col" onclick="colOnAnimePage()"><img src="/images/scenicanime.jpeg" class="recImage" alt="Some problem"></a>
+
+               </div>
+             </div>
+
+              <div class="col-xs-8">
+                <a href="/animepage">name of anime</a>
+                <p></p>
+                <p>Nr of eps</p>
+                <p>Date aired</p>
+                <p>Rating</p>
+                <button type="button" class="btn btn-primary" onclick="addToUserAnimeList()">Add</button>
+                <button type="button" class="btn btn-danger" onclick="removeFromRec()">X</button>
+              </div>
+            </div>
+            <br>
+          {% endfor %}
+
+        <p></p>
+        <button class="btn btn-default" type="button" onclick="location.href='http://localhost:3333/animepage'">More recommended animes</button>
+      {% else %}
+        <div class="text-center">
+          <h4>Sign up for personalised recommendations!</h4>
+          <div class="action-button"><a class="btn btn-primary" href="/login">Login</a></div>
+          <div class="action-button"><a class="btn btn-primary" href="/register">Create account</a></div>
+        </div>
+      {% endif %}
+    </div>
+
+
+  {# Top animes #}
+    <div class="col-xs-4">
+      <h3>Top anime</h3>
+      <br>
+
+        {% for i in range %}
+          <div class="row">
+            <div class="col-xs-4">
+                <a href="/animepage" id="top_anime_col" onclick="colOnAnimePage()"><img src="/images/scenicanime.jpeg" class="recImage" alt="Some problem"></img></a> {# initial era la id latest_entry_image #}
+            </div>
+            <div class="col-xs-8">
+                <a href="/animepage">name of anime</a>
+                <p></p>
+                <p>Nr of eps</p>
+                <p>Date aired</p>
+                <p>Rating</p>
+            </div>
+           </div><br>
+        {% endfor %}
+
+      <p></p>
+      <button class="btn btn-default" type="button" onclick="location.href='http://localhost:3333/animepage'">More top animes</button>
+    </div>
+
+
+  {# coming soon #}
+    <div class="col-xs-4">
+      <h3>Recent</h3>
+      <br>
+
+        {% for i in range %}
+          <div class="row">
+            <div class="col-xs-4">
+                <a href="/animepage" id="coming_soon_col" onclick="colOnAnimePage()"><img src="/images/scenicanime.jpeg" class="recImage" alt="Some problem"></img></a> {# initial era la id latest_entry_image #}
+            </div>
+            <div class="col-xs-8">
+                <a href="/animepage">name of anime</a>
+                <p></p>
+                <p>Date to air</p>
+                <p>Rating</p>
+            </div>
+          </div><br>
+        {% endfor %}
+
+      <p></p>
+      <button class="btn btn-default" type="button" onclick="location.href='http://localhost:3333/animepage'">More recent anime</button>
+    </div>
+  </div>
+
+  <p></p>
+
+  <footer id="lowerlinks">
+    <a href="https://www.facebook.com/"><img src="images/facebook-logo.jpg" name="facebook_picture" class="social_media_logo" alt="Some problem"></a>
+    <a href="https://www.gmail.com/"><img src="images/google+-logo.png" name="gmail_picture" class="social_media_logo" alt="Some problem"></a>
+    <a href="https://www.reddit.com/"><img src="images/redditisfun.jpeg" name="reddit_picture" class="social_media_logo" alt="Some problem"></a>
+    <br>
+    <p>NextAnime.net is a property of Alecu&Onete, @2016 All Rights Reserved</p>
+  </footer>
+{% endblock %}

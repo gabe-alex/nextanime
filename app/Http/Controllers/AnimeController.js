@@ -1,36 +1,25 @@
 'use strict'
 
-const Anime = use('App/Model/Anime'),
-  AnimeService = use("App/Services/AnimeService")
+const Anime = use('App/Model/Anime')
+const AnimeService = use("App/Services/AnimeService")
+const User = use('App/Model/User')
 
 class AnimeController {
-  *animepage (request, response) {
-    const anime = (yield Anime.all()).value()
-    if (anime) {
-      AnimeService.insertDisplayTitles(anime)
-      yield response.sendView('animepage', {anime: anime})
+  *view_anime (request, response) {
+    let userData;
+    const userId =  yield request.session.get('user_id')
+    if(userId) {
+      const user = yield User.find(userId)
+      userData = user.attributes
     }
 
-    /*
-    $(document).ready(function() {
-      if($('#rec_anime_col').attr('id'))
-      {
-        response.view('animepage', {h3: 'Recommended'});
-      }
-    });
-    $(document).ready(function() {
-      if($('#top_anime_col').attr('id'))
-      {
-        response.view('animepage', {h3: 'Top Anime'});
-      }
-    });
-    $(document).ready(function() {
-      if($('#coming_soon_col').attr('id'))
-      {
-        response.view('animepage', {h3: 'Coming Soon'});
-      }
-    });*/
-    
+    const animeId = request.param('id')
+    const anime = (yield Anime.find(animeId))
+    if (anime) {
+      AnimeService.insertDisplayTitles(anime)
+    }
+
+    yield response.sendView('anime', {user: userData, anime: anime})
   }
 }
 

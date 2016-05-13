@@ -13,8 +13,9 @@
 const Route = use('Route')
 
 Route.get('/', 'HomeController.index')
-Route.get('/mainpage', 'HomeController.mainpage')
-Route.get('/animepage', 'HomeController.animepage')
+
+Route.get('/anime/:id', 'AnimeController.view_anime')
+
 Route.get('/userprofile', 'UserController.user_profile')
 
 Route.get('/register', 'RegistrationController.index')
@@ -22,6 +23,7 @@ Route.post('/register', 'RegistrationController.submit')
 
 Route.get('/login', 'LoginController.index')
 Route.post('/login', 'LoginController.submit')
+Route.get('/logout', 'LoginController.logout')
 
 Route.get('/library', 'UserController.library')
 Route.get('/library/edit/:id', 'UserController.library_edit_view')

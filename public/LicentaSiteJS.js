@@ -51,7 +51,7 @@ $(document).ready(function()
 	var myVar = setInterval(function()
 	{ //schimbat imagine la cateva secunde
 
-		var list = ["images/city1.jpg","images/city2.jpg","images/city3.jpg","images/scenicanime.jpeg"];
+		var list = ["/images/city1.jpg","/images/city2.jpg","/images/city3.jpg","/images/scenicanime.jpeg"];
 		imgId++;
 		if(imgId > 3) {
 			imgId = 0;
@@ -142,7 +142,7 @@ $(document).ready(function()
     }
   }*/
 
-  
+
 });
 
 

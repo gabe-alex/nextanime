@@ -1,8 +1,18 @@
 #topimage
 {
-	width:1000px;
+  width: 100%;
 	height:260px;
 }
+
+#cover
+{
+  padding: 32px;
+}
+
+.action-button {
+  margin: 10px;
+}
+
 h1
 {
 	margin : auto;

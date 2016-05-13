@@ -1,22 +1,18 @@
 'use strict'
 
+const User = use('App/Model/User');
+
 class HomeController {
 
   * index (request, response) {
-    const view = yield response.view('PageTemplateLicenta')
-    response.send(view)
-	/*
-	let testvar = 24
-    response.send(view, {test: testvar, test2: 'lol'})*/
-  }
+    let userData;
+    const userId =  yield request.session.get('user_id')
+    if(userId) {
+      const user = yield User.find(userId)
+      userData = user.attributes
+    }
 
-  * mainpage (request, response) {
-    const view = yield response.view('MainPageLicenta')
-    response.send(view)
-  }
-
-  * animepage (request, response) {
-    const view = yield response.view('AnimePageLicenta')
+    const view = yield response.view('index', {user: userData})
     response.send(view)
   }
 

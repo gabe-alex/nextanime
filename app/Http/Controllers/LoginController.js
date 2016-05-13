@@ -61,6 +61,11 @@ class LoginController {
 
     return response.redirect('/')
   }
+
+  *logout (request, response) {
+    yield request.session.forget('user_id')
+    return response.redirect('/')
+  }
 }
 
 module.exports = LoginController

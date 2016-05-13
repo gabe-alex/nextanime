@@ -29,7 +29,7 @@ class UserController {
 
         yield response.sendView('library', {user: user.attributes, user_anime: userAnime, available_anime: availableAnime, status_types: statusTypes})
       } else {
-        forget('user_id')  //remove the id from session if it's not valid, because it's useless
+        yield request.session.forget('user_id')  //remove the id from session if it's not valid, because it's useless
         response.redirect('/login')
       }
     } else {
@@ -61,7 +61,7 @@ class UserController {
 
         yield response.sendView('library_edit', {user: user.attributes, available_anime: availableAnime, status_types: statusTypes, current_anime: currentAnime})
       } else {
-        forget('user_id')  //remove the id from session if it's not valid, because it's useless
+        yield request.session.forget('user_id')  //remove the id from session if it's not valid, because it's useless
         response.redirect('/login')
       }
     } else {
@@ -87,7 +87,7 @@ class UserController {
 
         response.redirect('/library')
       } else {
-        forget('user_id')
+        yield request.session.forget('user_id')
         response.redirect('/login')
       }
     } else {
@@ -106,7 +106,7 @@ class UserController {
 
         response.redirect('/library')
       } else {
-        forget('user_id')
+        yield request.session.forget('user_id')
         response.redirect('/login')
       }
     } else {
