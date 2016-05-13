@@ -27,15 +27,15 @@
               <p>Nr of eps</p>
               <p>Date aired</p>
               <p>Rating</p>
-              <button type="button" onclick="addToUserAnimeList()">Add</button>
-              <button type="button" onclick="removeFromRec()">X</button>
+              <button type="button" class="btn btn-primary" onclick="addToUserAnimeList()">Add</button>
+              <button type="button" class="btn btn-danger" onclick="removeFromRec()">X</button>
             </div>
           </div>
           <br>
         {% endfor %}
 
       <p></p>
-      <button type="button" onclick="location.href='http://localhost:3333/animepage'">More recommended animes</button>
+      <button class="btn btn-default" type="button" onclick="location.href='http://localhost:3333/animepage'">More recommended animes</button>
     </div>
 
 
@@ -60,7 +60,7 @@
         {% endfor %}
 
       <p></p>
-      <button type="button" onclick="location.href='http://localhost:3333/animepage'">More top animes</button>
+      <button class="btn btn-default" type="button" onclick="location.href='http://localhost:3333/animepage'">More top animes</button>
     </div>
 
 
@@ -84,7 +84,7 @@
         {% endfor %}
 
       <p></p>
-      <button type="button" onclick="location.href='http://localhost:3333/animepage'">More recent anime</button>
+      <button class="btn btn-default" type="button" onclick="location.href='http://localhost:3333/animepage'">More recent anime</button>
     </div>
   </div>
 
