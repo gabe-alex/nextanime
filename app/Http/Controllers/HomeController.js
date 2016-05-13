@@ -1,6 +1,8 @@
 'use strict'
 
-const User = use('App/Model/User');
+const User = use('App/Model/User')
+const Anime = use('App/Model/Anime')
+const AnimeService = use("App/Services/AnimeService")
 
 class HomeController {
 
@@ -14,6 +16,16 @@ class HomeController {
 
     const view = yield response.view('index', {user: userData})
     response.send(view)
+
+    const animeId = request.param('id')
+    const anime = (yield Anime.find(animeId))
+    if (anime) {
+      AnimeService.insertDisplayTitles(anime)
+      AnimeService.getDisplayNrEps(anime)
+    }
+
+    yield response.sendView('anime', {user: userData, anime: anime})
+
   }
 
   * userprofile (request, response) {

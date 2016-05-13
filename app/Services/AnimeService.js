@@ -66,6 +66,16 @@ class AnimeService {
     return cast
   }
 
+  static getDisplayNrEps(anime) {
+    return anime.nr_episodes
+  }
+
+  static insertDisplayNrEps(anime) {
+    anime.display_nr_eps = AnimeService.getDisplayNrEps(anime)
+    return anime
+  }
+  
+
   static insertDisplayTitles(animeList) {
     return _(animeList).map(function(item) {return AnimeService.insertDisplayTitle(item)}).value()
   }
