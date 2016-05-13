@@ -13,7 +13,9 @@
 const Route = use('Route')
 
 Route.get('/', 'HomeController.index')
-Route.get('/animepage', 'HomeController.animepage')
+
+Route.get('/anime/:id', 'AnimeController.view_anime')
+
 Route.get('/userprofile', 'UserController.user_profile')
 
 Route.get('/register', 'RegistrationController.index')

@@ -17,7 +17,7 @@
     <tbody>
     {% for a in user_anime %}
       <tr>
-        <td>{{ a.display_title }}</td>
+        <td><a href="/anime/{{ a.id }}">{{ a.display_title }}</a></td>
         <td>{{ a._pivot_status }}</td>
         <td>{{ a._pivot_rating }}</td>
         <td>

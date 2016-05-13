@@ -16,11 +16,6 @@ class HomeController {
     response.send(view)
   }
 
-  * animepage (request, response) {
-    const view = yield response.view('anime')
-    response.send(view)
-  }
-
   * userprofile (request, response) {
     const view = yield response.view('user_profile')
     response.send(view)
