@@ -2,7 +2,7 @@
 {# resources/views/user_profile.html #}
 
 
-{% extends 'PageTemplateLicenta' %}
+{% extends 'layout' %}
 
 {# lista genuri , in progress #}
 {% block genres %}
@@ -29,7 +29,7 @@
 
 
 {# User Profile #}
-{% block centralcolumn %}
+{% block content %}
   {% set username="Raylight" %} {# de adugat tabel cu toate detaliile #}
   {% set name="Gabriel" %}
   {% set age="23" %}
@@ -112,11 +112,11 @@
 
     </div>
   </div>
-{% endblock %}
+
 
 
 {# Latest Entries + FB #}
-{% block rightcolumn %}
+
   {% set range = [0,1,2,3,4] %}
   <div class="col-xs-4">
     <h4>Latest news</h4>
