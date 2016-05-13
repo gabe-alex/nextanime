@@ -53,20 +53,18 @@ class AnimeService {
   }
 
   static insertDisplayCharacters(characters) {
-    characters.display_title = AnimeService.getDisplayCharacters(characters)
+    characters.display_characters = AnimeService.getDisplayCharacters(characters)
     return characters
   }
 
-  static getDisplayCharacters(characters) {
-    return characters.romaji_name
+  static getDisplayActors(cast) {
+    return cast.romaji_name
   }
 
-  static insertDisplayCharacters(characters) {
-    characters.display_title = AnimeService.getDisplayCharacters(characters)
-    return characters
+  static insertDisplayActors(cast) {
+    cast.display_actors = AnimeService.getDisplayActors(cast)
+    return cast
   }
-
-
 
   static insertDisplayTitles(animeList) {
     return _(animeList).map(function(item) {return AnimeService.insertDisplayTitle(item)}).value()

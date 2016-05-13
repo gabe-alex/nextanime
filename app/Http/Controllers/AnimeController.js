@@ -17,6 +17,8 @@ class AnimeController {
     const anime = (yield Anime.find(animeId))
     if (anime) {
       AnimeService.insertDisplayTitles(anime)
+      AnimeService.getDisplayAnimeDescription(anime)
+      AnimeService.getDisplayEnglishTitle(anime)
     }
 
     yield response.sendView('anime', {user: userData, anime: anime})

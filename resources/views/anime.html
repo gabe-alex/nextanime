@@ -28,7 +28,7 @@
 #}
 
 {# loginsignup/recomandari , trebuie un if #}
-{#
+
 {% block leftcolumn %}
   {% set range = [0,1,2,3,4] %}
   <div class="col-xs-2">
@@ -46,7 +46,8 @@
   {% endfor %}
   </div>
 {% endblock %}
-#}
+
+
 
 {# Anime Details #}
 {% block content %}
@@ -57,7 +58,7 @@
    </div>
     <div class = "col-xs-8">
     	<p>Name : {{ anime.display_title }}</p>
-    	<p>English : {{ anime.english_titlee }}</p>
+    	<p>English : {{ anime.english_title }}</p>
     	<p>Studios : {# TODO #}</p>
     	<p>Status :
     		<select id="selectStatus">
@@ -93,10 +94,10 @@
     </div>
     <br>
     <div>
-    	<h3>Original Material</h3><br>
-    	<p>Material : {{ material }}</p><br>
+    	<!--<h3>Original Material</h3><br>
+    	<p>Material : {{ material }}</p><br>-->
     	<h3>Description</h3><br>
-    	<p>{{ description }}</p><br>
+    	<p>{{ anime.description }}</p><br>
     	<h3>Actors</h3><br>
     	<ul>
     	  {% set range = [0,1,2,3,4] %}
