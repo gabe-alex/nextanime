@@ -10,32 +10,39 @@
     <div class="col-xs-4">
       <h3>Recommendations</h3>
       <br>
+      {% if user %}
+          {% for i in range %}
+            <div class="row">
+             <div class="col-xs-4">
+               <div class="btn-group">
 
-        {% for i in range %}
-          <div class="row">
-           <div class="col-xs-4">
-             <div class="btn-group">
+                <a href="/animepage" id="rec_anime_col" onclick="colOnAnimePage()"><img src="images/scenicanime.jpeg" class="recImage" alt="Some problem"></a>
 
-              <a href="/animepage" id="rec_anime_col" onclick="colOnAnimePage()"><img src="images/scenicanime.jpeg" class="recImage" alt="Some problem"></a>
-
+               </div>
              </div>
-           </div>
-            <div class="col-xs-8">
 
-              <a href="/animepage">name of anime</a>
-              <p></p>
-              <p>Nr of eps</p>
-              <p>Date aired</p>
-              <p>Rating</p>
-              <button type="button" class="btn btn-primary" onclick="addToUserAnimeList()">Add</button>
-              <button type="button" class="btn btn-danger" onclick="removeFromRec()">X</button>
+              <div class="col-xs-8">
+                <a href="/animepage">name of anime</a>
+                <p></p>
+                <p>Nr of eps</p>
+                <p>Date aired</p>
+                <p>Rating</p>
+                <button type="button" class="btn btn-primary" onclick="addToUserAnimeList()">Add</button>
+                <button type="button" class="btn btn-danger" onclick="removeFromRec()">X</button>
+              </div>
             </div>
-          </div>
-          <br>
-        {% endfor %}
+            <br>
+          {% endfor %}
 
-      <p></p>
-      <button class="btn btn-default" type="button" onclick="location.href='http://localhost:3333/animepage'">More recommended animes</button>
+        <p></p>
+        <button class="btn btn-default" type="button" onclick="location.href='http://localhost:3333/animepage'">More recommended animes</button>
+      {% else %}
+        <div class="text-center">
+          <h4>Sign up for personalised recommendations!</h4>
+          <div class="action-button"><a class="btn btn-primary" href="/login">Login</a></div>
+          <div class="action-button"><a class="btn btn-primary" href="/register">Create account</a></div>
+        </div>
+      {% endif %}
     </div>
 
 

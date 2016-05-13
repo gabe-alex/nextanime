@@ -9,6 +9,10 @@
   padding: 32px;
 }
 
+.action-button {
+  margin: 10px;
+}
+
 h1
 {
 	margin : auto;
