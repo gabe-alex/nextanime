@@ -55,6 +55,7 @@
     "lodash": "^4.9.0",
     "mysql": "^2.10.2",
     "ouch": "^0.2.0-beta",
-    "raccoon": "github:gabe-alex/recommendationRaccoon#private"
+    "raccoon": "github:gabe-alex/recommendationRaccoon#private",
+    "stack-trace": "0.0.9"
   }
 }
