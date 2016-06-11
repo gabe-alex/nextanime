@@ -43,7 +43,7 @@
     	<button type="button" onclick="addToFriendList()" class="userProfBtn"><span class="glyphicon glyphicon-plus"></span> Friend Request</button><br>
     	<button type="button" onclick="sendMessage()" class="userProfBtn"><span class="glyphicon glyphicon-envelope"></span> Message</button><br>
     	<button type="button" onclick="recFriend()" class="userProfBtn"><span class="glyphicon glyphicon-hand-right"></span> Recommend Friend</button><br>
-    	<h4>Friends<h4>
+    	<h4>Friends</h4>
     	{% for friend in friendsList %}
         <a href="#"><img src="images/noraNOPE.png" id="friendImage" alt="Some problem" title={{ friend }}></a>
     	{% endfor %}
@@ -129,7 +129,7 @@
     {% for i in range %}
       <div class="row">
         <div class="col-xs-3">
-          <a href="/animepage"><img src="images/scenicanime.jpeg" id="latest_entry_image" alt="Some problem"></img></a>
+          <a href="/animepage"><img src="images/scenicanime.jpeg" id="latest_entry_image" alt="Some problem"></a>
         </div>
         <div class="col-xs-9">
           <a href="/animepage">name of anime</a>
