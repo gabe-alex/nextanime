@@ -18,16 +18,16 @@ class AnimeController {
     const animeId = request.param('id')
     const studioId = request.param('id')
     const anime = (yield Anime.find(animeId))
-    const studio = (yield anime.studio().fetch()).value()
+    //const studio = (yield anime.studio().fetch()).value()
     if (anime) {
       AnimeService.insertDisplayTitles(anime)
       AnimeService.insertDisplayEnglishTitle(anime)
       AnimeService.insertDisplayNrEps(anime)
       AnimeService.insertDisplayAnimeDescription(anime)
-      AnimeService.insertDisplayStudio(studio)
+      //AnimeService.insertDisplayStudio(studio)
     }
 
-    yield response.sendView('anime', {user: userData, anime: anime, studio: studio})
+    yield response.sendView('anime', {user: userData, anime: anime/*, studio: studio*/})
   }
 }
 
