@@ -18,13 +18,14 @@ class AnimeController {
     const animeId = request.param('id')
     const studioId = request.param('id')
     const anime = (yield Anime.find(animeId))
-    //const studio = (yield anime.studio().fetch()).value()
+    const studio = (yield anime.studio().fetch()).value()
+
     if (anime) {
       AnimeService.insertDisplayTitles(anime)
-      AnimeService.insertDisplayEnglishTitle(anime)
-      AnimeService.insertDisplayNrEps(anime)
-      AnimeService.insertDisplayAnimeDescription(anime)
-      //AnimeService.insertDisplayStudio(studio)
+      //AnimeService.insertDisplayEnglishTitle(anime)
+      //AnimeService.insertDisplayNrEps(anime)
+      //AnimeService.insertDisplayAnimeDescription(anime)
+      AnimeService.insertDisplayStudio(studio)
     }
 
     yield response.sendView('anime', {user: userData, anime: anime/*, studio: studio*/})
@@ -48,6 +49,14 @@ class AnimeController {
     }
   }
 
+  *index (request, response) {
+    
+        yield UserService.rebuildRecommendations(user)  //TODO: don't do this every time
+        const recs = (yield UserService.getRecommendations(user)).value()
+        AnimeService.insertDisplayTitles(recs)
+        yield response.sendView('index', {user: user.attributes, recs: recs})
+    
+      }
 }
 
 module.exports = AnimeController

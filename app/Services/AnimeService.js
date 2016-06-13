@@ -1,6 +1,7 @@
 'use strict'
 
-const _ = require('lodash')
+const _ = require('lodash'),
+          Anime = use('App/Model/Anime')
 
 class AnimeService {
   static getDisplayTitle(anime) {
@@ -13,17 +14,10 @@ class AnimeService {
   }
 
   //TODO : get rid of useless getters
-  static getDisplayEnglishTitle(anime) {
-    return anime.english_title
-  }
 
   static insertDisplayEnglishTitle(anime) {
     anime.display_english_title = AnimeService.getDisplayEnglishTitle(anime)
     return anime
-  }
-
-  static getDisplayAuthor(anime) {
-    return anime.author
   }
 
   static insertDisplayAuthor(anime) {
@@ -40,17 +34,9 @@ class AnimeService {
     return studios
   }
 
-  static getDisplayAnimeDescription(anime) {
-    return anime.description
-  }
-
   static insertDisplayAnimeDescription(anime) {
     anime.display_description = AnimeService.getDisplayAnimeDescription(anime)
     return anime
-  }
-
-  static getDisplayCharacters(characters) {
-    return characters.romaji_name
   }
 
   static insertDisplayCharacters(characters) {
@@ -67,19 +53,15 @@ class AnimeService {
     return cast
   }
 
-  static getDisplayNrEps(anime) {
-    return anime.nr_episodes
-  }
-
   static insertDisplayNrEps(anime) {
     anime.display_nr_eps = AnimeService.getDisplayNrEps(anime)
     return anime
   }
 
-
   static insertDisplayTitles(animeList) {
     return _(animeList).map(function(item) {return AnimeService.insertDisplayTitle(item)}).value()
   }
+
 }
 
 module.exports = AnimeService
