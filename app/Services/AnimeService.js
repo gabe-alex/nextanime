@@ -12,6 +12,7 @@ class AnimeService {
     return anime
   }
 
+  //TODO : get rid of useless getters
   static getDisplayEnglishTitle(anime) {
     return anime.english_title
   }
@@ -74,7 +75,7 @@ class AnimeService {
     anime.display_nr_eps = AnimeService.getDisplayNrEps(anime)
     return anime
   }
-  
+
 
   static insertDisplayTitles(animeList) {
     return _(animeList).map(function(item) {return AnimeService.insertDisplayTitle(item)}).value()

@@ -29,6 +29,25 @@ class AnimeController {
 
     yield response.sendView('anime', {user: userData, anime: anime/*, studio: studio*/})
   }
+
+  *index (request, response) {
+    const userId =  yield request.session.get('user_id')
+    if(userId) {
+      const user = yield User.find(userId)
+      if (user) {
+        yield UserService.rebuildRecommendations(user)  //TODO: don't do this every time
+        const recs = (yield UserService.getRecommendations(user)).value()
+        AnimeService.insertDisplayTitles(recs)
+        yield response.sendView('index', {user: user.attributes, recs: recs})
+      } else {
+        yield request.session.forget('user_id')
+        yield response.sendView('index', {})
+      }
+    } else {
+      yield response.sendView('index', {})
+    }
+  }
+
 }
 
 module.exports = AnimeController
