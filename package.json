@@ -43,6 +43,7 @@
     "adonis-middleware": "^1.0.5",
     "adonis-validation-provider": "^2.0.2",
     "co": "^4.6.0",
+    "express": "^4.13.4",
     "generator-async": "^0.1.4",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
@@ -55,6 +56,7 @@
     "lodash": "^4.9.0",
     "mysql": "^2.10.2",
     "ouch": "^0.2.0-beta",
+    "passport-facebook": "^2.1.1",
     "raccoon": "github:gabe-alex/recommendationRaccoon#private",
     "stack-trace": "0.0.9"
   }

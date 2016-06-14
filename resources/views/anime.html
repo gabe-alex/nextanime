@@ -53,13 +53,16 @@
 {% block content %}
 
   <div class="col-xs-6">
-    <div class = "col-xs-4">
+    <div class = "col-xs-5">
     	<a href="#"><img src="/images/scenicanime.jpeg" id="animeProfileImage" alt="Some problem"></a>
+      <button type="button"  onclick="addToUserAnimeList()">Add to list</button>
+      <button type="button"  onclick="recommendToFriend()">Recommend</button>
    </div>
-    <div class = "col-xs-8">
+    <div class = "col-xs-7">
     	<p>Name : {{ anime.display_title }}</p>
     	<p>English : {{ anime.english_title }}</p>
     	<p>Studio : {{ studio.display_studio }}</p>
+      <p>Episodes : {{ anime.nr_episodes }}</p>
     	<p>Status :
     		<select id="selectStatus">
     			<option value="nothing">Nothing</option>
@@ -69,10 +72,10 @@
     			<option value="dropped">Dropped</option>
     		</select>
     	</p>
-    	<p>Watched : <input  type="text" size="2"> / {{ anime.display_nr_eps }}</p>
+    	<p>Watched : <input id="eps_watched" type="text" size="2"> / {{ anime.nr_episodes }}</p>
 
     	<!--<p>Chapters/Volumes : <input  type="text" size="2"> / <input  type="text" size="2"></p>--> <!-- mai am de lucru -->
-    	<p>Completion : <progress value="60" max="100"></progress></p>
+    	<p>Completion : <progress value="{{ anime.nr_episodes }}" max="{{ anime.nr_episodes }}"></progress></p>
     	<p>Rating : {{ rating }}</p>
     	<p>Your rating :
     		<select id="selectRating">
@@ -90,8 +93,7 @@
     		</select>
     	</p>
 
-        <button type="button"  onclick="addToUserAnimeList()">Add to list</button>
-        <button type="button"  onclick="recommendToFriend()">Recommend</button>
+
 
     </div>
     <br>
