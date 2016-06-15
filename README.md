@@ -56,6 +56,4 @@ Example:
     ...
     }
     
-Usage:
-
-    yield Recommendation.addLike(userId, itemId, true);
+Usage: `yield Recommendation.addLike(userId, itemId, true);`
