@@ -1,13 +1,35 @@
-'use strict'
+'use strict';
 
-const Validator = use('Validator'),
-  Collection = use('Collection'),
-  User = use('App/Model/User'),
-  Hash = use('Hash'),
-  Config = use("Config"),
-  co = require('co')
-const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
+const Validator = use('Validator');
+const Collection = use('Collection');
+const User = use('App/Model/User');
+const Hash = use('Hash');
+const Config = use("Config");
+const co = require('co');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
+
+//Prepare local login strategy
+passport.use('local', new LocalStrategy(
+  function (username, password, done) {
+    return co(function* () {
+      const user = yield User.where('username', username).first().fetch();
+
+      if (!user.size()) {   //.size() = num of fields returned, will be 0 of no records are found
+        return done(null, false, {username: Config.get('messages.validation.username.exists')});
+      }
+
+      const result = yield Hash.verify(password, user.get('password'));
+      if (!result) {
+        return done(null, false, {password:  Config.get('messages.validation.password.matches')});
+      }
+
+      return done(null, user);
+    });
+  }
+));
+
 
 class LoginController {
   *index (request, response) {
@@ -15,26 +37,9 @@ class LoginController {
   }
 
   *local_login (request, response) {
-    request.body = request.all();  //workaround for passport expecting form data in request.body
+    request.body = request.all();  //Workaround for passport expecting form data in request.body
 
-    passport.use('local', new LocalStrategy(
-      function (username, password, done) {
-        return co(function* () {
-          const user = yield User.where('username', username).first().fetch();
-          if (!user.size()) {
-            return done(null, false, {username: Config.get('messages.validation.username.exists')});
-          }
-
-          const result = yield Hash.verify(password, user.get('password'));
-          if (!result) {
-            return done(null, false, {password:  Config.get('messages.validation.password.matches')});
-          }
-
-          return done(null, user);
-        });
-      }
-    ));
-
+    //Prepare passport's auth function and then call it
     const passport_func = passport.authenticate('local', function (err, user, err_info) {
       return co(function*() {
         if (err) {
@@ -42,22 +47,21 @@ class LoginController {
         }
 
         if (!user) {
-          console.error(err_info)
-          const view = yield response.view('login', {params: request.all(), errors: err_info})
+          const view = yield response.view('login', {params: request.all(), errors: err_info});
           return response.unauthorized(view)
         }
 
-        yield request.session.put('user_id', user.get('id'))
+        yield request.session.put('user_id', user.get('id'));
         response.redirect('/')
       });
     });
-    passport_func(request, response)
+    passport_func(request, response);
   }
 
   *logout (request, response) {
-    yield request.session.forget('user_id')
-    response.redirect('/')
+    yield request.session.forget('user_id');
+    response.redirect('/');
   }
 }
 
-module.exports = LoginController
+module.exports = LoginController;
