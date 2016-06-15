@@ -10,11 +10,9 @@ const LocalStrategy = require('passport-local').Strategy
 
 const validationErrorMessages = {
   'username' : {
-    'required': "Username is required.",
     'exists': "User not found."
   },
   'password' : {
-    'required': "Password is required.",
     'matches': "Incorrect password."
   }
 }
@@ -30,28 +28,6 @@ class LoginController {
     passport.use('local', new LocalStrategy(
       function (username, password, done) {
         return co(function* () {
-          console.log("validation start")
-
-          const rules = {
-            username: 'required',
-            password: 'required'
-          };
-
-          const validation = yield Validator.validateAll(rules, request.all())
-          if (validation.fails()) {
-            const errors = new Collection(validation.messages())
-              .groupBy('field')
-              .mapValues(function (value) {
-                return new Collection(value).first().validation
-              })  //eliminate pointless array and bad message
-              .mapValues(function (value, key) {
-                return validationErrorMessages[key][value]
-              })  //add better error messages
-              .value()
-
-            return done(null, false, errors);
-          }
-
           const user = yield User.where('username', username).first().fetch()
           if (!user.size()) {
             return done(null, false, {username: validationErrorMessages.username.exists});
@@ -62,33 +38,27 @@ class LoginController {
             return done(null, false, {password: validationErrorMessages.password.matches});
           }
 
-          console.log("verify ok");
           return done(null, user);
         });
-      }));
+      }
+    ));
 
     const passport_func = passport.authenticate('local', function (err, user, err_info) {
-      return co(function* () {
-        console.log("login start")
-
-        const params = request.all();
-
+      return co(function*() {
         if (err) {
           return console.error(err);
         }
 
         if (!user) {
           console.log(err_info)
-          const view = yield response.view('login', {params: params, errors: err_info})
+          const view = yield response.view('login', {params: request.all(), errors: err_info})
           return response.unauthorized(view)
         }
 
         yield request.session.put('user_id', user.get('id'))
-        console.log("login ok")
         return response.redirect('/')
       });
     });
-
     passport_func(request, response)
   }
 

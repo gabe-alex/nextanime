@@ -6,17 +6,17 @@ const Validator = use('Validator'),
   Hash = use('Hash')
 
 const validationErrorMessages = { // obiect in js / map
-  'username' : {
-    'required': "Username is required.",
-    'unique': "Username is already taken."
+  username : {
+    required: "Username is required.",
+    unique: "Username is already taken."
   },
-  'password' : {
-    'required': "Password is required.",
-    'min': "Password must have at least 6 characters."
+  password : {
+    required: "Password is required.",
+    min: "Password must have at least 6 characters."
   },
-  'password_confirm' : {
-    'required': "Password Confirm is required.",
-    'same': "Passwords don't match."
+  password_confirm : {
+    required: "Password Confirm is required.",
+    same: "Passwords don't match."
   }
 }
 
@@ -30,7 +30,7 @@ class RegistrationController {
 
     //Generic validations
     const rules = {
-      username : 'required',
+      username : 'required|min:3',
       password : 'required|min:6',
       password_confirm: 'required|same:password'
     }
