@@ -3,22 +3,8 @@
 const Validator = use('Validator'),
   Collection = use('Collection'),
   User = use('App/Model/User'),
-  Hash = use('Hash')
-
-const validationErrorMessages = { // obiect in js / map
-  username : {
-    required: "Username is required.",
-    unique: "Username is already taken."
-  },
-  password : {
-    required: "Password is required.",
-    min: "Password must have at least 6 characters."
-  },
-  password_confirm : {
-    required: "Password Confirm is required.",
-    same: "Passwords don't match."
-  }
-}
+  Hash = use('Hash'),
+  Config = use("Config")
 
 class RegistrationController {
   *index (request, response) {
@@ -36,12 +22,13 @@ class RegistrationController {
     }
 
     const validation = yield Validator.validateAll(rules, params)
+    const validationMessages = Config.get('messages.validation');
     let errors = {}
     if (validation.fails()) {
       errors = new Collection(validation.messages())
         .groupBy('field')
         .mapValues(function(value) {return new Collection(value).first().validation})  //eliminate pointless array and bad message
-        .mapValues(function(value, key) {return validationErrorMessages[key][value]})  //add better error messages
+        .mapValues(function(value, key) {return validationMessages[key][value]})  //add better error messages
         .value()
     }
 
@@ -49,7 +36,7 @@ class RegistrationController {
       //Check if username is available
       const user = yield User.where('username', params.username).first().fetch()
       if(user.size()) {
-        errors.username = validationErrorMessages.username.unique
+        errors.username = validationMessages.username.unique
       }
 
       if(!new Collection(errors).isEmpty()) {
@@ -62,7 +49,7 @@ class RegistrationController {
     yield User.create({username: params.username, password: hashedPassword})
 
     //TODO: show success message
-    yield response.sendView('register')
+    yield response.redirect('/')
   }
 }
 

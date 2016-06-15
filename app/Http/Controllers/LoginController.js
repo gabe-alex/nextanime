@@ -4,18 +4,10 @@ const Validator = use('Validator'),
   Collection = use('Collection'),
   User = use('App/Model/User'),
   Hash = use('Hash'),
+  Config = use("Config"),
   co = require('co')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
-
-const validationErrorMessages = {
-  'username' : {
-    'exists': "User not found."
-  },
-  'password' : {
-    'matches': "Incorrect password."
-  }
-}
 
 class LoginController {
   *index (request, response) {
@@ -30,12 +22,12 @@ class LoginController {
         return co(function* () {
           const user = yield User.where('username', username).first().fetch();
           if (!user.size()) {
-            return done(null, false, {username: validationErrorMessages.username.exists});
+            return done(null, false, {username: Config.get('messages.validation.username.exists')});
           }
 
           const result = yield Hash.verify(password, user.get('password'));
           if (!result) {
-            return done(null, false, {password: validationErrorMessages.password.matches});
+            return done(null, false, {password:  Config.get('messages.validation.password.matches')});
           }
 
           return done(null, user);
