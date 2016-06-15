@@ -28,12 +28,12 @@ class LoginController {
     passport.use('local', new LocalStrategy(
       function (username, password, done) {
         return co(function* () {
-          const user = yield User.where('username', username).first().fetch()
+          const user = yield User.where('username', username).first().fetch();
           if (!user.size()) {
             return done(null, false, {username: validationErrorMessages.username.exists});
           }
 
-          const result = yield Hash.verify(params.password, user.get('password'))
+          const result = yield Hash.verify(password, user.get('password'));
           if (!result) {
             return done(null, false, {password: validationErrorMessages.password.matches});
           }
@@ -50,13 +50,13 @@ class LoginController {
         }
 
         if (!user) {
-          console.log(err_info)
+          console.error(err_info)
           const view = yield response.view('login', {params: request.all(), errors: err_info})
           return response.unauthorized(view)
         }
 
         yield request.session.put('user_id', user.get('id'))
-        return response.redirect('/')
+        response.redirect('/')
       });
     });
     passport_func(request, response)
@@ -64,7 +64,7 @@ class LoginController {
 
   *logout (request, response) {
     yield request.session.forget('user_id')
-    return response.redirect('/')
+    response.redirect('/')
   }
 }
 
