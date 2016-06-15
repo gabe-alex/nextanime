@@ -48,9 +48,9 @@ class UserService {
 
     yield Recommendation.clearUserRatings(user.id)
 
-    yield async.forEach(userAnime.value(), function*(item) {
+    /*yield async.forEach(userAnime.value(), function*(item) {
       yield UserService.updateRedisRating(user.id, item.id, item._pivot_status, item._pivot_rating, mean)
-    })
+    })*/
   }
 
   static *getRecommendations(user) {

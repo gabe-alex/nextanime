@@ -22,7 +22,7 @@ Route.get('/register', 'RegistrationController.index')
 Route.post('/register', 'RegistrationController.submit')
 
 Route.get('/login', 'LoginController.index')
-Route.post('/login', 'LoginController.submit')
+Route.post('/login', 'LoginController.login_pp')
 Route.get('/logout', 'LoginController.logout')
 
 Route.get('/library', 'UserController.library')

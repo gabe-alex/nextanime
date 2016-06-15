@@ -3,7 +3,10 @@
 const Validator = use('Validator'),
   Collection = use('Collection'),
   User = use('App/Model/User'),
-  Hash = use('Hash')
+  Hash = use('Hash'),
+  co = require('co')
+const passport = require('passport')
+const LocalStrategy = require('passport-local').Strategy
 
 const validationErrorMessages = {
   'username' : {
@@ -45,7 +48,7 @@ class LoginController {
     //Check if username exists
     const user = yield User.where('username', params.username).first().fetch()
     if(!user.size()) {
-      const errors = {username: validationErrorMessages.username.unique}
+      const errors = {username: validationErrorMessages.username.exists}
       const view = yield response.view('login', {params: params, errors: errors})
       return response.unauthorized(view)
     }
@@ -67,7 +70,75 @@ class LoginController {
     return response.redirect('/')
   }
 
+  *login_pp (request, response) {
+    request.body = request.all();
 
+    passport.use('local', new LocalStrategy(
+      function (username, password, done) {
+        return co(function* () {
+          console.log("validation start")
+
+          const params = request.all();
+
+          const rules = {
+            username: 'required',
+            password: 'required'
+          };
+
+          const validation = yield Validator.validateAll(rules, params)
+          if (validation.fails()) {
+            const errors = new Collection(validation.messages())
+              .groupBy('field')
+              .mapValues(function (value) {
+                return new Collection(value).first().validation
+              })  //eliminate pointless array and bad message
+              .mapValues(function (value, key) {
+                return validationErrorMessages[key][value]
+              })  //add better error messages
+              .value()
+
+            return done(null, false, errors);
+          }
+
+          const user = yield User.where('username', username).first().fetch()
+          if (!user.size()) {
+            return done(null, false, {username: validationErrorMessages.username.exists});
+          }
+
+          const result = yield Hash.verify(params.password, user.get('password'))
+          if (!result) {
+            return done(null, false, {password: validationErrorMessages.password.matches});
+          }
+
+          console.log("verify ok");
+          return done(null, user);
+        });
+      }));
+
+    let passport_func = passport.authenticate('local', function (err, user, err_info) {
+      return co(function* () {
+        console.log("login start")
+
+        const params = request.all();
+
+        if (err) {
+          return console.error(err);
+        }
+
+        if (!user) {
+          console.log(err_info)
+          const view = yield response.view('login', {params: params, errors: err_info})
+          return response.unauthorized(view)
+        }
+
+        yield request.session.put('user_id', user.get('id'))
+        console.log("login ok")
+        return response.redirect('/')
+      });
+    });
+
+    passport_func(request, response)
+  }
 }
 
 module.exports = LoginController

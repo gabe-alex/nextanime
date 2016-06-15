@@ -56,7 +56,9 @@
     "lodash": "^4.9.0",
     "mysql": "^2.10.2",
     "ouch": "^0.2.0-beta",
+    "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
+    "passport-local": "^1.0.0",
     "raccoon": "github:gabe-alex/recommendationRaccoon#private",
     "stack-trace": "0.0.9"
   }
