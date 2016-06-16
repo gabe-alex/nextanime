@@ -1,9 +1,10 @@
-'use strict'
+'use strict';
 
-const User = use('App/Model/User'),
-  Anime = use('App/Model/Anime'),
-  AnimeService = use("App/Services/AnimeService"),
-  _ = require('lodash')
+const User = use('App/Model/User');
+const Anime = use('App/Model/Anime');
+const AnimeService = use("App/Services/AnimeService");
+const _ = require('lodash');
+
 
 const statusTypes = {
   planning: "Planning",
@@ -11,126 +12,83 @@ const statusTypes = {
   on_hold: "On Hold",
   completed: "Completed",
   dropped: "Dropped",
-  ignored: "Ignored",
-}
+  ignored: "Ignored"
+};
+
 
 class UserController {
-  *library (request, response) {
-    const userId =  yield request.session.get('user_id')
-    if(userId) {
-      const user = yield User.find(userId)
-      if (user) {
-        const userAnime = (yield user.anime().fetch()).value()
-        AnimeService.insertDisplayTitles(userAnime)
+  *library(request, response) {
+    const userAnime = (yield request.user.anime().fetch()).value();
+    AnimeService.insertDisplayTitles(userAnime);
 
-        const allAnime = (yield Anime.all()).value()
-        const availableAnime = _.differenceBy(allAnime, userAnime, 'id')
-        AnimeService.insertDisplayTitles(availableAnime)
+    const allAnime = (yield Anime.all()).value();
+    const availableAnime = _.differenceBy(allAnime, userAnime, 'id');
+    AnimeService.insertDisplayTitles(availableAnime);
 
-        yield response.sendView('library', {user: user.attributes, user_anime: userAnime, available_anime: availableAnime, status_types: statusTypes})
-      } else {
-        yield request.session.forget('user_id')  //remove the id from session if it's not valid, because it's useless
-        response.redirect('/login')
-      }
-    } else {
-      response.redirect('/login')
-    }
+    yield response.sendView('library', {
+      user: request.user.attributes,
+      user_anime: userAnime,
+      available_anime: availableAnime,
+      status_types: statusTypes
+    })
   }
 
-  *library_edit_view (request, response) {
-    const userId =  yield request.session.get('user_id')
-    if(userId) {
-      const user = yield User.find(userId)
-      if (user) {
-        const userAnimeCol = yield user.anime().fetch()
-        const userAnime = userAnimeCol.value()
-        AnimeService.insertDisplayTitles(userAnime)
+  *library_edit_view(request, response) {
+    const userAnimeCol = yield request.user.anime().fetch();
+    const userAnime = userAnimeCol.value();
+    AnimeService.insertDisplayTitles(userAnime);
 
-        const allAnime = (yield Anime.all()).value()
-        const availableAnime = _.differenceBy(allAnime, userAnime, 'id')
-        AnimeService.insertDisplayTitles(availableAnime)
+    const allAnime = (yield Anime.all()).value();
+    const availableAnime = _.differenceBy(allAnime, userAnime, 'id');
+    AnimeService.insertDisplayTitles(availableAnime);
 
-        let currentAnime;
-        const animeId = request.param('id')
-        if(animeId) {
-          currentAnime = userAnimeCol.find('id',parseInt(animeId));
-          if(currentAnime) {
-            AnimeService.insertDisplayTitle(currentAnime)
-          }
-        }
-
-        yield response.sendView('library_edit', {user: user.attributes, available_anime: availableAnime, status_types: statusTypes, current_anime: currentAnime})
-      } else {
-        yield request.session.forget('user_id')  //remove the id from session if it's not valid, because it's useless
-        response.redirect('/login')
+    let currentAnime;
+    const animeId = request.param('id');
+    if (animeId) {
+      currentAnime = userAnimeCol.find('id', parseInt(animeId));
+      if (currentAnime) {
+        AnimeService.insertDisplayTitle(currentAnime)
       }
-    } else {
-      response.redirect('/login')
     }
+
+    yield response.sendView('library_edit', {
+      user: request.user.attributes,
+      available_anime: availableAnime,
+      status_types: statusTypes,
+      current_anime: currentAnime
+    })
   }
 
-  *library_save (request, response) {
-    const userId =  yield request.session.get('user_id')
-    if(userId) {
-      const user = yield User.find(userId)
-      if (user) {
-        const params = request.all()
-        const animeId = params.anime
+  *library_save(request, response) {
+    const params = request.all();
+    const animeId = params.anime;
 
-        const userAnimeCol = yield user.anime().fetch()
+    const userAnimeCol = yield request.user.anime().fetch();
 
-        if(userAnimeCol.find('id',parseInt(animeId))) {
-          yield user.anime().detach(animeId)
-        }
-        yield user.anime().attach(animeId, {status: params.status, rating: params.rating})
-        yield user.update()
-
-        response.redirect('/library')
-      } else {
-        yield request.session.forget('user_id')
-        response.redirect('/login')
-      }
-    } else {
-      response.redirect('/login')
+    if (userAnimeCol.find('id', parseInt(animeId))) {
+      yield request.user.anime().detach(animeId)
     }
+    yield request.user.anime().attach(animeId, {status: params.status, rating: params.rating});
+    yield request.user.update();
+
+    response.redirect('/library')
   }
 
-  *library_remove (request, response) {
-    const userId =  yield request.session.get('user_id')
-    if(userId) {
-      const user = yield User.find(userId)
-      if (user) {
-        const params = request.all()
-        yield user.anime().detach(params.id)
-        yield user.update()
+  *library_remove(request, response) {
+    const params = request.all();
+    yield request.user.anime().detach(params.id);
+    yield request.user.update();
 
-        response.redirect('/library')
-      } else {
-        yield request.session.forget('user_id')
-        response.redirect('/login')
-      }
-    } else {
-      response.redirect('/login')
-    }
+    response.redirect('/library')
   }
 
   *user_profile(request, response) {
-    const userId =  yield request.session.get('user_id')
-    if(userId) {
-      const user = yield User.find(userId)
-      if (user) {
-        const userAnime = yield user.anime().fetch()
-        const watching = userAnime.filter(function (anime) {
-          return anime.status === 'watching'
-        }).value()
-        AnimeService.insertDisplayTitles(watching)
-        yield response.sendView('user_profile', {user: user.attributes, watching: watching})
-      } else {
-        response.redirect('/')
-      }
-    } else {
-      response.redirect('/')
-    }
+    const userAnime = yield request.user.anime().fetch();
+    const watching = userAnime.filter(function (anime) {
+      return anime.status === 'watching'
+    }).value();
+    AnimeService.insertDisplayTitles(watching);
+    yield response.sendView('user_profile', {user: request.user.attributes, watching: watching})
   }
 }
 

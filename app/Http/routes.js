@@ -25,14 +25,14 @@ Route.get('/login', 'LoginController.index')
 Route.post('/login', 'LoginController.local_login')
 Route.get('/logout', 'LoginController.logout')
 
-Route.get('/library', 'UserController.library')
-Route.get('/library/edit/:id', 'UserController.library_edit_view')
-Route.post('/library/save', 'UserController.library_save')
-Route.post('/library/remove', 'UserController.library_remove')
+Route.get('/library', 'UserController.library').middlewares(['auth'])
+Route.get('/library/edit/:id', 'UserController.library_edit_view').middlewares(['auth'])
+Route.post('/library/save', 'UserController.library_save').middlewares(['auth'])
+Route.post('/library/remove', 'UserController.library_remove').middlewares(['auth'])
 
 Route.get('/animedatabase', 'ListController.animedatabase')
 
-Route.get('/recommendations', 'RecommendationsController.index')
+Route.get('/recommendations', 'RecommendationsController.index').middlewares(['auth'])
 
 
 
