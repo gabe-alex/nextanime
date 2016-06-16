@@ -7,6 +7,7 @@ Anime recommendations website
 
 - An installation of node.js (with npm)
 - A mysql database
+- A redis database
 
 2) Installing
 
@@ -29,6 +30,8 @@ Adonis uses ES6 generators in order to make the code more readable. However, thi
 Fixed using the `co` module.  
 Example: Requesting a user from the database for verification with passport.
 
+    const co = require('co');
+    ...
     passport.use('local', new LocalStrategy(
       function (username, password, done) {
         return co(function* () {
