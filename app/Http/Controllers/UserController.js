@@ -2,6 +2,7 @@
 
 const User = use('App/Model/User');
 const Anime = use('App/Model/Anime');
+const UserService = use("App/Services/UserService");
 const _ = require('lodash');
 
 
@@ -62,6 +63,7 @@ class UserController {
     }
     yield request.user.anime().attach(animeId, {status: params.status, rating: params.rating});
     yield request.user.update();
+    yield UserService.rebuildRecommendations(request.user);
 
     response.redirect('/library')
   }
