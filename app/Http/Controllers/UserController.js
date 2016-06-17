@@ -72,6 +72,7 @@ class UserController {
     const params = request.all();
     yield request.user.anime().detach(params.id);
     yield request.user.update();
+    yield UserService.rebuildRecommendations(request.user);
 
     response.redirect('/library')
   }
