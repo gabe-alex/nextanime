@@ -46,7 +46,7 @@ module.exports = {
     connection: {
       host: Env.get('MYSQL_HOST', 'localhost'),
       user: Env.get('MYSQL_USER', 'root'),
-      password: Env.get('MYSQL_PASSWORD', ''),
+      password: Env.get('MYSQL_PASSWORD', 'root'),
       database: Env.get('MYSQL_DATABASE', 'nextanime')
     }
   },
@@ -63,7 +63,8 @@ module.exports = {
   redis: {
     connection: {
       host: Env.get('REDIS_HOST', 'localhost'),
-      port: Env.get('REDIS_PORT', 6379)
+      port: Env.get('REDIS_PORT', 6379),
+      auth: Env.get('REDIS_AUTH')
     }
   }
 }

@@ -1,10 +1,10 @@
-'use strict'
+'use strict';
 
 const Recommendation = use("Recommendation"),
   Anime = use('App/Model/Anime'),
   async = require('generator-async'),
   _ = require('lodash'),
-  co = require('co')
+  co = require('co');
 
 class UserService {
   static updateRedisRating(userId, itemId, status, rating, userMean) {
@@ -20,7 +20,7 @@ class UserService {
           break;
         case 'ignored':
         case 'dropped':
-          yield Recommendation.addDislike(userId, itemId, true)
+          yield Recommendation.addDislike(userId, itemId, true);
           break;
         case 'planning':
         default:
@@ -35,29 +35,29 @@ class UserService {
     let sum_ratings = 0;
     _(userAnime.value()).forEach(function(item) {
       if (item._pivot_rating) {
-        sum_ratings += item._pivot_rating
+        sum_ratings += item._pivot_rating;
         num_rated++
       }
-    })
+    });
     return sum_ratings/num_rated;
   }
 
   static *rebuildRecommendations(user) {
-    const userAnime = yield user.anime().fetch()
-    const mean = this.calcUserMean(userAnime)
+    const userAnime = yield user.anime().fetch();
+    const mean = this.calcUserMean(userAnime);
 
-    yield Recommendation.clearUserRatings(user.id)
+    yield Recommendation.clearUserRatings(user.id);
 
-    /*yield async.forEach(userAnime.value(), function*(item) {
+    yield async.forEach(userAnime.value(), function*(item) {
       yield UserService.updateRedisRating(user.id, item.id, item._pivot_status, item._pivot_rating, mean)
-    })*/
+    })
   }
 
   static *getRecommendations(user) {
-    yield Recommendation.updateUser(user.id)
-    const recIds = yield Recommendation.getRecommandations(user.id)
+    yield Recommendation.updateUser(user.id);
+    const recIds = yield Recommendation.getRecommandations(user.id);
     return Anime.whereIn('id',recIds).fetch()
   }
 }
 
-module.exports = UserService
+module.exports = UserService;

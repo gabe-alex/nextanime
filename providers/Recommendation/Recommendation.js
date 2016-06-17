@@ -1,14 +1,19 @@
-'use strict'
+'use strict';
 
-const raccoon = require('raccoon')
+const raccoon = require('raccoon');
+
 
 class Recommendation {
-
   constructor (Config) {
-    const host = Config.get('redis.host')
-    const port = Config.get('redis.port')
-    raccoon.connect(port, host)
+    raccoon.config.className = 'nextanime';
+    raccoon.config.numOfRecsStore = 30;
+
+    const host = Config.get('database.redis.connection.host');
+    const port = Config.get('database.redis.connection.port');
+    const auth = Config.get('database.redis.connection.auth');
+    raccoon.connect(port, host, auth);
   }
+
 
   addLike (userId, itemId, omitUpdate) {
     return new Promise((resolve, reject) => {
@@ -68,12 +73,11 @@ class Recommendation {
 
   getRecommandations (userId) {
     return new Promise((resolve, reject) => {
-      raccoon.recommendFor(userId, 30, function (results) {
+      raccoon.recommendFor(userId, 30, function (results) {  //TODO: put num. of recs in a config
         resolve(results)
       })
     })
   }
-
 }
 
-module.exports = Recommendation
+module.exports = Recommendation;
