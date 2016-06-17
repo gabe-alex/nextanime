@@ -47,7 +47,7 @@ gulp.task('fonts', function(){
 
 gulp.task('watch', function() {
   gulp.watch(config.sassPath + '/**/*.scss', ['css']);
-  gulp.watch( [ './app/**/*.js' ], server.restart );
+  gulp.watch( [ './app/**/*.js', './bootstrap/**/*.js', './config/**/*.js', './providers/**/*.js'  ], server.restart );
 });
 
 gulp.task( 'server:start', function() {
