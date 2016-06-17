@@ -21,7 +21,6 @@ class AnimeController {
     const studio = (yield anime.studio().fetch()).value()
 
     if (anime) {
-      AnimeService.insertDisplayTitles(anime)
       //AnimeService.insertDisplayEnglishTitle(anime)
       //AnimeService.insertDisplayNrEps(anime)
       //AnimeService.insertDisplayAnimeDescription(anime)
@@ -38,7 +37,6 @@ class AnimeController {
       if (user) {
         yield UserService.rebuildRecommendations(user)  //TODO: don't do this every time
         const recs = (yield UserService.getRecommendations(user)).value()
-        AnimeService.insertDisplayTitles(recs)
         yield response.sendView('index', {user: user.attributes, recs: recs})
       } else {
         yield request.session.forget('user_id')
@@ -50,12 +48,11 @@ class AnimeController {
   }
 
   *index (request, response) {
-    
+
         yield UserService.rebuildRecommendations(user)  //TODO: don't do this every time
         const recs = (yield UserService.getRecommendations(user)).value()
-        AnimeService.insertDisplayTitles(recs)
         yield response.sendView('index', {user: user.attributes, recs: recs})
-    
+
       }
 }
 

@@ -1,8 +1,9 @@
-'use strict'
+'use strict';
 
-const App = use('App')
-const Ouch = use('ouch')
-const Env = use('Env')
+const App = use('App');
+const Ouch = use('ouch');
+const Env = use('Env');
+const View = use('View');
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,11 @@ const Env = use('Env')
 | })
 |
 */
-App.on('start', function () {})
+App.on('start', function () {
+  View.filter('display_title', function (anime) {
+    return anime.romaji_title || anime.title
+  })
+});
 
 App.on('error', function (error, request, response) {
   /*
@@ -33,10 +38,10 @@ App.on('error', function (error, request, response) {
   if (Env.get('NODE_ENV') === 'development') {
     const ouchInstance = new Ouch().pushHandler(new Ouch.handlers.PrettyPageHandler('blue', null, 'sublime'))
     ouchInstance.handleException(error, request.request, response.response, function () {
-      console.log('Handled following error gracefully')
-      console.log(error)
-    })
-    return
+      console.log('Handled following error gracefully');
+      console.log(error);
+    });
+    return;
   }
 
   /*
@@ -48,9 +53,9 @@ App.on('error', function (error, request, response) {
   | exit the process
   |
   */
-  const status = error.status || 503
-  const message = error.message || 'Internal server error'
-  console.log(message, error.stack)
-  response.status(status).send(message)
-  process.exit(1)
-})
+  const status = error.status || 503;
+  const message = error.message || 'Internal server error';
+  console.log(message, error.stack);
+  response.status(status).send(message);
+  process.exit(1);
+});

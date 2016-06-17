@@ -4,15 +4,6 @@ const _ = require('lodash'),
           Anime = use('App/Model/Anime')
 
 class AnimeService {
-  static getDisplayTitle(anime) {
-    return anime.romaji_title || anime.title
-  }
-
-  static insertDisplayTitle(anime) {
-    anime.display_title = AnimeService.getDisplayTitle(anime)
-    return anime
-  }
-
   //TODO : get rid of useless getters
 
   static insertDisplayEnglishTitle(anime) {

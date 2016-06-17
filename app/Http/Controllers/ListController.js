@@ -7,7 +7,6 @@ class ListController {
   *animedatabase (request, response) {
     const anime = (yield Anime.all()).value()
     if (anime) {
-      AnimeService.insertDisplayTitles(anime)
       yield response.sendView('animedatabase', {anime: anime})
     }
   }

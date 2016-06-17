@@ -20,7 +20,6 @@ class HomeController {
     const animeId = request.param('id')
     const anime = (yield Anime.find(animeId))
     if (anime) {
-      AnimeService.insertDisplayTitles(anime)
       AnimeService.getDisplayNrEps(anime)
     }
 

@@ -59,7 +59,7 @@
       <button type="button"  onclick="recommendToFriend()">Recommend</button>
    </div>
     <div class = "col-xs-7">
-    	<p>Name : {{ anime.display_title }}</p>
+    	<p>Name : {{ anime | display_title }}</p>
     	<p>English : {{ anime.english_title }}</p>
     	<p>Studio : {{ studio.display_studio }}</p>
       <p>Episodes : {{ anime.nr_episodes }}</p>

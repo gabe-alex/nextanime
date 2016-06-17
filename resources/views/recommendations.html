@@ -14,7 +14,7 @@
     <tbody>
     {% for a in anime %}
       <tr>
-        <td><a href="/anime/{{ a.id }}">{{ a.display_title }}</a></td>
+        <td><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></td>
       </tr>
     {% endfor %}
     </tbody>

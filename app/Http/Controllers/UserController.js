@@ -19,11 +19,9 @@ const statusTypes = {
 class UserController {
   *library(request, response) {
     const userAnime = (yield request.user.anime().fetch()).value();
-    AnimeService.insertDisplayTitles(userAnime);
 
     const allAnime = (yield Anime.all()).value();
     const availableAnime = _.differenceBy(allAnime, userAnime, 'id');
-    AnimeService.insertDisplayTitles(availableAnime);
 
     yield response.sendView('library', {
       user: request.user.attributes,
@@ -36,19 +34,14 @@ class UserController {
   *library_edit_view(request, response) {
     const userAnimeCol = yield request.user.anime().fetch();
     const userAnime = userAnimeCol.value();
-    AnimeService.insertDisplayTitles(userAnime);
 
     const allAnime = (yield Anime.all()).value();
     const availableAnime = _.differenceBy(allAnime, userAnime, 'id');
-    AnimeService.insertDisplayTitles(availableAnime);
 
     let currentAnime;
     const animeId = request.param('id');
     if (animeId) {
       currentAnime = userAnimeCol.find('id', parseInt(animeId));
-      if (currentAnime) {
-        AnimeService.insertDisplayTitle(currentAnime)
-      }
     }
 
     yield response.sendView('library_edit', {
@@ -87,7 +80,6 @@ class UserController {
     const watching = userAnime.filter(function (anime) {
       return anime.status === 'watching'
     }).value();
-    AnimeService.insertDisplayTitles(watching);
     yield response.sendView('user_profile', {user: request.user.attributes, watching: watching})
   }
 }
