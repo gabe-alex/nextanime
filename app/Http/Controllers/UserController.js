@@ -2,7 +2,6 @@
 
 const User = use('App/Model/User');
 const Anime = use('App/Model/Anime');
-const AnimeService = use("App/Services/AnimeService");
 const _ = require('lodash');
 
 
@@ -84,4 +83,4 @@ class UserController {
   }
 }
 
-module.exports = UserController
+module.exports = UserController;

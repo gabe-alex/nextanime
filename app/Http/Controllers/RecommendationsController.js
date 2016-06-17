@@ -2,7 +2,6 @@
 
 const UserService = use("App/Services/UserService");
 const User = use('App/Model/User');
-const AnimeService = use("App/Services/AnimeService");
 
 
 class RecommendationsController {
