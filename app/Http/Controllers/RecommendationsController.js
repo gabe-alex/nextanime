@@ -6,7 +6,8 @@ const User = use('App/Model/User');
 
 class RecommendationsController {
   *index(request, response) {
-    const recs = (yield UserService.getRecommendations(request.user)).value();
+    yield UserService.rebuildRecommendations(request.user);
+    const recs = (yield UserService.getRecommendations(request.user, 30)).value();
     yield response.sendView('recommendations', {user: request.user.attributes, anime: recs})
   }
 }

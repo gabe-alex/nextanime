@@ -13,10 +13,10 @@ class HomeController {
     if(userId) {
       const user = yield User.find(userId);
       userData = user.attributes;
-      recs = (yield UserService.getRecommendations(user)).value();
+      recs = (yield UserService.getRecommendations(user, 5)).value();
     }
-    const top = (yield StatsService.getTopAnime()).value();
-    const newAnime = (yield StatsService.getNewAnime()).value();
+    const top = (yield StatsService.getTopAnime(5)).value();
+    const newAnime = (yield StatsService.getNewAnime(5)).value();
 
     yield response.sendView('index', {user: userData, recs: recs, top: top, new: newAnime})
 

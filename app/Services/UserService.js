@@ -53,9 +53,9 @@ class UserService {
     })
   }
 
-  static *getRecommendations(user) {
+  static *getRecommendations(user, count) {
     yield Recommendation.updateUser(user.id);
-    const recIds = yield Recommendation.getRecommandations(user.id);
+    const recIds = yield Recommendation.getRecommandations(user.id, count);
     return Anime.whereIn('id',recIds).fetch()
   }
 }

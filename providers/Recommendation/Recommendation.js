@@ -71,17 +71,17 @@ class Recommendation {
     })
   }
 
-  getRecommandations (userId) {
+  getRecommandations (userId, count) {
     return new Promise((resolve, reject) => {
-      raccoon.recommendFor(userId, 30, function (results) {  //TODO: put num. of recs in a config
+      raccoon.recommendFor(userId, count, function (results) {
         resolve(results)
       })
     })
   }
 
-  bestRated() {
+  bestRated(count) {
     return new Promise((resolve, reject) => {
-      raccoon.bestRatedWithScores(30, function (results) {  //TODO: put num. of ratings in a config
+      raccoon.bestRatedWithScores(count-1, function (results) {
         resolve(results)
       })
     })
