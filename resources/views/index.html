@@ -4,8 +4,6 @@
 
 {% block content %}
   <div class="row">
-    {% set range = [0,1,2,3,4] %}
-
     {# loginsignup/recomandari , trebuie un if #}
     <div class="col-xs-4">
       <h3>Recommendations</h3>
@@ -76,10 +74,10 @@
       <h3>New</h3>
       <br>
 
-        {% for a in range %}
+        {% for a in new %}
           <div class="row">
             <div class="col-xs-4">
-                <a href="/anime/{{ a.id }}" id="coming_soon_col" onclick="colOnAnimePage()"><img src="/images/scenicanime.jpeg" class="recImage" alt="Some problem"></a> {# initial era la id latest_entry_image #}
+                <a href="/anime/{{ a.id }}" id="coming_soon_col" onclick="colOnAnimePage()"><img src="/images/anime_covers/{{ a.id }}.jpg" class="recImage" alt="Some problem"></a> {# initial era la id latest_entry_image #}
             </div>
             <div class="col-xs-8">
                 <a href="/anime/{{ a.id }}">{{ a | display_title }}</a>

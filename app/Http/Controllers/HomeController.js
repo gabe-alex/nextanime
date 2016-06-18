@@ -9,15 +9,16 @@ class HomeController {
 
   * index (request, response) {
     let userData, recs;
-    const top = (yield StatsService.getTopAnime()).value();
     const userId =  yield request.session.get('user_id');
     if(userId) {
       const user = yield User.find(userId);
       userData = user.attributes;
       recs = (yield UserService.getRecommendations(user)).value();
     }
+    const top = (yield StatsService.getTopAnime()).value();
+    const newAnime = (yield StatsService.getNewAnime()).value();
 
-    yield response.sendView('index', {user: userData, recs: recs, top: top})
+    yield response.sendView('index', {user: userData, recs: recs, top: top, new: newAnime})
 
   }
 
