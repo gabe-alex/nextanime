@@ -7,15 +7,16 @@ const UserService = use("App/Services/UserService");
 class HomeController {
 
   * index (request, response) {
-    let user;
+    let userData;
     let recs;
     const userId =  yield request.session.get('user_id');
     if(userId) {
-      user = yield User.find(userId);
+      const user = yield User.find(userId);
+      userData = user.attributes;
       recs = (yield UserService.getRecommendations(user)).value();
     }
 
-    yield response.sendView('index', {user: user.attributes, recs: recs})
+    yield response.sendView('index', {user: userData, recs: recs})
 
   }
 
