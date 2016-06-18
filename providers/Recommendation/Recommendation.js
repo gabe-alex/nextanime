@@ -78,6 +78,14 @@ class Recommendation {
       })
     })
   }
+
+  bestRated() {
+    return new Promise((resolve, reject) => {
+      raccoon.bestRatedWithScores(30, function (results) {  //TODO: put num. of ratings in a config
+        resolve(results)
+      })
+    })
+  }
 }
 
 module.exports = Recommendation;

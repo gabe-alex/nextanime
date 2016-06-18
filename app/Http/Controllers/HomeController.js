@@ -3,12 +3,13 @@
 const User = use('App/Model/User');
 const Anime = use('App/Model/Anime');
 const UserService = use("App/Services/UserService");
+const StatsService = use("App/Services/StatsService");
 
 class HomeController {
 
   * index (request, response) {
-    let userData;
-    let recs;
+    let userData, recs;
+    const top = (yield StatsService.getTopAnime()).value();
     const userId =  yield request.session.get('user_id');
     if(userId) {
       const user = yield User.find(userId);
@@ -16,7 +17,7 @@ class HomeController {
       recs = (yield UserService.getRecommendations(user)).value();
     }
 
-    yield response.sendView('index', {user: userData, recs: recs})
+    yield response.sendView('index', {user: userData, recs: recs, top: top})
 
   }
 
