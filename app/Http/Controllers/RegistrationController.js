@@ -38,11 +38,11 @@ class RegistrationController {
       if(user.size()) {
         errors.username = validationMessages.username.unique
       }
+    }
 
-      if(!new Collection(errors).isEmpty()) {
-        const view = yield response.view('register', {params: params, errors: errors});
-        return response.badRequest(view)
-      }
+    if(!new Collection(errors).isEmpty()) {
+      const view = yield response.view('register', {params: params, errors: errors});
+      return response.badRequest(view)
     }
 
     const hashedPassword = yield Hash.make(params.password);
