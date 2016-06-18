@@ -18,7 +18,7 @@
         <td><a href="/anime/{{ a.id }}">{{ a.id }}</a></td>
         <td>{{ a | display_title }}</td>
         <td>{{ a.studio.name }}</td>
-        <td><img src="/images/anime_covers/{{ a.id }}.jpg" class="recImage" alt="Not available" /></td>
+        <td><img src="//s3.amazonaws.com/nextanime/anime_covers/{{ a.id }}.jpg" class="recImage" alt="Not available" /></td>
       </tr>
     {% endfor %}
     </tbody>
