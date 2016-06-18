@@ -2,24 +2,20 @@
 
 const User = use('App/Model/User');
 const Anime = use('App/Model/Anime');
+const UserService = use("App/Services/UserService");
 
 class HomeController {
 
   * index (request, response) {
-    let userData;
+    let user;
+    let recs;
     const userId =  yield request.session.get('user_id');
     if(userId) {
-      const user = yield User.find(userId);
-      userData = user.attributes
+      user = yield User.find(userId);
+      recs = (yield UserService.getRecommendations(user)).value();
     }
 
-    const view = yield response.view('index', {user: userData});
-    response.send(view);
-
-    const animeId = request.param('id');
-    const anime = (yield Anime.find(animeId));
-
-    yield response.sendView('anime', {user: userData, anime: anime})
+    yield response.sendView('index', {user: user.attributes, recs: recs})
 
   }
 

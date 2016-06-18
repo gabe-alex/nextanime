@@ -10,13 +10,13 @@
     <div class="col-xs-4">
       <h3>Recommendations</h3>
       <br>
-      {% if user %}
+      {% if recs %}
           {% for a in recs %}
             <div class="row">
              <div class="col-xs-4">
                <div class="btn-group">
 
-                <a href="/anime/{{ a.id }}" id="rec_anime_col" onclick="colOnAnimePage()"><img src="/images/scenicanime.jpeg" class="recImage" alt="Some problem"></a>
+                <a href="/anime/{{ a.id }}" id="rec_anime_col" onclick="colOnAnimePage()"><img src="/images/anime_covers/{{ a.id }}.jpg" class="recImage" alt="Some problem"></a>
 
                </div>
              </div>
