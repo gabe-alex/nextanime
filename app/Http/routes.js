@@ -18,12 +18,13 @@ Route.get('/anime/:id', 'AnimeController.view_anime')
 
 Route.get('/userprofile', 'UserController.user_profile')
 
-Route.get('/register', 'RegistrationController.index')
-Route.post('/register', 'RegistrationController.submit')
+Route.get('/register', 'AccountController.view_register')
+Route.post('/register', 'AccountController.do_register')
 
-Route.get('/login', 'LoginController.index')
-Route.post('/login', 'LoginController.local_login')
-Route.get('/logout', 'LoginController.logout')
+Route.get('/login', 'AccountController.view_login')
+Route.post('/login', 'AccountController.do_local_login')
+Route.post('/login_fb', 'AccountController.do_login_fb')
+Route.get('/logout', 'AccountController.do_logout')
 
 Route.get('/library', 'UserController.library').middlewares(['auth'])
 Route.get('/library/edit/:id', 'UserController.library_edit_view').middlewares(['auth'])
