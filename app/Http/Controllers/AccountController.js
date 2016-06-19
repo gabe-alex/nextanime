@@ -106,8 +106,6 @@ class AccountController {
   }
 
   *do_local_login (request, response) {
-    request.body = request.all();  //Workaround for passport expecting form data in request.body
-
     //Prepare passport's auth function and then call it
     const passport_func = passport.authenticate('local', function (err, user, err_info) {
       return co(function*() {
@@ -130,17 +128,7 @@ class AccountController {
   }
 
   *login_fb_start (request, response) {
-    response.setHeader = response.header;  //yet another express workaround...
-    response.oldEnd = response.end;
-    response.end = function() {
-      if (this.statusCode) {
-        this.status(this.statusCode)
-      }
-      this.oldEnd();
-    };
-
     console.log("fb1 start");
-
     const passport_func = passport.authenticate('facebook', function (err, user, err_info) {
       return co(function*() {
         console.log("pp1 start");
@@ -166,16 +154,6 @@ class AccountController {
   }
 
   *login_fb_callback (request, response) {
-    request.query = request.get();
-    response.setHeader = response.header;
-    response.oldEnd = response.end;
-    response.end = function() {
-      if (this.statusCode) {
-        this.status(this.statusCode)
-      }
-      this.oldEnd();
-    };
-
     console.log("fb2 start");
     const passport_func = passport.authenticate('facebook', function (err, user, err_info) {
       return co(function*() {
