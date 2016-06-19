@@ -23,7 +23,8 @@ Route.post('/register', 'AccountController.do_register')
 
 Route.get('/login', 'AccountController.view_login')
 Route.post('/login', 'AccountController.do_local_login')
-Route.post('/login_fb', 'AccountController.do_login_fb')
+Route.get('/login_fb', 'AccountController.login_fb_start')
+Route.get('/login_fb_callback', 'AccountController.login_fb_callback')
 Route.get('/logout', 'AccountController.do_logout')
 
 Route.get('/library', 'UserController.library').middlewares(['auth'])

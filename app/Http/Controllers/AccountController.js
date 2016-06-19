@@ -40,48 +40,19 @@ passport.use('facebook', new FacebookStrategy(
   },
   // facebook will send back the tokens and profile
   function(access_token, refresh_token, profile, done) {
-
-    console.log('profile', profile);
-
-    // asynchronous
-    process.nextTick(function* () {
+    return co(function* () {
+      console.log('profile', profile);
 
       // find the user in the database based on their facebook id
-      const user = yield User.findOne({ 'fb_id' : profile.id }, function(err, user) {
-
-        // if there is an error, stop everything and return that
-        // ie an error connecting to the database
-        if (err)
-          return done(err);
-
-        // if the user is found, then log them in
-        if (user) {
-          return done(null, user); // user found, return that user
-        } else {
-          // if there is no user found with that facebook id, create them
-          const fbUser = new User();
-
-          // set all of the facebook information in our user model
-          fbUser.fb.id    = profile.id; // set the users facebook id
-          fbUser.fb.access_token = access_token; // we will save the token that facebook provides to the user
-
-          // save our user to the database
-          fbUser.save(function(err) {
-            if (err)
-              return console.error(err);
-
-            // if successful, return the new user
-            return done(null, fbUser);
-            
-          });
-        }
-
-      });
+      let user = yield User.where('fb_id', profile.id).first().fetch();
+      if (!user.size()) {
+        const userId = yield User.create({fb_id: profile.id, fb_access_token: access_token});
+        user = new Collection((yield User.find(userId)).attributes); //find doesn't keep the same format as where
+      }
+      return done(null, user);
     });
-
-  }));
-
-
+  }
+));
 
 
 class AccountController {
@@ -141,7 +112,9 @@ class AccountController {
     const passport_func = passport.authenticate('local', function (err, user, err_info) {
       return co(function*() {
         if (err) {
-          return console.error(err);
+          console.error(err);
+          const view = yield response.view('login', {errors: {fb: err.message}});
+          return response.unauthorized(view)
         }
 
         if (!user) {
@@ -156,8 +129,75 @@ class AccountController {
     passport_func(request, response);
   }
 
-  *do_login_fb (request, response) {
+  *login_fb_start (request, response) {
+    response.setHeader = response.header;  //yet another express workaround...
+    response.oldEnd = response.end;
+    response.end = function() {
+      if (this.statusCode) {
+        this.status(this.statusCode)
+      }
+      this.oldEnd();
+    };
 
+    console.log("fb1 start");
+
+    const passport_func = passport.authenticate('facebook', function (err, user, err_info) {
+      return co(function*() {
+        console.log("pp1 start");
+        if (err) {
+          console.error(err);
+          const view = yield response.view('login', {errors: {fb: err.message}});
+          return response.unauthorized(view)
+        }
+
+        if (!user) {
+          const view = yield response.view('login', {errors: err_info});
+          return response.unauthorized(view)
+        }
+
+        yield request.session.put('user_id', user.get('id'));// saves user id in cookie
+        response.redirect('/');
+        console.log("pp1 end");
+      });
+    });
+
+    passport_func(request, response);
+    console.log("fb1 end");
+  }
+
+  *login_fb_callback (request, response) {
+    request.query = request.get();
+    response.setHeader = response.header;
+    response.oldEnd = response.end;
+    response.end = function() {
+      if (this.statusCode) {
+        this.status(this.statusCode)
+      }
+      this.oldEnd();
+    };
+
+    console.log("fb2 start");
+    const passport_func = passport.authenticate('facebook', function (err, user, err_info) {
+      return co(function*() {
+        console.log("pp2 start");
+        if (err) {
+          console.error(err);
+          const view = yield response.view('login', {errors: {fb: err.message}});
+          return response.unauthorized(view)
+        }
+        console.log("pp2 err");
+        if (!user) {
+          const view = yield response.view('login', {errors: err_info});
+          return response.unauthorized(view)
+        }
+        console.log("pp2 user");
+        yield request.session.put('user_id', user.get('id'));// saves user id in cookie
+        response.redirect('/');
+        console.log("pp2 end");
+      });
+    });
+    passport_func(request, response);
+    console.log("fb2 end");
   }
 
   *do_logout (request, response) {

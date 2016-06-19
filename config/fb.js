@@ -6,5 +6,5 @@ const Env = use('Env');
 module.exports = {
   appID: Env.get('FB_APPID'),
   appSecret: Env.get('FB_APPSECRET'),
-  callbackUrl : 'http://localhost:'+Env.get('APP_PORT')+'/login_fb'
+  callbackUrl : 'http://localhost:'+Env.get('APP_PORT')+'/login_fb_callback'
 };
