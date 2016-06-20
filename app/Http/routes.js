@@ -27,7 +27,7 @@ Route.get('/login_fb', 'AccountController.login_fb_start')
 Route.get('/login_fb_callback', 'AccountController.login_fb_callback')
 Route.get('/logout', 'AccountController.do_logout')
 
-Route.get('/library', 'UserController.library').middlewares(['auth'])
+Route.get('/library', 'LibraryController.library').middlewares(['auth'])
 Route.get('/library/edit/:id', 'UserController.library_edit_view').middlewares(['auth'])
 Route.post('/library/save', 'UserController.library_save').middlewares(['auth'])
 Route.post('/library/remove', 'UserController.library_remove').middlewares(['auth'])
