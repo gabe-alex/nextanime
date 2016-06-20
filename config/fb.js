@@ -2,11 +2,11 @@
 
 const Env = use('Env');
 
-const port = Env.get('PUBLIC_PORT', 80);
+const port = Env.get('PUBLIC_PORT', '80');
 
 // facebook app settings
 module.exports = {
   appID: Env.get('FB_APPID'),
   appSecret: Env.get('FB_APPSECRET'),
-  callbackUrl : 'http://'+Env.get('PUBLIC_HOST')+(port==80 && '' || ':'+port)+'/login_fb_callback'
+  callbackUrl : 'http://'+Env.get('PUBLIC_HOST')+(port=='80' && '' || ':'+port)+'/login_fb_callback'
 };
