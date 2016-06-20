@@ -19,6 +19,11 @@ class AnimeController {
     const anime = (yield Anime.find(animeId));
     const studio = (yield anime.studio().fetch()).value();
     //why does this work, I wonder ... since .find needs .attributes
+/*
+    if(!anime.nr_episodes)
+    {
+      return anime.nr_episodes == "Unknown";
+    }*/
     yield response.sendView('anime', {user: userData, anime: anime , studio: studio})
   }
 

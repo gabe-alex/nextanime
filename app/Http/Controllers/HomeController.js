@@ -18,7 +18,7 @@ class HomeController {
     const top = (yield StatsService.getTopAnime(5)).value();
     const newAnime = (yield StatsService.getNewAnime(5)).value();
 
-    yield response.sendView('index', {user: userData, recs: recs, top: top, new: newAnime})
+    yield response.sendView('index', {user: userData, recs: recs, top: top, new: newAnime })
 
   }
 

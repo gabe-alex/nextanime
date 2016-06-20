@@ -11,6 +11,11 @@
   padding: 32px;
 }
 
+.spacing{
+  margin-top : 30px;
+  margin-bottom: 20px;
+}
+
 .action-button {
   margin: 10px;
 }
@@ -39,6 +44,7 @@ body
   margin-left : 25px;
   margin-right : 25px;
 }
+
 .align_to_center{
   text-align : center;
 }
@@ -59,9 +65,11 @@ body
   height : 50px;
   width : 50px;
 }
+
 #dropdownMenu{
   width : 373px;
 }
+
 #latest_entry_image{
   height : 120px;
   width : 90px;
@@ -77,15 +85,21 @@ body
 .genreTab{
   width : auto;
 }
+
 .userProfBtn{
   width : 200px;
   height : 30px;
   text-align : center;
 }
+
 .addx{
   align-self : center;
 }
+
 #animeBtn{
   align-self : right;
 }
 
+#fbiframe{
+  height : 100%;
+}

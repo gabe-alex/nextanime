@@ -7,30 +7,22 @@
     {# loginsignup/recomandari , trebuie un if #}
     <div class="col-xs-12 col-md-4">
       <h3>Recommendations</h3>
-      <br>
       {% if recs %}
           {% for a in recs %}
             <div class="row">
              <div class="col-xs-4">
-
                 <a href="/anime/{{ a.id }}" id="rec_anime_col"><img src="//s3.amazonaws.com/nextanime/anime_covers/{{ a.id }}.jpg" class="img-responsive" alt="Image Not available"></a>
-
              </div>
-
               <div class="col-xs-8 col-md-8">
                 <a href="/anime/{{ a.id }}">{{ a | display_title }}</a>
-                <p></p>
-                <p>Nr of eps</p>
-                <p>Date aired</p>
+                <p>Nr of eps : {{ a.nr_episodes }}</p>
+                <p>Date aired : {{ a.air_start }}</p>
                 <p>Rating</p>
                 <button type="button" class="btn btn-primary" onclick="addToUserAnimeList()">Add</button>
                 <button type="button" class="btn btn-danger" onclick="removeFromRec()">X</button>
               </div>
             </div>
-            <br>
           {% endfor %}
-
-        <p></p>
         <a class="btn btn-default" type="button" href='/recommendations'>More recommended animes</a>
       {% else %}
         <div class="text-center">
@@ -45,8 +37,6 @@
   {# Top animes #}
     <div class="col-xs-12 col-md-4">
       <h3>Top anime</h3>
-      <br>
-
         {% for a in top %}
           <div class="row">
             <div class="col-xs-4">
@@ -54,15 +44,12 @@
             </div>
             <div class="col-xs-8">
                 <a href="/anime/{{ a.id }}">{{ a | display_title }}</a>
-                <p></p>
-                <p>Nr of eps</p>
-                <p>Date aired</p>
+                <p>Nr of eps : {{ a.nr_episodes }}</p>
+                <p>Date aired : {{ a.air_start }}</p>
                 <p>Rating</p>
             </div>
            </div><br>
         {% endfor %}
-
-      <p></p>
       <a class="btn btn-default" type="button" href='/animedatabase'>More top animes</a>
     </div>
 
@@ -70,8 +57,6 @@
   {# New #}
     <div class="col-xs-12 col-md-4">
       <h3>New</h3>
-      <br>
-
         {% for a in new %}
           <div class="row">
             <div class="col-xs-4">
@@ -79,14 +64,12 @@
             </div>
             <div class="col-xs-8">
                 <a href="/anime/{{ a.id }}">{{ a | display_title }}</a>
-                <p></p>
-                <p>Date to air</p>
+                <p>Nr of eps : {{ a.nr_episodes }}</p>
+                <p>Date to air : {{ a.air_start }}</p>
                 <p>Rating</p>
             </div>
           </div><br>
         {% endfor %}
-
-      <p></p>
       <a class="btn btn-default" type="button" onclick="location.href='/animedatabase'">More recent anime</a>
     </div>
   </div>
