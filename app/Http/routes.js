@@ -16,7 +16,7 @@ Route.get('/', 'HomeController.index')
 
 Route.get('/anime/:id', 'AnimeController.view_anime')
 
-Route.get('/userprofile', 'UserController.user_profile')
+Route.get('/userprofile', 'LibraryController.user_profile')
 
 Route.get('/register', 'AccountController.view_register')
 Route.post('/register', 'AccountController.do_register')
@@ -28,9 +28,9 @@ Route.get('/login_fb_callback', 'AccountController.login_fb_callback')
 Route.get('/logout', 'AccountController.do_logout')
 
 Route.get('/library', 'LibraryController.library').middlewares(['auth'])
-Route.get('/library/edit/:id', 'UserController.library_edit_view').middlewares(['auth'])
-Route.post('/library/save', 'UserController.library_save').middlewares(['auth'])
-Route.post('/library/remove', 'UserController.library_remove').middlewares(['auth'])
+Route.get('/library/edit/:id', 'LibraryController.library_edit_view').middlewares(['auth'])
+Route.post('/library/save', 'LibraryController.library_save').middlewares(['auth'])
+Route.post('/library/remove', 'LibraryController.library_remove').middlewares(['auth'])
 
 Route.get('/animedatabase', 'ListController.animedatabase')
 
