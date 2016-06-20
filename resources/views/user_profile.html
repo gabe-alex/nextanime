@@ -39,17 +39,17 @@
   <div class="col-xs-8">
     <h2> {{ username }}'s Profile</h2>
     <div class = "col-xs-4">
-    	<a href="#"><img src="images/noraNOPE.png" id="userImage" alt="Some problem"></a>
+    	<a href="#"><img src="images/noraNOPE.png" class="img-responsive" alt="Image Not available"></a>
     	<button type="button" onclick="addToFriendList()" class="userProfBtn"><span class="glyphicon glyphicon-plus"></span> Friend Request</button><br>
     	<button type="button" onclick="sendMessage()" class="userProfBtn"><span class="glyphicon glyphicon-envelope"></span> Message</button><br>
     	<button type="button" onclick="recFriend()" class="userProfBtn"><span class="glyphicon glyphicon-hand-right"></span> Recommend Friend</button><br>
     	<h4>Friends</h4>
     	{% for friend in friendsList %}
-        <a href="#"><img src="images/noraNOPE.png" id="friendImage" alt="Some problem" title={{ friend }}></a>
+        <a href="#"><img src="images/noraNOPE.png" class="iconImage" alt="Image Not available" title={{ friend }}></a>
     	{% endfor %}
     	<br>
     	<h3>Lists</h3>
-      <a href="UserAnimeList.html"><h4>Anime List</h4></a>
+      <a href="/library"><h4>Anime List</h4></a>
 
     </div>
     <div class = "col-xs-8">
@@ -85,16 +85,18 @@
     	<!-- de cercetat mai mult carousel-->
       <h4> Watching </h4>
       {% for w in watching %}
+
             <tr>
-              <td>{{ a.display_title }}</td>
-              <td>{{ a._pivot_status }}</td>
-              <td>{{ a._pivot_rating }}</td>
+              <td>{{ w.display_title }}</td>
+              <td>{{ w._pivot_status }}</td>
+              <td>{{ w._pivot_rating }}</td>
             </tr>
-            <a href="/animepage" id="watching_anime_col"><img src="images/scenicanime.jpeg" class="recImage" alt="Some problem"></a>
+            <a href="/anime/{{ w.id }}" id="watching_anime_col"><img src="images/scenicanime.jpeg" class="img-responsive" alt="Image Not available"></a>
             <p></p>
             <p>{{ w.display_title }}</p>
             <p>Nr of eps</p>
             <p>{{ w._pivot_rating }}</p>
+
       {% endfor %}
 
 
@@ -127,16 +129,18 @@
     <h3>Latest Entries</h3><br>
     <div class="scroll">
     {% for i in range %}
+      {% for w in watching %}
       <div class="row">
         <div class="col-xs-3">
-          <a href="/animepage"><img src="images/scenicanime.jpeg" id="latest_entry_image" alt="Some problem"></a>
+          <a href="/anime/{{ w.id }}"><img src="images/scenicanime.jpeg" id="img-responsive" alt="Image Not available"></a>
         </div>
         <div class="col-xs-9">
-          <a href="/animepage">name of anime</a>
+          <a href="/anime/{{ w.id }}">name of anime</a>
           <p>Episodes :</p>
           <p>Date</p>
         </div>
       </div><br>
+        {% endfor %}
     {% endfor %}
     </div>
   </div>

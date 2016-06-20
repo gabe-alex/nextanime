@@ -18,8 +18,8 @@ class AnimeController {
     const studioId = request.param('id');
     const anime = (yield Anime.find(animeId));
     const studio = (yield anime.studio().fetch()).value();
-
-    yield response.sendView('anime', {user: userData, anime: anime/*, studio: studio*/})
+    //why does this work, I wonder ... since .find needs .attributes
+    yield response.sendView('anime', {user: userData, anime: anime , studio: studio})
   }
 
   *index (request, response) {

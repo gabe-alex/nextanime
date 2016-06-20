@@ -5,21 +5,19 @@
 {% block content %}
   <div class="row">
     {# loginsignup/recomandari , trebuie un if #}
-    <div class="col-xs-12 col-sm-12 col-md-4">
+    <div class="col-xs-12 col-md-4">
       <h3>Recommendations</h3>
       <br>
       {% if recs %}
           {% for a in recs %}
             <div class="row">
-             <div class="col-xs-3 col-sm-3 col-md-4">
-               <div class="btn-group">
+             <div class="col-xs-4">
 
-                <a href="/anime/{{ a.id }}" id="rec_anime_col" onclick="colOnAnimePage()"><img src="//s3.amazonaws.com/nextanime/anime_covers/{{ a.id }}.jpg" class="recImage" alt="Some problem"></a>
+                <a href="/anime/{{ a.id }}" id="rec_anime_col"><img src="//s3.amazonaws.com/nextanime/anime_covers/{{ a.id }}.jpg" class="img-responsive" alt="Image Not available"></a>
 
-               </div>
              </div>
 
-              <div class="col-xs-9 col-sm-9 col-md-8">
+              <div class="col-xs-8 col-md-8">
                 <a href="/anime/{{ a.id }}">{{ a | display_title }}</a>
                 <p></p>
                 <p>Nr of eps</p>
@@ -33,7 +31,7 @@
           {% endfor %}
 
         <p></p>
-        <button class="btn btn-default" type="button" onclick="location.href='https://nextanime.herokuapp.com/recommendations'">More recommended animes</button>
+        <a class="btn btn-default" type="button" href='/recommendations'>More recommended animes</a>
       {% else %}
         <div class="text-center">
           <h4>Sign up for personalised recommendations!</h4>
@@ -45,16 +43,16 @@
 
 
   {# Top animes #}
-    <div class="col-xs-12 col-sm-12 col-md-4">
+    <div class="col-xs-12 col-md-4">
       <h3>Top anime</h3>
       <br>
 
         {% for a in top %}
           <div class="row">
-            <div class="col-xs-3 col-sm-3 col-md-4">
-                <a href="/anime/{{ a.id }}" id="top_anime_col" onclick="colOnAnimePage()"><img src="//s3.amazonaws.com/nextanime/anime_covers/{{ a.id }}.jpg" class="recImage" alt="Some problem"></a> {# initial era la id latest_entry_image #}
+            <div class="col-xs-4">
+                <a href="/anime/{{ a.id }}" id="top_anime_col"><img src="//s3.amazonaws.com/nextanime/anime_covers/{{ a.id }}.jpg" class="img-responsive" alt="Image Not available"></a> {# initial era la id latest_entry_image #}
             </div>
-            <div class="col-xs-9 col-sm-9 col-md-8">
+            <div class="col-xs-8">
                 <a href="/anime/{{ a.id }}">{{ a | display_title }}</a>
                 <p></p>
                 <p>Nr of eps</p>
@@ -65,21 +63,21 @@
         {% endfor %}
 
       <p></p>
-      <button class="btn btn-default" type="button" onclick="location.href='https://nextanime.herokuapp.com/animedatabase'">More top animes</button>
+      <a class="btn btn-default" type="button" href='/animedatabase'>More top animes</a>
     </div>
 
 
   {# New #}
-    <div class="col-xs-12 col-sm-12 col-md-4">
+    <div class="col-xs-12 col-md-4">
       <h3>New</h3>
       <br>
 
         {% for a in new %}
           <div class="row">
-            <div class="col-xs-3 col-sm-3 col-md-4">
-                <a href="/anime/{{ a.id }}" id="coming_soon_col" onclick="colOnAnimePage()"><img src="//s3.amazonaws.com/nextanime/anime_covers/{{ a.id }}.jpg" class="recImage" alt="Some problem"></a> {# initial era la id latest_entry_image #}
+            <div class="col-xs-4">
+                <a href="/anime/{{ a.id }}" id="coming_soon_col"><img src="//s3.amazonaws.com/nextanime/anime_covers/{{ a.id }}.jpg" class="img-responsive" alt="Image Not available"></a> {# initial era la id latest_entry_image #}
             </div>
-            <div class="col-xs-9 col-sm-9 col-md-8">
+            <div class="col-xs-8">
                 <a href="/anime/{{ a.id }}">{{ a | display_title }}</a>
                 <p></p>
                 <p>Date to air</p>
@@ -89,17 +87,9 @@
         {% endfor %}
 
       <p></p>
-      <button class="btn btn-default" type="button" onclick="location.href='https://nextanime.herokuapp.com/animedatabase'">More recent anime</button>
+      <a class="btn btn-default" type="button" onclick="location.href='/animedatabase'">More recent anime</a>
     </div>
   </div>
 
-  <p></p>
 
-  <footer id="lowerlinks">
-    <a href="https://www.facebook.com/"><img src="images/facebook-logo.jpg" name="facebook_picture" class="social_media_logo" alt="Some problem"></a>
-    <a href="https://www.gmail.com/"><img src="images/google+-logo.png" name="gmail_picture" class="social_media_logo" alt="Some problem"></a>
-    <a href="https://www.reddit.com/"><img src="images/redditisfun.jpeg" name="reddit_picture" class="social_media_logo" alt="Some problem"></a>
-    <br>
-    <p>NextAnime.net is a property of Alecu&Onete, @2016 All Rights Reserved</p>
-  </footer>
 {% endblock %}

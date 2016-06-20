@@ -16,7 +16,7 @@ const statusTypes = {
 };
 
 
-class UserController {
+class LibraryController {
   *library(request, response) {
     const userAnime = (yield request.user.anime().fetch()).value();
 
@@ -86,4 +86,4 @@ class UserController {
   }
 }
 
-module.exports = UserController;
+module.exports = LibraryController;
