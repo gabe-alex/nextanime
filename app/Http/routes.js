@@ -16,7 +16,7 @@ Route.get('/', 'HomeController.index')
 
 Route.get('/anime/:id', 'AnimeController.view_anime')
 
-Route.get('/userprofile', 'LibraryController.user_profile')
+Route.get('/userprofile', 'LibraryController.user_profile').middlewares(['auth'])
 
 Route.get('/library', 'LibraryController.library').middlewares(['auth'])
 Route.get('/library/edit/:id', 'LibraryController.library_edit_view').middlewares(['auth'])
