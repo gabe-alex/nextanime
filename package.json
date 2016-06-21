@@ -43,6 +43,7 @@
     "adonis-middleware": "^1.0.5",
     "adonis-validation-provider": "^2.0.2",
     "co": "^4.6.0",
+    "email-addresses": "^2.0.2",
     "express": "^4.13.4",
     "generator-async": "^0.1.4",
     "gulp": "^3.9.1",

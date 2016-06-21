@@ -1,10 +1,11 @@
 
 module.exports = {
   validation: {
-    username : {
-      required: "Username is required.",
-      unique: "Username is already taken.",
-      exists: "User not found."
+    email : {
+      required: "Email is required.",
+      email: "Email is not valid.",
+      unique: "Email is already in use.",
+      exists: "Email not found."
     },
     password: {
       required: "Password is required.",

@@ -6,19 +6,22 @@ const User = use('App/Model/User');
 const Hash = use('Hash');
 const Config = use("Config");
 const co = require('co');
+const addrs = require("email-addresses");
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 
 
 //Prepare local login strategy
-passport.use('local', new LocalStrategy(
-  function (username, password, done) {
+passport.use('local', new LocalStrategy({
+    usernameField: 'email'
+  },
+  function (email, password, done) {
     return co(function* () {
-      const user = yield User.where('username', username).first().fetch();
+      const user = yield User.where('email', email).first().fetch();
 
       if (!user.size()) {   //.size() = num of fields returned, will be 0 of no records are found
-        return done(null, false, {username: Config.get('messages.validation.username.exists')});
+        return done(null, false, {email: Config.get('messages.validation.email.exists')});
       }
 
       const result = yield Hash.verify(password, user.get('password'));
@@ -46,9 +49,8 @@ passport.use('facebook', new FacebookStrategy(
       // find the user in the database based on their facebook id
       let user = yield User.where('fb_id', profile.id).first().fetch();
       if (!user.size()) {
-        let fbemail = profile.emails.value();
-        console.log(fbemail);
-        const userId = yield User.create({fb_id: profile.id, fb_access_token: access_token, fb_email: fbemail});
+        console.log(profile.displayName);
+        const userId = yield User.create({profile_name: profile.displayName, fb_id: profile.id, fb_access_token: access_token});
         user = new Collection((yield User.find(userId)).attributes); //find doesn't keep the same format as where
       }
       return done(null, user);
@@ -67,14 +69,14 @@ class AccountController {
 
     //Generic validations
     const rules = {
-      username : 'required|min:3',
-      email : 'required',
+      email : 'required|email',
       password : 'required|min:6',
       password_confirm: 'required|same:password'
     };
 
     const validation = yield Validator.validateAll(rules, params);
     const validationMessages = Config.get('messages.validation');
+    console.log(validation);
     let errors = {};
     if (validation.fails()) {
       errors = new Collection(validation.messages())
@@ -82,14 +84,6 @@ class AccountController {
         .mapValues(function(value) {return new Collection(value).first().validation})  //eliminate pointless array and bad message
         .mapValues(function(value, key) {return validationMessages[key][value]})  //add better error messages
         .value()
-    }
-
-    if(!errors.username) {
-      //Check if username is available
-      const user = yield User.where('username', params.username).first().fetch();
-      if(user.size()) {
-        errors.username = validationMessages.username.unique
-      }
     }
 
     if(!errors.email) {
@@ -105,8 +99,11 @@ class AccountController {
       return response.badRequest(view)
     }
 
+    const addr = addrs.parseOneAddress(params.email);
+    const profile_name = addr.local;
+
     const hashedPassword = yield Hash.make(params.password);
-    yield User.create({username: params.username, email: params.email, password: hashedPassword});
+    yield User.create({profile_name: profile_name, email: params.email, password: hashedPassword});
 
     //TODO: show success message
     yield response.redirect('/')
@@ -122,7 +119,7 @@ class AccountController {
       return co(function*() {
         if (err) {
           console.error(err);
-          const view = yield response.view('login', {errors: {fb: err.message}});
+          const view = yield response.view('login', {errors: err_info});
           return response.unauthorized(view)
         }
 
@@ -194,7 +191,5 @@ class AccountController {
     response.redirect('/');
   }
 }
-
-
 
 module.exports = AccountController;
