@@ -3,19 +3,6 @@
 
 $(document).ready(function()
 {
-	/*
-	function msg() {
-		var r = confirm("Are you sure you want to log out?");
-		if (r == true) {
-			x = "Logging out!";
-			//de intors inapoi la pagina principala
-
-		}
-	}
-		<form action="">
-		<input type="checkbox" name="remember" value="checker">Remember this choice
-		</form>*/
-
 	//nu merge cu clase, doar id-uri
 	$("#animetab").mouseenter(function()
 	{
@@ -64,70 +51,11 @@ $(document).ready(function()
     });
 		$("#topimage").fadeTo("slow",1);
 	},1000*5); //5 secunde
-
-
-	/*
-	$("#log_in").on("click",function() //login checks
-	{
-		var Username = document.getElementById("username").value;
-		var Password = document.getElementById("password").value;
-		if(Username.length > 0 && Password.length > 0)
-		{
-			window.location.assign(".html");//trebuie sa fie dus la pagina curenta
-		}else{
-			alert("No user or password was inserted !");
-		}
-	});*/ //inlocuit the parametrul required din <input>
-
-	/*$(".submit_button_New").on("click",function() //signup checks
-	{
-		console.log("check has been initiated")
-
-		var New_Username = document.getElementById("new_username").value;
-		var New_Password = document.getElementById("new_password").value;
-		var New_Password2 = document.getElementById("password2").value;
-
-		console.log("values from input" , New_Username, New_Password);
-		if(New_Username.length > 0 && New_Password.length > 0 && New_Password2.length > 0)
-		{
-
-			//mai trebuie un if sa verifice daca username-ul nu e luat deja
-
-			if (!New_Username.match(/[a-zA-Z0-9_/-]/))
-			{
-				alert("Userame not valid !");
-			}if (New_Username.length < 8)
-			{
-				alert("Username too short !");
-			}
-			if (!New_Password.match(/[a-zA-Z0-9]/))
-			{
-				alert("Password not valid !");
-			}
-			if (New_Password.length <= 7)
-			{
-				alert("Password too short !");
-			}
-			if (New_Password !== New_Password2)
-			{
-				alert("Passwords don't match !");
-			}
-
-			document.getElementById("signup_form").submit();
-
-		}else{
-			alert("Not all fields have been filled !");
-		}
-	});*/ //inlocuit de parametrii min si pattern din <input>
-
+  
 	function clearFiels(){
 		document.getElementById("login_form").reset();
 		document.getElementById("signup_form").reset();
   	}
-
-  function resizeIframe(obj) {
-    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
-  }
 
 });
 

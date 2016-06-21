@@ -14,9 +14,9 @@
                 <a href="/anime/{{ a.id }}" id="rec_anime_col"><img src="//s3.amazonaws.com/nextanime/anime_covers/{{ a.id }}.jpg" class="img-responsive" alt="Image Not available"></a>
              </div>
               <div class="col-xs-8 col-md-8">
-                <a href="/anime/{{ a.id }}">{{ a | display_title }}</a>
+                <p><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></p>
                 <p>Nr of eps : {{ a.nr_episodes }}</p>
-                <p>Date aired : {{ a.air_start }}</p>
+                <p>Date aired : {{ a.air_start | date }}</p>
                 <p>Rating</p>
                 <button type="button" class="btn btn-primary" onclick="addToUserAnimeList()">Add</button>
                 <button type="button" class="btn btn-danger" onclick="removeFromRec()">X</button>
@@ -43,7 +43,7 @@
                 <a href="/anime/{{ a.id }}" id="top_anime_col"><img src="//s3.amazonaws.com/nextanime/anime_covers/{{ a.id }}.jpg" class="img-responsive" alt="Image Not available"></a> {# initial era la id latest_entry_image #}
             </div>
             <div class="col-xs-8">
-                <a href="/anime/{{ a.id }}">{{ a | display_title }}</a>
+                <p><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></p>
                 <p>Nr of eps : {{ a.nr_episodes }}</p>
                 <p>Date aired : {{ a.air_start | date }}</p>
                 <p>Rating</p>
@@ -63,9 +63,9 @@
                 <a href="/anime/{{ a.id }}" id="coming_soon_col"><img src="//s3.amazonaws.com/nextanime/anime_covers/{{ a.id }}.jpg" class="img-responsive" alt="Image Not available"></a> {# initial era la id latest_entry_image #}
             </div>
             <div class="col-xs-8">
-                <a href="/anime/{{ a.id }}">{{ a | display_title }}</a>
+                <p><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></p>
                 <p>Nr of eps : {{ a.nr_episodes }}</p>
-                <p>Date to air : {{ a.air_start }}</p>
+                <p>Date to air : {{ a.air_start | date }}</p>
                 <p>Rating</p>
             </div>
           </div><br>
