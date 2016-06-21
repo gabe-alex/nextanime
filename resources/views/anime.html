@@ -27,29 +27,6 @@
 {% endblock %}
 #}
 
-{# loginsignup/recomandari , trebuie un if #}
-
-{#
-{% block leftcolumn %}
-  {% set range = [0,1,2,3,4] %}
-  <div class="col-xs-2">
-  <h3>{{ h3 }}</h3>
-  {% for i in range %}
-      <div>
-        <div class="btn-group addx">
-          <button type="button" onclick="addToUserAnimeList()">Add</button>
-          <button type="button" onclick="removeFromRec()">X</button>
-        </div>
-        <a href="/anime/{{ a.id }}"><img src="images/scenicanime.jpeg" class="img-responsive" alt="Image Not available"></a>
-        <p>Name of anime</p>
-      </div>
-      <br>
-  {% endfor %}
-  </div>
-{% endblock %}
-#}
-
-
 {# Anime Details #}
 {% block content %}
 
@@ -74,35 +51,44 @@
             <option value="dropped">Dropped</option>
           </select>
         </p>
-        <p>Watched : <input id="eps_watched" type="text" size="2"> / {{ anime.nr_episodes }}</p>
-
-        <!--<p>Chapters/Volumes : <input  type="text" size="2"> / <input  type="text" size="2"></p>--> <!-- mai am de lucru -->
-        <p>Completion : <progress value="{{ anime.nr_episodes }}" max="{{ anime.nr_episodes }}"></progress></p>
+        {% if user %}
+          <p>Watched : <input id="eps_watched" type="text" size="2"> / {{ anime.nr_episodes }}</p>
+          <!--<p>Chapters/Volumes : <input  type="text" size="2"> / <input  type="text" size="2"></p>--> <!-- mai am de lucru -->
+          <p>Completion : <progress value="{{ anime.nr_episodes }}" max="{{ anime.nr_episodes }}"></progress></p>
+        {% endif %}
         <p>Rating : {{ rating }}</p>
-        <p>Your rating :
-          <select id="selectRating">
-            <option value="not rated">not rated</option>
-            <option value="1">1 (worst)</option>
-            <option value="2">2 (terrible)</option>
-            <option value="3">3 (awful)</option>
-            <option value="4">4 (bad)</option>
-            <option value="5">5 (not worth it)</option>
-            <option value="6">6 (unsatisfactory)</option>
-            <option value="7">7 (satisfactory)</option>
-            <option value="8">8 (good)</option>
-            <option value="9">9 (excellent)</option>
-            <option value="10">10 (masterpiece)</option>
-          </select>
-        </p>
-        <button type="button"  onclick="addToUserAnimeList()">Add to list</button>
-        <button type="button"  onclick="recommendToFriend()">Recommend</button>
-        {#maybe a share button one day?#}
+        {% if user %}
+          <p>Your rating :
+            <select id="selectRating">
+              <option value="not rated">not rated</option>
+              <option value="1">1 (worst)</option>
+              <option value="2">2 (terrible)</option>
+              <option value="3">3 (awful)</option>
+              <option value="4">4 (bad)</option>
+              <option value="5">5 (not worth it)</option>
+              <option value="6">6 (unsatisfactory)</option>
+              <option value="7">7 (satisfactory)</option>
+              <option value="8">8 (good)</option>
+              <option value="9">9 (excellent)</option>
+              <option value="10">10 (masterpiece)</option>
+            </select>
+          </p>
+          <div class="row">
+            <button type="button"  onclick="addToUserAnimeList()">Add to list</button>
+            <button type="button"  onclick="recommendToFriend()">Recommend</button>
+          </div>
+
+          <div class="fb-share-button social_spacing" data-href="https://nextanime.net/anime/{{ a.id }}"  {#localhost:3333/anime/{{ a.id }}#}
+               data-layout="button_count" data-mobile-iframe="true"> {#developers.facebook.com/docs/plugins#}
+            <a class="fb-xfbml-parse-ignore" target="_blank"
+               href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;
+               src=sdkpreparse">Share</a>
+          </div>
+        {% endif %}
       </div>
     </div>
 
     <div>
-    	<!--<h3>Original Material</h3><br>
-    	<p>Material : {{ material }}</p><br>-->
     	<h3>Description</h3>
     	<p>{{ anime.description }}</p><br>
     	<h3>Actors</h3><br>
@@ -116,7 +102,7 @@
   </div>
 
   <div class="col-xs-3">
-    <h4>Latest news</h4> {#www.facebook.com/bogdangabriel.onete#}
+    <h4>Latest news</h4> {#www.facebook.com/AlexRaylight/#}
     <iframe src="http://www.bing.com" id="fbiframe" scrolling="auto" onload="resizeFrame(this)" name="fbframe">
       <p>Technical difficulties or your browser does not support iframes.</p>
     </iframe>

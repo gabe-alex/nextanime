@@ -7,11 +7,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="keywords" content="nextanime, anime, manga, light novels, visual novels">
   <meta property="fb:app_id" content="238038719873071">
+
+  <meta property="og:url" content="http://www.your-domain.com/your-page.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Nextanime.net" />
+  <meta property="og:description" content="A database for creating personal watch lists" />
+  {#<meta property="og:image" content="http://www.your-domain.com/path/image.jpg" />#}
+
   <link rel="stylesheet" href="/css/style.css">
   {% block css %}
   {% endblock %}
 </head>
 <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.6&appId=238038719873071";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">

@@ -57,6 +57,7 @@ $(document).ready(function()
 		document.getElementById("signup_form").reset();
   	}
 
+  
 });
 
 
