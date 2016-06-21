@@ -21,7 +21,11 @@ const View = use('View');
 */
 App.on('start', function () {
   View.filter('display_title', function (anime) {
-    return anime.romaji_title || anime.english_title || anime.title
+    return anime.romaji_title || anime.english_title || anime.title;
+  });
+  View.filter('date', function (date_str) {
+    var d = new Date(date_str);
+    return d.toLocaleDateString('en-US');
   })
 });
 
