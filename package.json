@@ -31,7 +31,7 @@
     "App": "./app"
   },
   "engines": {
-    "node": "4.x",
+    "node": "5.x",
     "npm": "3.x"
   },
   "dependencies": {
