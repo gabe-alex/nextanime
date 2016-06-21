@@ -31,8 +31,8 @@
     "App": "./app"
   },
   "engines": {
-    "node": "5.x",
-    "npm": "3.x"
+    "node": "5.11.1",
+    "npm": "3.8.6"
   },
   "dependencies": {
     "adonis-ace": "^2.0.7",
