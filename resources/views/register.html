@@ -22,6 +22,11 @@
       <input type="text" name="username" class="form-control" value="{{ params.username }}" autofocus required>
       {% if errors.username %}<span class="glyphicon glyphicon-remove form-control-feedback"></span>{% endif %}
     </div>
+    <div class="form-group{%if errors.email %} has-error has-feedback{% endif %}">
+      <label for="email">Email:</label>
+      <input type="email" name="email" class="form-control" value="{{ params.email }}" autofocus required>
+      {% if errors.email %}<span class="glyphicon glyphicon-remove form-control-feedback"></span>{% endif %}
+    </div>
     <div class="form-group{% if errors.password or errors.password_confirm %} has-error has-feedback{% endif %}">
       <label for="password">Password:</label>
       <input type="password" name="password" class="form-control" minlength=6 {%if not (errors.password or errors.password_confirm) %}value="{{ params.password }}"{% endif %} required>

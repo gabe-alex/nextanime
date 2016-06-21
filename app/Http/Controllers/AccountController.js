@@ -46,7 +46,9 @@ passport.use('facebook', new FacebookStrategy(
       // find the user in the database based on their facebook id
       let user = yield User.where('fb_id', profile.id).first().fetch();
       if (!user.size()) {
-        const userId = yield User.create({fb_id: profile.id, fb_access_token: access_token});
+        let fbemail = profile.emails.value();
+        console.log(fbemail);
+        const userId = yield User.create({fb_id: profile.id, fb_access_token: access_token, fb_email: fbemail});
         user = new Collection((yield User.find(userId)).attributes); //find doesn't keep the same format as where
       }
       return done(null, user);
@@ -66,6 +68,7 @@ class AccountController {
     //Generic validations
     const rules = {
       username : 'required|min:3',
+      email : 'required',
       password : 'required|min:6',
       password_confirm: 'required|same:password'
     };
@@ -89,13 +92,21 @@ class AccountController {
       }
     }
 
+    if(!errors.email) {
+      //Check if email is available
+      const userMail = yield User.where('email', params.email).first().fetch();
+      if(userMail.size()) {
+        errors.email = validationMessages.email.unique
+      }
+    }
+
     if(!new Collection(errors).isEmpty()) {
       const view = yield response.view('register', {params: params, errors: errors});
       return response.badRequest(view)
     }
 
     const hashedPassword = yield Hash.make(params.password);
-    yield User.create({username: params.username, password: hashedPassword});
+    yield User.create({username: params.username, email: params.email, password: hashedPassword});
 
     //TODO: show success message
     yield response.redirect('/')
