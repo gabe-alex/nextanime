@@ -42,7 +42,7 @@
         <p>English : {{ anime.english_title }}</p>
         <p>Studio : {{ studio.name }}</p>
         <p>Episodes : {{ anime.nr_episodes }}</p>
-        <p>Rating : {{ rating }}</p>
+        {#<p>Rating : {{ rating }}</p>#}
         {% if user %}
           <a class="btn btn-primary" data-id="{{ anime.id }}" data-toggle="modal" data-target="#add_edit">{{ "Edit in Library" if anime._pivot_status else "Add to Library" }}</a>
         {% endif %}
@@ -59,13 +59,14 @@
     <div>
     	<h3>Description</h3>
     	<p>{{ anime.description }}</p><br>
-    	<h3>Actors</h3><br>
+
+      {# <h3>Actors</h3><br>
     	<ul>
     	  {% set range = [0,1,2,3,4] %}
     	  {% for i in range %}
     		  <li><a href="#"><img src="/images/scenicanime.jpeg" class="iconImage" alt="Image Not available"></a>{{ people.characters }}/{{ people.actors }}</li><br>
         {% endfor %}
-    	</ul>
+    	</ul> #}
 
       <h3>More info</h3>
       {% if anime.mal_id %}

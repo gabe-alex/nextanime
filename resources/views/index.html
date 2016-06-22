@@ -16,9 +16,9 @@
                 <p><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></p>
                 <p>Nr of eps : {{ a.nr_episodes }}</p>
                 <p>Date aired : {{ a.air_start | date }}</p>
-                <p>Rating</p>
-                <button type="button" class="btn btn-primary">Add</button>
-                <button type="button" class="btn btn-danger">X</button>
+                {#<p>Rating</p>#}
+                {#<button type="button" class="btn btn-primary">Add</button>
+                <button type="button" class="btn btn-danger">X</button>#}
               </div>
             </div><br>
           {% endfor %}
@@ -45,7 +45,7 @@
                 <p><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></p>
                 <p>Nr of eps : {{ a.nr_episodes }}</p>
                 <p>Date aired : {{ a.air_start | date }}</p>
-                <p>Rating</p>
+              {#<<p>Rating</p>#}
             </div>
            </div><br>
         {% endfor %}
@@ -65,7 +65,7 @@
                 <p><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></p>
                 <p>Nr of eps : {{ a.nr_episodes }}</p>
                 <p>Date to air : {{ a.air_start | date }}</p>
-                <p>Rating</p>
+                {#<p>Rating</p>#}
             </div>
           </div><br>
         {% endfor %}
