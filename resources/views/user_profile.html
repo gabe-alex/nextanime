@@ -106,10 +106,10 @@
 
 
 {# Latest Entries + FB #}
-
+{#
   {% set range = [0,1,2,3,4] %}
   <div class="col-xs-12 col-md-3">
-    <h4>Latest news</h4> {#www.facebook.com/AlexRaylight/#}
+    <h4>Latest news</h4> <!--www.facebook.com/AlexRaylight/-->
     <iframe src="http://www.bing.com" id="fbiframe" scrolling="auto" onload="resizeFrame(this)" name="fbframe">
       <p>Technical difficulties or your browser does not support iframes.</p>
     </iframe>
@@ -119,19 +119,19 @@
     <br>
     <div class="scroll">
     {% for i in range %}
-      {% for a in completed %} {#need the most recent added to db#}
+      {% for a in completed %} <!--need the most recent added to db-->
         <div class="row">
           <div class="col-xs-3">
             <a href="/anime/{{ a.id }}"><img src="//nextanime.net/media/anime_covers/{{ a.id }}.jpg" class="img-responsive iconImage" alt="Image Not available"></a>
           </div>
           <div class="col-xs-9">
             <p><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></p>
-            <p>Episodes : {{ a.nr_episodes }}</p> {#need the most recent added to db#}
-            <p>Date : {{ a.air_start | date }}</p>{#need the most recent added to db#}
+            <p>Episodes : {{ a.nr_episodes }}</p> <!--need the most recent added to db-->
+            <p>Date : {{ a.air_start | date }}</p><!--need the most recent added to db-->
           </div>
         </div><br>
       {% endfor %}
     {% endfor %}
     </div>
-  </div>
+  </div>#}
 {% endblock %}
