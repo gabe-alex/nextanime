@@ -24,7 +24,9 @@ gulp.task('css', function () {
       precision: 8,
       includePaths: [
         config.sassPath,
-        config.bowerDir + '/bootstrap-sass/assets/stylesheets'
+        config.bowerDir + '/bootstrap-sass/assets/stylesheets',
+        config.bowerDir + '/bootstrap-social',
+        config.bowerDir + '/font-awesome/scss'
       ]
     }))
     .pipe(autoprefixer())
@@ -40,10 +42,15 @@ gulp.task('js', function(){
     .pipe(gulp.dest(config.assetsDir+'/js'))
 });
 
-gulp.task('fonts', function(){
+gulp.task('fonts-bootstrap', function(){
   return gulp.src(config.bowerDir + '/bootstrap-sass/assets/fonts/bootstrap/*')
     .pipe(gulp.dest(config.assetsDir+'/fonts/bootstrap'));
 });
+gulp.task('fonts-awesome', function(){
+  return gulp.src(config.bowerDir + '/font-awesome/fonts/*')
+    .pipe(gulp.dest(config.assetsDir+'/fonts'));
+});
+gulp.task('fonts', ['fonts-bootstrap', 'fonts-awesome']);
 
 gulp.task('watch', function() {
   gulp.watch(config.sassPath + '/**/*.scss', ['css']);

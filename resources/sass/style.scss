@@ -1,4 +1,6 @@
 @import "bootstrap";
+@import "bootstrap-social.scss";
+@import "font-awesome.scss";
 
 #topimage
 {
@@ -110,4 +112,9 @@ body
 #fbiframe{
   height : 100%;
   width : auto;
+}
+
+.social_button {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
