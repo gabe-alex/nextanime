@@ -55,7 +55,7 @@ class LibraryController {
     })
   }
 
-  *library_save(request, response) {
+  *library_edit_save(request, response) {
     const params = request.all();
     const animeId = params.anime;
 
@@ -64,16 +64,9 @@ class LibraryController {
     if (userAnimeCol.find('id', parseInt(animeId))) {
       yield request.user.anime().detach(animeId)
     }
-    yield request.user.anime().attach(animeId, {status: params.status, rating: params.rating});
-    yield request.user.update();
-    yield UserService.rebuildRecommendations(request.user);
-
-    response.redirect('/library')
-  }
-
-  *library_remove(request, response) {
-    const params = request.all();
-    yield request.user.anime().detach(params.id);
+    if(params.save) {
+      yield request.user.anime().attach(animeId, {status: params.status, rating: params.rating});
+    }
     yield request.user.update();
     yield UserService.rebuildRecommendations(request.user);
 

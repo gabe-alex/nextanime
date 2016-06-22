@@ -21,12 +21,7 @@
         <td>{{ a._pivot_status }}</td>
         <td>{{ a._pivot_rating }}</td>
         <td>
-          <form class="form-inline" method="post" action="/library/remove" role="form">
-            {{ csrfField | safe }}
-            <input type="hidden" name="id" value="{{ a.id }}" />
-            <a class="btn btn-warning" data-id="{{ a.id }}" data-toggle="modal" data-target="#add_edit">Edit</a>
-            <input class="btn btn-danger" type="submit" value="Remove" />
-          </form>
+          <a class="btn btn-warning" data-id="{{ a.id }}" data-toggle="modal" data-target="#add_edit">Edit</a>
         </td>
       </tr>
     {% endfor %}

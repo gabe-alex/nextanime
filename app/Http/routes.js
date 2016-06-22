@@ -20,8 +20,7 @@ Route.get('/userprofile', 'LibraryController.user_profile').middlewares(['auth']
 
 Route.get('/library', 'LibraryController.library').middlewares(['auth'])
 Route.get('/library/edit/:id', 'LibraryController.library_edit_view').middlewares(['auth'])
-Route.post('/library/save', 'LibraryController.library_save').middlewares(['auth'])
-Route.post('/library/remove', 'LibraryController.library_remove').middlewares(['auth'])
+Route.post('/library/edit', 'LibraryController.library_edit_save').middlewares(['auth'])
 
 Route.get('/register', 'AccountController.view_register')
 Route.post('/register', 'AccountController.do_register')
