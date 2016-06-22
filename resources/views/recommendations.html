@@ -5,6 +5,7 @@
 {% block content %}
   <h2>{{ title }}</h2>
 
+  {% if (anime | length) %}
   <table class="table table-striped">
     <thead>
       <tr>
@@ -19,4 +20,8 @@
     {% endfor %}
     </tbody>
   </table>
+  {% else %}
+  <p>No reccomendations found. Complete your <a href="/library">library</a> for more options!</p>
+  {% endif %}
+
 {% endblock %}

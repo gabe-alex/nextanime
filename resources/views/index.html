@@ -21,8 +21,12 @@
                 <button type="button" class="btn btn-danger">X</button>#}
               </div>
             </div><br>
+          {% else %}
+            <p>No reccomendations found. Complete your <a href="/library">library</a> for more options!</p>
           {% endfor %}
-        <a class="btn btn-default" type="button" href='/recommendations'>More recommended animes</a>
+        {% if (recs | length) %}
+        <a class="btn btn-default" type="button" href='/recommendations'>More recommended anime</a>
+        {% endif %}
       {% else %}
         <div class="text-center">
           <h4>Sign up for personalised recommendations!</h4>
@@ -49,7 +53,7 @@
             </div>
            </div><br>
         {% endfor %}
-      <a class="btn btn-default" type="button" href='/animedatabase'>More top animes</a>
+      <a class="btn btn-default" type="button" href='/animedatabase'>More top anime</a>
     </div>
 
 
