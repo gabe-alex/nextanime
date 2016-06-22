@@ -74,7 +74,7 @@ class LibraryController {
 
   *user_profile(request, response) {
 
-    const userAnime =(yield request.user.anime().fetch()).value();
+    const userAnime = yield request.user.anime().fetch();
     const watching = userAnime.filter(function (anime) {
       return anime.status === 'watching'
     }).value();
