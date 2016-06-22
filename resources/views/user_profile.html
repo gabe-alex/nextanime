@@ -2,109 +2,115 @@
 {# resources/views/user_profile.html #}
 
 
-{% extends 'layout' %}
+{% extends 'layout' %}\
 
-{# lista genuri , in progress #}
-{% block genres %}
-  {% set genre = ["Action","Adventure","Shounen","Horro","Slice of life","Historical","Mystery","Drama",
-  "Supernatural","Sci fi","Ecchi ","Fantasy","Game","Comedy","Vampire","School","Police","Psychological",
-  "Martial arts","Super power","Romance","Seinen","Harem ","Military","Thriller","Space",
-  "Dementia","Mecha","Parody","Shoujo","Kids","Demons","Sports","Cars"] %}
-  {% set counter = 1 %}
-
-   <div class="row">
-    {% for i in genre %}
-      {% if counter%4 <= 3 %}
-        <div class="col-xs-3"><input type="checkbox" value={{i}}>{{i}}</div>
-        {# counter se incrementeaza automat #}
-      {% endif %}
-      {% if counter%4 == 0 %} {# sau daca am ajuns la capat de lista#}
-        </div>
-        <div class="row">
-      {% endif %}
-    {% endfor %}
-   </div>
-
-{% endblock %}
 
 
 {# User Profile #}
 {% block content %}
-  {% set username="Raylight" %} {# de adugat tabel cu toate detaliile #}
+   {# de adugat tabel cu toate detaliile #}
+  {#{% set username="Raylight" %}
   {% set name="Gabriel" %}
   {% set age="23" %}
   {% set country="Romania" %}
-  {% set description="I iz potato" %}
+  {% set description="I iz potato" %}#}
   {% set friendsList=["Onee-sama","Senpai"] %}
-  <div class="col-xs-8">
-    <h2> {{ username }}'s Profile</h2>
-    <div class = "col-xs-4">
-    	<a href="#"><img src="images/noraNOPE.png" class="img-responsive" alt="Image Not available"></a>
-    	<button type="button" onclick="addToFriendList()" class="userProfBtn"><span class="glyphicon glyphicon-plus"></span> Friend Request</button><br>
-    	<button type="button" onclick="sendMessage()" class="userProfBtn"><span class="glyphicon glyphicon-envelope"></span> Message</button><br>
-    	<button type="button" onclick="recFriend()" class="userProfBtn"><span class="glyphicon glyphicon-hand-right"></span> Recommend Friend</button><br>
-    	<h4>Friends</h4>
-    	{% for friend in friendsList %}
-        <a href="#"><img src="images/noraNOPE.png" class="iconImage" alt="Image Not available" title={{ friend }}></a>
-    	{% endfor %}
-    	<br>
-    	<h3>Lists</h3>
-      <a href="/library"><h4>Anime List</h4></a>
+  <div class="col-xs-12 col-md-9">
 
-    </div>
-    <div class = "col-xs-8">
-    	<h3>Statistics</h3>
-    	<p>Animes :
-    		<div class="progress">
-    			<div class="progress-bar progress-bar-success" role="progressbar" style="width:40%">40%</div>
-    			<div class="progress-bar progress-bar-warning" role="progressbar" style="width:30%">30%</div>
-    			<div class="progress-bar" role="progressbar" style="width:20%">20%</div>
-    			<div class="progress-bar progress-bar-info" role="progressbar" style="width:10%">10%</div>
-    		</div>
-    	</p>
-    	<p>Legend :
-    		<div class="progress">
-    			<div class="progress-bar progress-bar-success" role="progressbar" style="width:25%">
-    			Current
-    			</div>
-    			<div class="progress-bar progress-bar-warning" role="progressbar" style="width:25%">
-    			Plan to
-    			</div>
-    			<div class="progress-bar" role="progressbar" style="width:25%">
-    			Finished
-    			</div>
-    			<div class="progress-bar progress-bar-info" role="progressbar" style="width:25%">
-    			Dropped
-    			</div>
-    		</div>
-    	</p>
-    	<p>Compatibility : <meter value="0.7"></meter></p>
-    </div>
+    <h3> {{ user.profile_name }}'s Profile</h3>
+    <div class="row">
+      <div class = "col-xs-4">
+        <a href="#"><img src="images/noraNOPE.png" class="img-responsive" alt="Image Not available"></a>
+        <button type="button" onclick="addToFriendList()" class="userProfBtn"><span class="glyphicon glyphicon-plus"></span> Friend Request</button><br>
+        <button type="button" onclick="sendMessage()" class="userProfBtn"><span class="glyphicon glyphicon-envelope"></span> Message</button><br>
+        <button type="button" onclick="recFriend()" class="userProfBtn"><span class="glyphicon glyphicon-hand-right"></span> Recommend Friend</button><br>
+        <h4>Friends</h4>
+        {% for friend in friendsList %}
+          <a href="#"><img src="images/noraNOPE.png" class="iconImage" alt="Image Not available" title={{ friend }}></a>
+        {% endfor %}
+        <br>
+        <h3>Lists</h3>
+        <a href="/library"><h4>Anime List</h4></a>
+      </div>
 
-    <div class = "col-xs-4">
-    	<!-- de cercetat mai mult carousel-->
-      <h4> Watching </h4>
-      {% for w in watching %}
+      <div class = "col-xs-8">
+        <h4>Statistics</h4>
+        <p>Animes :
+          <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" style="width:40%">40%</div>
+            <div class="progress-bar progress-bar-warning" role="progressbar" style="width:30%">30%</div>
+            <div class="progress-bar" role="progressbar" style="width:20%">20%</div>
+            <div class="progress-bar progress-bar-info" role="progressbar" style="width:10%">10%</div>
+          </div>
+        </p>
+        <p>Legend :
+          <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" style="width:25%">
+            Current
+            </div>
+            <div class="progress-bar progress-bar-warning" role="progressbar" style="width:25%">
+            Plan to
+            </div>
+            <div class="progress-bar" role="progressbar" style="width:25%">
+            Finished
+            </div>
+            <div class="progress-bar progress-bar-info" role="progressbar" style="width:25%">
+            Dropped
+            </div>
+          </div>
+        </p>
+        <p>Compatibility : <meter value="0.7"></meter></p>
+        <p></p>
+        <h4> Currently </h4>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Cover</th>
+            <th>Anime</th>
+            <th>Status</th>
+            <th>Rating</th>
+          </tr>
+          </thead>
+          {% for a in watching %}
+            <tbody>
+              <tr>
+                <td><a href="/anime/{{ a.id }}"><img src="//nextanime.net/media/anime_covers/{{ a.id }}.jpg" class="img-responsive iconImage" alt="Image Not available"></a></td>
+                <td><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></td>
+                <td>{{ a._pivot_status }}</td>
+                <td>{{ a._pivot_rating }}</td>
+              </tr>
+            </tbody>
+          {% endfor %}
+        </table>
 
+        <p></p>
+        <h4> Completed </h4>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Cover</th>
+            <th>Anime</th>
+            <th>Status</th>
+            <th>Rating</th>
+          </tr>
+          </thead>
+          {% for a in completed %}
+            <tbody>
             <tr>
-              <td>{{ w.display_title }}</td>
-              <td>{{ w._pivot_status }}</td>
-              <td>{{ w._pivot_rating }}</td>
+              <td><a href="/anime/{{ a.id }}"><img src="//nextanime.net/media/anime_covers/{{ a.id }}.jpg" class="img-responsive iconImage" alt="Image Not available"></a></td>
+              <td><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></td>
+              <td>{{ a._pivot_status }}</td>
+              <td>{{ a._pivot_rating }}</td>
             </tr>
-            <a href="/anime/{{ w.id }}" id="watching_anime_col"><img src="images/scenicanime.jpeg" class="img-responsive" alt="Image Not available"></a>
-            <p></p>
-            <p>{{ w.display_title }}</p>
-            <p>Nr of eps</p>
-            <p>{{ w._pivot_rating }}</p>
+            </tbody>
+          {% endfor %}
+        </table>
 
-      {% endfor %}
-
-
+      </div>
     </div>
 
-    <div class = "col-xs-8">
-
-    	<h4 align="left">Description</h4><br>
+      {#must create user edit page for this info#}
+    	{#<h4 align="left">Description</h4><br>
     	<div class="row">
     		<div class="col-xs-4">Name : {{ name }}</div>
     		<div class="col-xs-4">Age : {{ age }}</div>
@@ -112,7 +118,8 @@
     	</div>
     	<textarea rows="5" cols="50">{{ description }}</textarea>
 
-    </div>
+    </div>#}
+
   </div>
 
 
@@ -120,27 +127,29 @@
 {# Latest Entries + FB #}
 
   {% set range = [0,1,2,3,4] %}
-  <div class="col-xs-4">
-    <h4>Latest news</h4>
-    <iframe src="https://www.facebook.com/bogdangabriel.onete">
+  <div class="col-xs-12 col-md-3">
+    <h4>Latest news</h4> {#www.facebook.com/AlexRaylight/#}
+    <iframe src="http://www.bing.com" id="fbiframe" scrolling="auto" onload="resizeFrame(this)" name="fbframe">
       <p>Technical difficulties or your browser does not support iframes.</p>
     </iframe>
 
-    <h3>Latest Entries</h3><br>
+
+    <h4>Latest Entries</h4>
+    <br>
     <div class="scroll">
     {% for i in range %}
-      {% for w in watching %}
-      <div class="row">
-        <div class="col-xs-3">
-          <a href="/anime/{{ w.id }}"><img src="images/scenicanime.jpeg" id="img-responsive" alt="Image Not available"></a>
-        </div>
-        <div class="col-xs-9">
-          <a href="/anime/{{ w.id }}">name of anime</a>
-          <p>Episodes :</p>
-          <p>Date</p>
-        </div>
-      </div><br>
-        {% endfor %}
+      {% for a in completed %} {#need the most recent added to db#}
+        <div class="row">
+          <div class="col-xs-3">
+            <a href="/anime/{{ a.id }}"><img src="//nextanime.net/media/anime_covers/{{ a.id }}.jpg" class="img-responsive iconImage" alt="Image Not available"></a>
+          </div>
+          <div class="col-xs-9">
+            <p><a href="/anime/{{ a.id }}">name of anime</a></p>
+            <p>Episodes : {{ a.nr_episodes }}</p> {#need the most recent added to db#}
+            <p>Date : {{ a.air_start | date }}</p>{#need the most recent added to db#}
+          </div>
+        </div><br>
+      {% endfor %}
     {% endfor %}
     </div>
   </div>

@@ -20,6 +20,7 @@ class LibraryController {
   *library(request, response) {
 
     const userAnime = (yield request.user.anime().fetch()).value();
+    const allAnime = (yield Anime.all()).value();
     const availableAnime = _.differenceBy(allAnime, userAnime, 'id');
 
     yield response.sendView('library', {
@@ -74,11 +75,15 @@ class LibraryController {
 
   *user_profile(request, response) {
 
+
     const userAnime = yield request.user.anime().fetch();
     const watching = userAnime.filter(function (anime) {
-      return anime.status === 'watching'
+      return anime._pivot_status === 'watching';
     }).value();
-    yield response.sendView('user_profile', {user: request.user.attributes, watching: watching})
+    const completed = userAnime.filter(function (anime) {
+      return anime._pivot_status === 'completed';
+    }).value();
+    yield response.sendView('user_profile', {user: request.user, completed: completed, watching: watching, user_anime: userAnime})
   }
 }
 
