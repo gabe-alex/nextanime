@@ -18,9 +18,8 @@ const statusTypes = {
 
 class LibraryController {
   *library(request, response) {
-    const userAnime = (yield request.user.anime().fetch()).value();
 
-    const allAnime = (yield Anime.all()).value();
+    const userAnime = (yield request.user.anime().fetch()).value();
     const availableAnime = _.differenceBy(allAnime, userAnime, 'id');
 
     yield response.sendView('library', {
@@ -74,7 +73,8 @@ class LibraryController {
   }
 
   *user_profile(request, response) {
-    const userAnime = yield request.user.anime().fetch();
+
+    const userAnime =(yield request.user.anime().fetch()).value();
     const watching = userAnime.filter(function (anime) {
       return anime.status === 'watching'
     }).value();

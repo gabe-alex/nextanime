@@ -10,7 +10,7 @@ class User extends Lucid {
     return false
   }
 
-  anime () {
+  anime() {
     return this.belongsToMany('App/Model/Anime', 'users_anime').withPivot('rating', 'status')
   }
 }

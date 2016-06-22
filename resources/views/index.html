@@ -4,24 +4,23 @@
 
 {% block content %}
   <div class="row">
-    {# loginsignup/recomandari , trebuie un if #}
     <div class="col-xs-12 col-md-4">
       <h3>Recommendations</h3>
       {% if recs %}
           {% for a in recs %}
             <div class="row">
              <div class="col-xs-4">
-                <a href="/anime/{{ a.id }}" id="rec_anime_col"><img src="//nextanime.net/media/anime_covers/{{ a.id }}.jpg" class="img-responsive" alt="Image Not available"></a>
+                <a href="/anime/{{ a.id }}"><img src="//nextanime.net/media/anime_covers/{{ a.id }}.jpg" class="img-responsive" alt="Image Not available"></a>
              </div>
               <div class="col-xs-8 col-md-8">
                 <p><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></p>
                 <p>Nr of eps : {{ a.nr_episodes }}</p>
                 <p>Date aired : {{ a.air_start | date }}</p>
                 <p>Rating</p>
-                <button type="button" class="btn btn-primary" onclick="addToUserAnimeList()">Add</button>
-                <button type="button" class="btn btn-danger" onclick="removeFromRec()">X</button>
+                <button type="button" class="btn btn-primary">Add</button>
+                <button type="button" class="btn btn-danger">X</button>
               </div>
-            </div>
+            </div><br>
           {% endfor %}
         <a class="btn btn-default" type="button" href='/recommendations'>More recommended animes</a>
       {% else %}
@@ -40,7 +39,7 @@
         {% for a in top %}
           <div class="row">
             <div class="col-xs-4">
-                <a href="/anime/{{ a.id }}" id="top_anime_col"><img src="//nextanime.net/media/anime_covers/{{ a.id }}.jpg" class="img-responsive" alt="Image Not available"></a> {# initial era la id latest_entry_image #}
+                <a href="/anime/{{ a.id }}"><img src="//nextanime.net/media/anime_covers/{{ a.id }}.jpg" class="img-responsive" alt="Image Not available"></a>
             </div>
             <div class="col-xs-8">
                 <p><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></p>
@@ -60,7 +59,7 @@
         {% for a in new %}
           <div class="row">
             <div class="col-xs-4">
-                <a href="/anime/{{ a.id }}" id="coming_soon_col"><img src="//nextanime.net/media/anime_covers/{{ a.id }}.jpg" class="img-responsive" alt="Image Not available"></a> {# initial era la id latest_entry_image #}
+                <a href="/anime/{{ a.id }}"><img src="//nextanime.net/media/anime_covers/{{ a.id }}.jpg" class="img-responsive" alt="Image Not available"></a>
             </div>
             <div class="col-xs-8">
                 <p><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></p>
@@ -70,7 +69,7 @@
             </div>
           </div><br>
         {% endfor %}
-      <a class="btn btn-default" type="button" onclick="location.href='/animedatabase'">More recent anime</a>
+      <a class="btn btn-default" type="button" href='/animedatabase'>More recent anime</a>{#onclick="location.href='/animedatabase'"#}
     </div>
   </div>
 
