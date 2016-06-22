@@ -16,7 +16,9 @@ class AnimeController {
     }
 
     const animeId = request.param('id');
-    let anime = userAnimeCol.find('id', parseInt(animeId));
+    let anime;
+    if(userAnimeCol)
+      anime = userAnimeCol.find('id', parseInt(animeId));
     if (!anime) {
       anime = (yield Anime.find(animeId)).attributes;
     }
