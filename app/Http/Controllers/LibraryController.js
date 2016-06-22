@@ -38,10 +38,13 @@ class LibraryController {
     const allAnime = (yield Anime.all()).value();
     const availableAnime = _.differenceBy(allAnime, userAnime, 'id');
 
-    let currentAnime;
+    let currentAnime, newAnime;
     const animeId = request.param('id');
     if (animeId) {
       currentAnime = userAnimeCol.find('id', parseInt(animeId));
+      if (!currentAnime) {
+        currentAnime = (yield  Anime.find(animeId)).attributes;
+      }
     }
 
     yield response.sendView('library_edit', {

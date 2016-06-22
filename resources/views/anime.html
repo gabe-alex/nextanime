@@ -42,49 +42,17 @@
         <p>English : {{ anime.english_title }}</p>
         <p>Studio : {{ studio.name }}</p>
         <p>Episodes : {{ anime.nr_episodes }}</p>
-        <p>Status :
-          <select id="selectStatus">
-            <option value="nothing">Nothing</option>
-            <option value="reading">Reading</option>
-            <option value="plantoread">Plan to read</option>
-            <option value="completed">Completed</option>
-            <option value="dropped">Dropped</option>
-          </select>
-        </p>
-        {% if user %}
-          <p>Watched : <input id="eps_watched" type="text" size="2"> / {{ anime.nr_episodes }}</p>
-          <!--<p>Chapters/Volumes : <input  type="text" size="2"> / <input  type="text" size="2"></p>--> <!-- mai am de lucru -->
-          <p>Completion : <progress value="{{ anime.nr_episodes }}" max="{{ anime.nr_episodes }}"></progress></p>
-        {% endif %}
         <p>Rating : {{ rating }}</p>
         {% if user %}
-          <p>Your rating :
-            <select id="selectRating">
-              <option value="not rated">not rated</option>
-              <option value="1">1 (worst)</option>
-              <option value="2">2 (terrible)</option>
-              <option value="3">3 (awful)</option>
-              <option value="4">4 (bad)</option>
-              <option value="5">5 (not worth it)</option>
-              <option value="6">6 (unsatisfactory)</option>
-              <option value="7">7 (satisfactory)</option>
-              <option value="8">8 (good)</option>
-              <option value="9">9 (excellent)</option>
-              <option value="10">10 (masterpiece)</option>
-            </select>
-          </p>
-          <div class="row">
-            <button type="button"  onclick="addToUserAnimeList()">Add to list</button>
-            <button type="button"  onclick="recommendToFriend()">Recommend</button>
-          </div>
-          
-          <div class="fb-share-button social_spacing" data-href="http://nextanime.net/anime/{{ anime.id }}"  {#localhost:3333/anime/{{ a.id }}#}
-               data-layout="button_count" data-mobile-iframe="true"> {#developers.facebook.com/docs/plugins#}
-            <a class="fb-xfbml-parse-ignore" target="_blank"
-               href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;
-               src=sdkpreparse">Share</a>
-          </div>
+          <a class="btn btn-primary" data-id="{{ anime.id }}" data-toggle="modal" data-target="#add_edit">{{ "Edit in Library" if anime._pivot_status else "Add to Library" }}</a>
         {% endif %}
+
+        <div class="fb-share-button social_spacing" data-href="http://nextanime.net/anime/{{ anime.id }}"
+        data-layout="button_count" data-mobile-iframe="true"> {#developers.facebook.com/docs/plugins#}
+        <a class="fb-xfbml-parse-ignore" target="_blank"
+           href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;
+               src=sdkpreparse">Share</a>
+      </div>
       </div>
     </div>
 
@@ -107,9 +75,25 @@
       <p>Technical difficulties or your browser does not support iframes.</p>
     </iframe>
   </div>
+
+  <div id="add_edit" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
-
+{% block scripts %}
+<script>
+  $('#add_edit').on('show.bs.modal', function(e) {
+    //get data-id attribute of the clicked element
+    var entryId = $(e.relatedTarget).data('id');
+    $('#add_edit .modal-content').load('/library/edit/'+entryId);
+  });
+</script>
+{% endblock %}
 
 
 
