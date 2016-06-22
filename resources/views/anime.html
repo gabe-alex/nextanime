@@ -66,6 +66,11 @@
     		  <li><a href="#"><img src="/images/scenicanime.jpeg" class="iconImage" alt="Image Not available"></a>{{ people.characters }}/{{ people.actors }}</li><br>
         {% endfor %}
     	</ul>
+
+      <h3>More info</h3>
+      {% if anime.mal_id %}
+        <a href="http://myanimelist.net/anime/{{ anime.mal_id }}">MyAnimeList page</a>
+      {% endif %}
     </div>
   </div>
 
