@@ -81,8 +81,8 @@ body
   width : 90px;
 }
 .scroll {
-  width: auto;
-  height: 800px;
+  //width: auto;
+  height: 600px;
   overflow-x: hidden;
   overflow-y: auto; /*sau scroll*/
 
@@ -93,9 +93,10 @@ body
 }
 
 .userProfBtn{
-  width : 200px;
+  width : 150px;
   height : 30px;
   text-align : center;
+  font-size: 80%
 }
 
 .addx{

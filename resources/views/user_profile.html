@@ -10,12 +10,12 @@
   <div class="col-xs-12 col-md-9">
 
     <h3> {{ user.profile_name }}'s Profile</h3>
-    <div class="row">
-      <div class = "col-xs-4">
-        <a href="#"><img src="images/noraNOPE.png" class="img-responsive" alt="Image Not available"></a>
-        <button type="button" onclick="addToFriendList()" class="userProfBtn"><span class="glyphicon glyphicon-plus"></span> Friend Request</button><br>
-        <button type="button" onclick="sendMessage()" class="userProfBtn"><span class="glyphicon glyphicon-envelope"></span> Message</button><br>
-        <button type="button" onclick="recFriend()" class="userProfBtn"><span class="glyphicon glyphicon-hand-right"></span> Recommend Friend</button><br>
+
+      <div class = "col-xs-3">
+        <img src="images/noraNOPE.png" class="img-responsive" alt="Image Not available"><br>
+        <button type="button" onclick="addToFriendList()" class="userProfBtn"><span class="glyphicon glyphicon-plus"></span> Friend Request</button>
+        <button type="button" onclick="sendMessage()" class="userProfBtn"><span class="glyphicon glyphicon-envelope"></span> Message</button>
+        <button type="button" onclick="recFriend()" class="userProfBtn"><span class="glyphicon glyphicon-hand-right"></span> Recommend Friend</button>
         <h4>Friends</h4>
         {% for friend in friendsList %}
           <a href="#"><img src="images/noraNOPE.png" class="iconImage" alt="Image Not available" title={{ friend }}></a>
@@ -25,7 +25,7 @@
         <a href="/library"><h4>Anime List</h4></a>
       </div>
 
-      <div class = "col-xs-8">
+      <div class = "col-xs-9">
         <h4>Statistics</h4>
         <p>Animes :
           <div class="progress">
@@ -35,6 +35,7 @@
             <div class="progress-bar progress-bar-info" role="progressbar" style="width:10%">10%</div>
           </div>
         </p>
+        <p>Total entries : </p>
         <p>Legend :
           <div class="progress">
             <div class="progress-bar progress-bar-success" role="progressbar" style="width:25%">
@@ -99,18 +100,6 @@
         </table>
 
       </div>
-    </div>
-
-      {#must create user edit page for this info#}
-    	{#<h4 align="left">Description</h4><br>
-    	<div class="row">
-    		<div class="col-xs-4">Name : {{ name }}</div>
-    		<div class="col-xs-4">Age : {{ age }}</div>
-    		<div class="col-xs-4">Country : {{ country }}</div>
-    	</div>
-    	<textarea rows="5" cols="50">{{ description }}</textarea>
-
-    </div>#}
 
   </div>
 
@@ -136,7 +125,7 @@
             <a href="/anime/{{ a.id }}"><img src="//nextanime.net/media/anime_covers/{{ a.id }}.jpg" class="img-responsive iconImage" alt="Image Not available"></a>
           </div>
           <div class="col-xs-9">
-            <p><a href="/anime/{{ a.id }}">name of anime</a></p>
+            <p><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></p>
             <p>Episodes : {{ a.nr_episodes }}</p> {#need the most recent added to db#}
             <p>Date : {{ a.air_start | date }}</p>{#need the most recent added to db#}
           </div>
