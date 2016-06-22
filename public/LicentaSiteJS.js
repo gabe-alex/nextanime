@@ -56,7 +56,6 @@ $(document).ready(function()
 		document.getElementById("login_form").reset();
 		document.getElementById("signup_form").reset();
   	}
-
   
 });
 
