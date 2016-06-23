@@ -10,7 +10,7 @@ class HomeController {
     const userId =  yield request.session.get('user_id');
     if(userId) {
       user = yield User.find(userId);
-      recs.value() = yield Recommendation.getRecommendations(user, 5);
+      recs = (yield Recommendation.getRecommendations(user, 5)).value();
     }
     const top = yield Recommendation.getTopAnime(5);
     const newAnime = yield Anime.query().orderBy('created_at','desc').limit(5).fetch();
