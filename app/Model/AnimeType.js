@@ -1,21 +1,22 @@
-'use strict'
+'use strict';
 
-const Lucid = use("Lucid")
+const Lucid = use('Lucid');
+
 
 class AnimeType extends Lucid {
   static get table () {
     return 'anime_types'
   }
-  static get timestamps () {
-    return false
+  static get createTimestamp () {
+    return null
   }
-  static get softDeletes () {
-    return false
+  static get updateTimestamp () {
+    return null
   }
-  
+
   anime () {
     return this.hasMany('App/Model/Anime')
   }
 }
 
-module.exports = AnimeType
+module.exports = AnimeType;

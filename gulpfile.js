@@ -1,14 +1,10 @@
 'use strict';
 
-var gulp = require('gulp'),
-  sass = require('gulp-sass'),
-  autoprefixer = require('gulp-autoprefixer'),
-  cleanCSS = require('gulp-clean-css'),
-  server = require( 'gulp-develop-server' ),
-  rename = require('gulp-rename'),
-  bower = require('gulp-bower'),
-  gulpif = require('gulp-if'),
-  fs = require('fs');
+var gulp = require('gulp');
+var sass = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
+var cleanCSS = require('gulp-clean-css');
+var server = require('gulp-develop-server');
 
 
 var config = {
@@ -16,7 +12,6 @@ var config = {
   sassPath: './resources/sass',
   assetsDir: './public'
 };
-
 
 gulp.task('css', function () {
   return gulp.src(config.sassPath + '/style.scss')
@@ -64,26 +59,6 @@ gulp.task( 'server:start', function() {
   });
 });
 
-function fileExists(file) {
-  try {
-    fs.statSync(file);
-    return true;
-  } catch(err) {
-    return false;
-  }
-}
-
-gulp.task('env-setup', function() {
-  return gulp.src('./.env.example')
-    .pipe(rename('.env'))
-    .pipe(gulpif(function() {return !fileExists('.env') },gulp.dest('.')))
-});
-
-gulp.task('bower:install', function() {
-  return bower({ cmd: 'install'});
-});
-
-gulp.task('build', ['bower:install', 'css', 'js', 'fonts']);
-gulp.task('install', ['env-setup', 'bower:install']);
+gulp.task('build', ['css', 'js', 'fonts']);
 gulp.task('start:dev', ['build', 'server:start', 'watch']);
 gulp.task('default', ['start:dev']);

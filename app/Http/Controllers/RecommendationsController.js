@@ -1,14 +1,19 @@
 'use strict';
 
-const UserService = use("App/Services/UserService");
+const Recommendation = use("Recommendation");
 const User = use('App/Model/User');
 
 
 class RecommendationsController {
   *index(request, response) {
-    yield UserService.rebuildRecommendations(request.user);
-    const recs = (yield UserService.getRecommendations(request.user, 30)).value();
-    yield response.sendView('recommendations', {user: request.user.attributes, anime: recs})
+    const userId =  yield request.session.get('user_id');
+    if(userId) {
+      request.user = yield User.query().where('id', userId).with('anime').first();
+    }
+
+    yield Recommendation.rebuildRecommendations(request.user);
+    const recs = yield Recommendation.getRecommendations(request.user, 30);
+    yield response.sendView('recommendations', {user: request.user.attributes, anime: recs.value()})
   }
 }
 

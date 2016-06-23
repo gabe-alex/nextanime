@@ -1,18 +1,16 @@
-'use strict'
+'use strict';
 
-const Lucid = use("Lucid")
+const Lucid = use('Lucid');
+
 
 class AnimeRelation extends Lucid {
-  static get table () {
-    return 'anime_relations'
+  static get createTimestamp () {
+    return null
   }
-  static get timestamps () {
-    return false
+  static get updateTimestamp () {
+    return null
   }
-  static get softDeletes () {
-    return false
-  }
-  
+
   anime () {
     return this.belongsTo('App/Model/Anime', 'anime_from')
   }
@@ -24,4 +22,4 @@ class AnimeRelation extends Lucid {
   }
 }
 
-module.exports = AnimeRelation
+module.exports = AnimeRelation;

@@ -1,16 +1,17 @@
-'use strict'
+'use strict';
 
-const Lucid = use("Lucid")
+const Lucid = use('Lucid');
+
 
 class StaffMember extends Lucid {
   static get table () {
     return 'staff'
   }
-  static get timestamps () {
-    return false
+  static get createTimestamp () {
+    return null
   }
-  static get softDeletes () {
-    return false
+  static get updateTimestamp () {
+    return null
   }
   
   anime () {
@@ -24,4 +25,4 @@ class StaffMember extends Lucid {
   }
 }
 
-module.exports = StaffMember
+module.exports = StaffMember;

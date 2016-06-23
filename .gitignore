@@ -1,6 +1,9 @@
 # Node modules
 node_modules
 
+#Bower components
+bower_components
+
 # Ignoring everything inside storage directory
 storage/*
 
@@ -9,6 +12,11 @@ storage/*
 
 # Environment files should be seperate for each environment
 .env
+
+#Generated files
+public/css/
+public/js/
+public/fonts/
 
 # When npm runs error it write logs to the below file
 npm-debug.log
@@ -27,11 +35,3 @@ lib-cov
 
 #IntelliJ
 .idea/
-
-#Bower components
-bower_components/
-
-#Generated files
-public/css/
-public/js/
-public/fonts/

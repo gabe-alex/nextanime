@@ -7,7 +7,8 @@ class RecommendationProvider extends ServiceProvider {
     this.app.singleton('App/Recommendation', function (app) {
       const Recommendation = require('./Recommendation')
       const Config = app.use('Config')
-      return new Recommendation(Config)
+      const Anime = use('App/Model/Anime');
+      return new Recommendation(Config, Anime)
     })
   }
 }

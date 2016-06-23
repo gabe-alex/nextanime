@@ -1,27 +1,28 @@
-'use strict'
+'use strict';
 
-const Lucid = use("Lucid")
+const Lucid = use('Lucid');
+
 
 class CastMember extends Lucid {
   static get table () {
     return 'cast'
   }
-  static get timestamps () {
-    return false
+  static get createTimestamp () {
+    return null
   }
-  static get softDeletes () {
-    return false
+  static get updateTimestamp () {
+    return null
   }
 
   anime () {
-    return this.belongsTo('App/Model/Anime', 'anime_id')
+    return this.belongsTo('App/Model/Anime')
   }
   person () {
-    return this.belongsTo('App/Model/Person', 'person_id')
+    return this.belongsTo('App/Model/Person')
   }
   character () {
-    return this.belongsTo('App/Model/Character', 'character_id')
+    return this.belongsTo('App/Model/Character')
   }
 }
 
-module.exports = CastMember
+module.exports = CastMember;

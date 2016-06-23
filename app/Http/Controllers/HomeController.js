@@ -2,33 +2,20 @@
 
 const User = use('App/Model/User');
 const Anime = use('App/Model/Anime');
-const UserService = use("App/Services/UserService");
-const StatsService = use("App/Services/StatsService");
+const Recommendation = use("Recommendation");
 
 class HomeController {
-
-  * index (request, response) {
-    let userData, recs;
+  *index (request, response) {
+    let user, recs;
     const userId =  yield request.session.get('user_id');
     if(userId) {
-      const user = yield User.find(userId);
-      userData = user.attributes;
-      recs = (yield UserService.getRecommendations(user, 5)).value();
+      user = yield User.find(userId);
+      recs = yield Recommendation.getRecommendations(user, 5);
     }
-    const top = (yield StatsService.getTopAnime(5)).value();
-    const newAnime = (yield StatsService.getNewAnime(5)).value();
+    const top = yield Recommendation.getTopAnime(5);
+    const newAnime = yield Anime.query().orderBy('created_at','desc').limit(5).fetch();
 
-    yield response.sendView('index', {user: userData, recs: recs, top: top, new: newAnime })
-
-  }
-
-  * userprofile (request, response) {
-    const view = yield response.view('user_profile');
-    response.send(view)
-  }
-  * animedatabase (request, response) {
-    const view = yield response.view('animedatabase');
-    response.send(view)
+    yield response.sendView('home', {user: user, recs: recs.value(), top: top.value(), new: newAnime.value()});
   }
 }
 

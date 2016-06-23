@@ -1,18 +1,19 @@
-'use strict'
+'use strict';
 
-const Lucid = use("Lucid")
+const Lucid = use('Lucid');
+
 
 class User extends Lucid {
-  static get timestamps () {
-    return false
+  static get createTimestamp () {
+    return null
   }
-  static get softDeletes () {
-    return false
+  static get updateTimestamp () {
+    return null
   }
 
   anime() {
-    return this.belongsToMany('App/Model/Anime', 'users_anime').withPivot('rating', 'status')
+    return this.belongsToMany('App/Model/Anime', 'users_anime').withPivot('rating', 'status');
   }
 }
 
-module.exports = User
+module.exports = User;

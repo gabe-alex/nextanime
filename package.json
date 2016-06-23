@@ -21,46 +21,40 @@
   "bugs": {
     "url": "https://github.com/gabe-alex/nextanime/issues"
   },
+  "private": true,
   "main": "server.js",
   "scripts": {
-    "postinstall": "gulp install && gulp build",
+    "postinstall": "bower install && gulp build",
+    "dev": "gulp start:dev",
     "start": "node --harmony_proxies server.js",
     "ace": "node --harmony_proxies ace"
   },
   "autoload": {
     "App": "./app"
   },
-  "engines": {
-    "node": "5.11.1",
-    "npm": "3.8.6"
-  },
   "dependencies": {
-    "adonis-ace": "^2.0.7",
-    "adonis-commands": "^2.0.3",
-    "adonis-fold": "^2.0.1",
-    "adonis-framework": "^2.0.10",
-    "adonis-lucid": "^2.0.5",
-    "adonis-middleware": "^1.0.5",
+    "adonis-ace": "git+https://github.com/adonisjs/ace.git#develop",
+    "adonis-auth": "git+https://github.com/adonisjs/adonis-auth.git#develop",
+    "adonis-commands": "git+https://github.com/adonisjs/adonis-commands.git#develop",
+    "adonis-fold": "^3.0.1",
+    "adonis-framework": "git+https://github.com/adonisjs/adonis-framework.git#develop",
+    "adonis-lucid": "git+https://github.com/adonisjs/adonis-lucid.git#feature-version-3",
+    "adonis-middleware": "git+https://github.com/adonisjs/adonis-middleware.git#develop",
     "adonis-validation-provider": "^2.0.2",
     "co": "^4.6.0",
     "email-addresses": "^2.0.2",
-    "express": "^4.13.4",
-    "generator-async": "^0.1.4",
+    "generator-async": "^0.1.6",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
-    "gulp-bower": "0.0.13",
-    "gulp-clean-css": "^2.0.4",
-    "gulp-develop-server": "^0.5.1",
-    "gulp-if": "^2.0.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^2.2.0",
-    "lodash": "^4.9.0",
-    "mysql": "^2.10.2",
-    "ouch": "^0.2.0-beta",
+    "gulp-clean-css": "^2.0.10",
+    "gulp-develop-server": "^0.5.2",
+    "gulp-sass": "^2.3.2",
+    "lodash": "^4.13.1",
+    "mysql": "^2.11.1",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
-    "raccoon": "github:gabe-alex/recommendationRaccoon#private",
-    "stack-trace": "0.0.9"
+    "raccoon": "git+https://github.com/gabe-alex/recommendationRaccoon.git#private",
+    "youch": "^1.0.0"
   }
 }

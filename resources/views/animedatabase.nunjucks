@@ -11,7 +11,6 @@
         <th class="align_to_center">Title</th>
         <th class="align_to_center">Studio</th>
         <th class="align_to_center">Episodes</th>
-
       </tr>
     </thead>
     <tbody>
@@ -20,9 +19,8 @@
         <td><a href="/anime/{{ a.id }}">{{ a.id }}</a></td>
         <td><a href="/anime/{{ a.id }}"><img src="//nextanime.net/media/anime_covers/{{ a.id }}.jpg" class="img-responsive" alt="Image Not available" /></a></td>
         <td>{{ a | display_title }}</td>
-        <td>{{ a.studio.name }}</td>
+        <td>{{ a.relations.studio.name }}</td>
         <td>{{ a.nr_episodes }}</td>
-
       </tr>
     {% endfor %}
     </tbody>

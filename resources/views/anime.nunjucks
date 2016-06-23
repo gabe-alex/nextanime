@@ -40,7 +40,7 @@
         <h3>Details</h3>
         <p>Name : {{ anime | display_title }}</p>
         <p>English : {{ anime.english_title }}</p>
-        <p>Studio : {{ studio.name }}</p>
+        <p>Studio : {{ anime.relations.studio.name }}</p>
         <p>Episodes : {{ anime.nr_episodes }}</p>
         {#<p>Rating : {{ rating }}</p>#}
         {% if user %}

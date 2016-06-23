@@ -1,0 +1,50 @@
+'use strict';
+
+const Ouch = use('youch');
+const Env = use('Env');
+const Http = exports = module.exports = {};
+const View = use('View');
+
+/**
+ * handle errors occured during a Http request.
+ *
+ * @param  {Object} error
+ * @param  {Object} request
+ * @param  {Object} response
+ */
+Http.handleError = function * (error, request, response) {
+  /**
+   * DEVELOPMENT REPORTER
+   */
+  if (Env.get('NODE_ENV') === 'development') {
+    const ouch = new Ouch().pushHandler(
+      new Ouch.handlers.PrettyPageHandler('blue', null, 'sublime')
+    );
+    ouch.handleException(error, request.request, response.response, (output) => {
+      console.log('Handled error gracefully')
+    });
+    return;
+  }
+
+  /**
+   * PRODUCTION REPORTER
+   */
+  const status = error.status || 500;
+  console.error(error);
+  yield response.status(status).sendView('errors/index', {error});
+};
+
+/**
+ * listener for Http.start event, emitted after
+ * starting http server.
+ */
+Http.onStart = function () {
+  View.filter('display_title', function (anime) {
+    return anime.romaji_title || anime.english_title || anime.title;
+  });
+
+  View.filter('date', function (date_str) {
+    var d = new Date(date_str);
+    return d.toLocaleDateString('en-US');
+  });
+};

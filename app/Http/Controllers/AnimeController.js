@@ -7,22 +7,19 @@ const User = use('App/Model/User');
 
 class AnimeController {
   *view_anime (request, response) {
-    let userData, userAnimeCol;
+    let user;
     const userId =  yield request.session.get('user_id');
     if(userId) {
-      const user = yield User.find(userId);
-      userAnimeCol = yield user.anime().fetch();
-      userData = user.attributes
+      user = yield User.query().where('id', userId).with('anime.studio').first();
     }
 
     const animeId = request.param('id');
     let anime;
-    if(userAnimeCol)
-      anime = userAnimeCol.find('id', parseInt(animeId));
+    if(user && user.relations.anime)
+      anime = user.relations.anime.find(['id', parseInt(animeId)]);
     if (!anime) {
-      anime = (yield Anime.find(animeId)).attributes;
+      anime = yield Anime.query().where('id', animeId).with('studio').first();
     }
-    const studio = (yield Studio.find(anime.studio)).attributes;
 
     /*const cast = yield CastMember.where('anime_id', 1).with('person', 'character').fetch();
     for(let i=0; i<cast.value().length; i++) {
@@ -33,7 +30,12 @@ class AnimeController {
     {
       return anime.nr_episodes == "Unknown";
     }*/
-    yield response.sendView('anime', {user: userData, anime: anime , studio: studio})
+    yield response.sendView('anime', {user: user, anime: anime})
+  }
+
+  *animedatabase (request, response) {
+    const anime = yield Anime.query().with('studio').fetch();
+    yield response.sendView('animedatabase', {anime: anime.value()})
   }
 }
 

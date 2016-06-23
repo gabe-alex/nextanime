@@ -1,15 +1,16 @@
-'use strict'
+'use strict';
 
-const Lucid = use("Lucid")
+const Lucid = use('Lucid');
+
 
 class Character extends Lucid {
-  static get timestamps () {
-    return false
+  static get createTimestamp () {
+    return null
   }
-  static get softDeletes () {
-    return false
+  static get updateTimestamp () {
+    return null
   }
-  
+
   aliases () {
     return this.hasMany('App/Model/CharacterAlias')
   }
@@ -18,4 +19,4 @@ class Character extends Lucid {
   }
 }
 
-module.exports = Character
+module.exports = Character;

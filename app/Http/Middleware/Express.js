@@ -11,7 +11,7 @@ class Express {
 
     response.setHeader = response.header;
 
-    //in express, statusCode is a value, but in Adonis it's a funtion, so we call the function before response.end()
+    //in express, statusCode is a value, but in Adonis it's a function, so we call the function before response.end()
     response.oldEnd = response.end;
     response.end = function() {
       if (this.statusCode) {

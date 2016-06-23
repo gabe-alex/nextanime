@@ -1,18 +1,16 @@
-'use strict'
+'use strict';
 
-const Lucid = use("Lucid")
+const Lucid = use('Lucid');
+
 
 class Person extends Lucid {
-  static get table () {
-    return 'people'
+  static get createTimestamp () {
+    return null
   }
-  static get timestamps () {
-    return false
+  static get updateTimestamp () {
+    return null
   }
-  static get softDeletes () {
-    return false
-  }
-  
+
   cast_roles () {
     return this.hasMany('App/Model/CastMember')
   }
@@ -21,4 +19,5 @@ class Person extends Lucid {
   }
 }
 
-module.exports = Person
+module.exports = Person;
+
