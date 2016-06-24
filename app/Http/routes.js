@@ -23,11 +23,8 @@ Route.get('/', 'HomeController.index');
 Route.get('/anime/:id', 'AnimeController.view_anime');
 Route.get('/animedatabase', 'AnimeController.animedatabase');
 
-Route.get('/register', 'AccountController.view_register');
-Route.post('/register', 'AccountController.do_register');
-
 Route.get('/login', 'AccountController.view_login');
-Route.post('/login', 'AccountController.do_local_login');
+Route.post('/login', 'AccountController.local_login');
 Route.get('/login_fb', 'AccountController.login_fb');
 Route.get('/logout', 'AccountController.do_logout');
 
