@@ -41,14 +41,10 @@ class LibraryController {
     }
 
     const userAnime = yield request.user.anime().fetch();
-    const allAnime = yield Anime.all();
-    const availableAnime = allAnime.differenceBy(userAnime, 'id');
 
     yield response.sendView('library', {
       user: request.user,
-      user_anime: userAnime.value(),
-      available_anime: availableAnime.value(),
-      status_types: statusTypes
+      user_anime: userAnime.value()
     })
   }
 
@@ -62,7 +58,7 @@ class LibraryController {
     const userAnime = yield request.user.anime().fetch();
 
     const allAnime = yield Anime.all();
-    const availableAnime = allAnime.differenceBy(userAnime, 'id');
+    const availableAnime = allAnime.differenceBy(userAnime.value(), 'id');
 
     let currentAnime, newAnime;
     const animeId = request.param('id');
@@ -94,7 +90,7 @@ class LibraryController {
     const userAnime = yield request.user.anime().fetch();
 
     if (userAnime.find(['id', parseInt(animeId)])) {
-      yield request.user.anime().detach(animeId);
+      yield request.user.anime().detach([animeId]);
     }
     if(params.save) {
       yield request.user.anime().attach({[animeId]: {status: params.status, rating: params.rating}});

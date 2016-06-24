@@ -9,16 +9,16 @@
     {% if current_anime.id %}
       <input type="hidden" name="anime" value="{{ current_anime.id }}" />
     {% else %}
-    <div class="form-group">
-      <label class="col-sm-2 control-label" for="anime">Anime</label>
-      <div class="col-sm-10">
-        <select class="form-control" id="anime" name="anime" required>
-          {% for a in available_anime %}
-            <option value="{{ a.id }}">{{ a | display_title }}</option>
-          {% endfor %}
-        </select>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="anime">Anime</label>
+        <div class="col-sm-10">
+          <select class="form-control" id="anime" name="anime" required>
+            {% for a in available_anime %}
+              <option value="{{ a.id }}">{{ a | display_title }}</option>
+            {% endfor %}
+          </select>
+        </div>
       </div>
-    </div>
     {% endif %}
     <div class="form-group">
       <label class="col-sm-2 control-label" for="status">Status</label>
