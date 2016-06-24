@@ -30,7 +30,7 @@
           {% if errors.password and params.action=="login" %}<span class="glyphicon glyphicon-remove form-control-feedback"></span>{% endif %}
         </div>
         <div class="login-sns-buttons">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">Login</button>
         </div>
       </form>
     </div>
@@ -62,7 +62,7 @@
         <input type="password" name="password_confirm" class="form-control" {%if not (errors.password or errors.password_confirm) %}value="{{ params.password_confirm }}"{% endif %} required>
         {% if errors.password_confirm and params.action=="register" %}<span class="glyphicon glyphicon-remove form-control-feedback"></span>{% endif %}
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary">Register</button>
     </form>
   </div>
 {% endblock %}
