@@ -13,15 +13,25 @@ const View = use('View');
  * @param  {Object} response
  */
 Http.handleError = function * (error, request, response) {
+
+  //handle access attempts without auth
+  if(error.name == 'InvalidLoginException') {
+    yield request.session.put('redirect_url', request.originalUrl());
+    response.redirect('/login')
+    return;
+  }
+
+
   /**
    * DEVELOPMENT REPORTER
    */
+
   if (Env.get('NODE_ENV') === 'development') {
     const ouch = new Ouch().pushHandler(
       new Ouch.handlers.PrettyPageHandler('blue', null, 'sublime')
     );
     ouch.handleException(error, request.request, response.response, (output) => {
-      console.log('Handled error gracefully')
+      console.log('Handled error gracefully');
     });
     return;
   }

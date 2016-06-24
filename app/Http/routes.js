@@ -28,15 +28,14 @@ Route.post('/register', 'AccountController.do_register');
 
 Route.get('/login', 'AccountController.view_login');
 Route.post('/login', 'AccountController.do_local_login');
-Route.get('/login_fb', 'AccountController.login_fb_start');
-Route.get('/login_fb_callback', 'AccountController.login_fb_callback');
+Route.get('/login_fb', 'AccountController.login_fb');
 Route.get('/logout', 'AccountController.do_logout');
 
-Route.get('/userprofile', 'UserController.user_profile');
+Route.get('/userprofile', 'UserController.user_profile').middleware('auth');
 
-Route.get('/library', 'UserController.library_view');
-Route.get('/library/edit', 'UserController.library_edit_view');
-Route.get('/library/edit/:id', 'UserController.library_edit_view');
-Route.post('/library/edit', 'UserController.library_edit_save');
+Route.get('/library', 'UserController.library_view').middleware('auth');
+Route.get('/library/edit', 'UserController.library_edit_view').middleware('auth');
+Route.get('/library/edit/:id', 'UserController.library_edit_view').middleware('auth');
+Route.post('/library/edit', 'UserController.library_edit_save').middleware('auth');
 
-Route.get('/recommendations', 'RecommendationsController.index');
+Route.get('/recommendations', 'RecommendationsController.index').middleware('auth');

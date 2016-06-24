@@ -18,6 +18,7 @@ passport.use('local', new LocalStrategy({
   },
   function (email, password, done) {
     return co(function* () {
+      console.log('local start');
       const user = yield User.query().where('email', email).first();
 
       if (!user) {
@@ -29,6 +30,7 @@ passport.use('local', new LocalStrategy({
         return done(null, false, {password:  Config.get('messages.validation.password.matches')});
       }
 
+      console.log('local end');
       return done(null, user);
     });
   }
@@ -57,6 +59,26 @@ passport.use('facebook', new FacebookStrategy(
   }
 ));
 
+function login_callback (err, user, err_info, request, response) {
+  return co(function*() {
+    if (err) {
+      console.error(err);
+      const view = yield response.view('login', {errors: {system: err.message}});
+      return response.unauthorized(view);
+    }
+
+    if (!user) {
+      const view = yield response.view('login', {params: request.all(), errors: err_info});
+      return response.unauthorized(view)
+    }
+
+    yield request.auth.login(user);
+
+    const redirect_url = yield request.session.get('redirect_url', '/');
+    yield request.session.forget('redirect_url');
+    response.redirect(redirect_url);
+  });
+}
 
 class AccountController {
   *view_register (request, response) {
@@ -113,68 +135,26 @@ class AccountController {
   }
 
   *view_login (request, response) {
-    yield response.sendView('login')
+    yield response.sendView('login');
   }
 
   *do_local_login (request, response) {
     //Prepare passport's auth function and then call it
-    const passport_func = passport.authenticate('local', function (err, user, err_info) {
-      return co(function*() {
-        if (err) {
-          console.error(err);
-          const view = yield response.view('login', {errors: err_info});
-          return response.unauthorized(view);
-        }
-
-        if (!user) {
-          const view = yield response.view('login', {params: request.all(), errors: err_info});
-          return response.unauthorized(view)
-        }
-
-        yield request.session.put('user_id', user.id);
-        response.redirect('/')
-      });
+    const passport_func = passport.authenticate('local', function(err, user, err_info) {
+      return login_callback(err, user, err_info, request, response);
     });
     passport_func(request, response);
   }
 
-  *login_fb_start (request, response) {
-    const passport_func = passport.authenticate('facebook', function (err, user, err_info) {
-      return co(function*() {
-        if (err) {
-          console.error(err);
-          const view = yield response.view('login', {errors: {fb: err.message}});
-          return response.unauthorized(view)
-        }
-      });
-    });
-
-    passport_func(request, response);
-  }
-
-  *login_fb_callback (request, response) {
-    const passport_func = passport.authenticate('facebook', function (err, user, err_info) {
-      return co(function*() {
-        if (err) {
-          console.error(err);
-          const view = yield response.view('login', {errors: {fb: err.message}});
-          return response.unauthorized(view)
-        }
-
-        if (!user) {
-          const view = yield response.view('login', {errors: err_info});
-          return response.unauthorized(view)
-        }
-
-        yield request.session.put('user_id', user.id);
-        response.redirect('/');
-      });
+  *login_fb (request, response) {
+    const passport_func = passport.authenticate('facebook', function(err, user, err_info) {
+      return login_callback(err, user, err_info, request, response);
     });
     passport_func(request, response);
   }
 
   *do_logout (request, response) {
-    yield request.session.forget('user_id');
+    yield request.auth.logout();
     response.redirect('/');
   }
 }

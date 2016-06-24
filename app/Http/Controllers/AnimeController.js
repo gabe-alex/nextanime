@@ -3,20 +3,15 @@
 const Anime = use('App/Model/Anime');
 const Studio = use('App/Model/Studio');
 const CastMember = use('App/Model/CastMember');
-const User = use('App/Model/User');
 
 class AnimeController {
   *view_anime (request, response) {
-    let user;
-    const userId =  yield request.session.get('user_id');
-    if(userId) {
-      user = yield User.query().where('id', userId).with('anime.studio').first();
-    }
-
     const animeId = request.param('id');
     let anime;
-    if(user && user.relations.anime)
-      anime = user.relations.anime.find(['id', parseInt(animeId)]);
+    if(request.currentUser) {
+      const userAnime = yield request.currentUser.anime().fetch();
+      anime = userAnime.find(['id', parseInt(animeId)]);
+    }
     if (!anime) {
       anime = yield Anime.query().where('id', animeId).with('studio').first();
     }
@@ -30,7 +25,7 @@ class AnimeController {
     {
       return anime.nr_episodes == "Unknown";
     }*/
-    yield response.sendView('anime', {user: user, anime: anime})
+    yield response.sendView('anime', {anime: anime})
   }
 
   *animedatabase (request, response) {

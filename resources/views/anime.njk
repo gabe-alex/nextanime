@@ -43,7 +43,7 @@
         <p>Studio : {{ anime.relations.studio.name }}</p>
         <p>Episodes : {{ anime.nr_episodes }}</p>
         {#<p>Rating : {{ rating }}</p>#}
-        {% if user %}
+        {% if currentUser %}
           <a class="btn btn-primary" data-id="{{ anime.id }}" data-toggle="modal" data-target="#add_edit">{{ "Edit in Library" if anime._pivot_status else "Add to Library" }}</a>
         {% endif %}
 
