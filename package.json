@@ -24,7 +24,7 @@
   "private": true,
   "main": "server.js",
   "scripts": {
-    "postinstall": "bower install && gulp build",
+    "postinstall": "npm update && bower install && gulp build",
     "dev": "gulp start:dev",
     "start": "node --harmony_proxies server.js",
     "ace": "node --harmony_proxies ace"
