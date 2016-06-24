@@ -1,13 +1,15 @@
 'use strict';
 
+const QueueHandler = require('./QueueHandler')
 const raccoon = require('raccoon');
 const co = require('co');
 const async = require('generator-async');
 
-
 class Recommendation {
   constructor (Config, Anime) {
-    this.anime = Anime;
+    this.animeModel = Anime;
+
+    this.queueHandler = new QueueHandler(this);
 
     raccoon.config.className = 'nextanime';
     raccoon.config.numOfRecsStore = 30;
@@ -77,7 +79,7 @@ class Recommendation {
 
   getRecommandations (userId, count) {
     return new Promise((resolve, reject) => {
-      raccoon.recommendFor(userId, count, function (results) {
+      raccoon.recommendFor(userId, count-1, function (results) {  //count-1 because redis has bounds inclusive
         resolve(results)
       })
     })
@@ -91,16 +93,28 @@ class Recommendation {
     })
   }
 
+  calcUserMean(userAnime) {
+    let num_rated = 0;
+    let sum_ratings = 0;
+    userAnime.forEach(function(item) {
+      if (item._pivot_rating) {
+        sum_ratings += item._pivot_rating;
+        num_rated++;
+      }
+    });
+    return sum_ratings/num_rated;
+  }
+
   updateRedisRating(userId, itemId, status, rating, userMean) {
     const context = this;
-    return co(function* () {
+    return co(function*() {  //need this because async expects it in a specific format(?)
       switch (status) {
         case 'watching':
         case 'completed':
           if (!rating || rating >= userMean) {
-            yield context.addLike(userId, itemId, true)
+            yield context.addLike(userId, itemId, true);
           } else {
-            yield context.addDislike(userId, itemId, true)
+            yield context.addDislike(userId, itemId, true);
           }
           break;
         case 'ignored':
@@ -109,45 +123,31 @@ class Recommendation {
           break;
         case 'planning':
         default:
-          yield context.removeRating(userId, itemId, true)
+          yield context.removeRating(userId, itemId, true);
       }
-      yield context.updateItem(itemId)
-    })
-  }
-
-  calcUserMean(userAnime) {
-    let num_rated = 0;
-    let sum_ratings = 0;
-    userAnime.forEach(function(item) {
-      if (item._pivot_rating) {
-        sum_ratings += item._pivot_rating;
-        num_rated++
-      }
+      yield context.updateItem(itemId);
     });
-    return sum_ratings/num_rated;
   }
 
   *rebuildRecommendations(user) {
     const userAnime = yield user.anime().fetch();
     const mean = this.calcUserMean(userAnime);
 
-    yield this.clearUserRatings(user.id);
-
     const context = this;
     yield async.forEach(userAnime.value(), function*(item) {
       yield context.updateRedisRating(user.id, item.id, item._pivot_status, item._pivot_rating, mean);
-    })
+    });
   }
 
   *getRecommendations(user, count) {
-      yield this.updateUser(user.id);
-      const recIds = yield this.getRecommandations(user.id, count);
-      return yield this.anime.query().whereIn('id', recIds).fetch();
+    this.queueHandler.scheduleUpdate(user.id);  //note: this is executed aync
+    const recIds = yield this.getRecommandations(user.id, count);
+    return yield this.animeModel.query().whereIn('id', recIds).fetch();
   }
 
   *getTopAnime(count) {
     const recIds = yield this.bestRated(count);
-    return yield this.anime.query().whereIn('id', recIds).fetch();
+    return yield this.animeModel.query().whereIn('id', recIds).fetch();
   }
 }
 

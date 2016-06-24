@@ -10,8 +10,7 @@ class RecommendationsController {
     if(userId) {
       request.user = yield User.query().where('id', userId).with('anime').first();
     }
-
-    yield Recommendation.rebuildRecommendations(request.user);
+    
     const recs = yield Recommendation.getRecommendations(request.user, 30);
     yield response.sendView('recommendations', {user: request.user.attributes, anime: recs.value()})
   }

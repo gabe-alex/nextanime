@@ -31,7 +31,7 @@ const providers = [
   'adonis-middleware/providers/AppMiddlewareProvider',
   'adonis-auth/providers/AuthManagerProvider',
   'adonis-validation-provider/providers/ValidatorProvider',
-  path.join(__dirname,'../providers/Recommendation/RecommendationProvider.js')
+  path.join(__dirname,'../providers/RecommendationProvider.js')
 ];
 
 /*
