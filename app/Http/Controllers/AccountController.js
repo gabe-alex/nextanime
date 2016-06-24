@@ -106,8 +106,11 @@ class AccountController {
     user.password = hashedPassword;
     yield user.save();
 
-    //TODO: show success message
-    yield response.redirect('/')
+    yield request.auth.login(user);
+
+    const redirect_url = yield request.session.get('redirect_url', '/');
+    yield request.session.forget('redirect_url');
+    response.redirect(redirect_url);
   }
 
   *view_login (request, response) {
