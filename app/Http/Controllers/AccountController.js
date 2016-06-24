@@ -8,33 +8,8 @@ const _ = require('lodash');
 const co = require('co');
 const addrs = require("email-addresses");
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 
-
-//Prepare local login strategy
-passport.use('local', new LocalStrategy({
-    usernameField: 'email'
-  },
-  function (email, password, done) {
-    return co(function* () {
-      console.log('local start');
-      const user = yield User.query().where('email', email).first();
-
-      if (!user) {
-        return done(null, false, {email: Config.get('messages.validation.email.exists')});
-      }
-
-      const result = yield Hash.verify(password, user.password);
-      if (!result) {
-        return done(null, false, {password:  Config.get('messages.validation.password.matches')});
-      }
-
-      console.log('local end');
-      return done(null, user);
-    });
-  }
-));
 
 //Prepare facebook login strategy
 passport.use('facebook', new FacebookStrategy(
@@ -79,6 +54,7 @@ function login_callback (err, user, err_info, request, response) {
     response.redirect(redirect_url);
   });
 }
+
 
 class AccountController {
   *view_register (request, response) {
@@ -139,18 +115,31 @@ class AccountController {
   }
 
   *do_local_login (request, response) {
-    //Prepare passport's auth function and then call it
-    const passport_func = passport.authenticate('local', function(err, user, err_info) {
-      return login_callback(err, user, err_info, request, response);
-    });
-    passport_func(request, response);
+    try {
+      yield request.auth.attempt(request.input('email'), request.input('password'));
+
+      const redirect_url = yield request.session.get('redirect_url', '/');
+      yield request.session.forget('redirect_url');
+      response.redirect(redirect_url);
+    } catch(e) {
+      const errors = {};
+      switch(e.name) {
+        case 'UserNotFoundException':
+          errors.email=e.message;
+          break;
+        case 'PasswordMisMatchException':
+          errors.password=e.message;
+          break;
+      }
+      const view = yield response.view('login', {errors: errors});
+      response.badRequest(view);
+    }
   }
 
   *login_fb (request, response) {
-    const passport_func = passport.authenticate('facebook', function(err, user, err_info) {
+    passport.authenticate('facebook', function(err, user, err_info) {
       return login_callback(err, user, err_info, request, response);
-    });
-    passport_func(request, response);
+    })(request, response);
   }
 
   *do_logout (request, response) {
