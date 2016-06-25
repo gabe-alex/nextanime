@@ -29,6 +29,7 @@
 
 {# Anime Details #}
 {% block content %}
+  <h1>{{ anime | display_title }}</h1>
 
   <div class="col-xs-9">
     <div class = "row">
@@ -38,7 +39,6 @@
      </div>
       <div class = "col-xs-8">
         <h3>Details</h3>
-        <p>Name : {{ anime | display_title }}</p>
         <p>English : {{ anime.english_title }}</p>
         <p>Studio : {{ anime.relations.studio.name }}</p>
         <p>Episodes : {{ anime.nr_episodes }}</p>
