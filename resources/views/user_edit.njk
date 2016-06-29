@@ -5,49 +5,63 @@
 {# User Profile #}
 {% block content %}
 
-   {# action="/create?_method=PUT"#}
-    <br>
-    <div style="padding: 0 15px">
-      <div class="col-xs-12 col-md-6">
-        <form method="post" role="form">
-          {{ csrfField | safe }}
-          <input type="hidden" name="action" value="update_email" />
-          <div class="form-group{% if errors.current_password and params.action=="update_email" %} has-error has-feedback{% endif %}">
-            <label for="current_password">Confirm changes with current password:</label>
-            <input type="password" name="current_password" class="form-control" minlength=6 {%if not errors.current_password %}value="{{ params.current_password }}"{% endif %} required>
-            {% if errors.current_password and params.action=="update_email" %}<span class="glyphicon glyphicon-remove form-control-feedback"></span>{% endif %}
-          </div>
-          <div class="form-group{%if errors.email and params.action=="update_email" %} has-error has-feedback{% endif %}">
-            <label for="email">New Email:</label>
-            <input type="email" name="email" class="form-control" value="{{ params.email }}">
-            {% if errors.email and params.action=="update_email" %}<span class="glyphicon glyphicon-remove form-control-feedback"></span>{% endif %}
-          </div>
-          <input type="submit" class="btn btn-primary" value="Update Email"/>
-        </form>
-      </div>
-      <div class="col-xs-12 col-md-6">
-        <form method="post" role="form">
-          {{ csrfField | safe }}
-          <input type="hidden" name="action" value="update_password" />
-          <div class="form-group{% if errors.current_password and params.action=="update_password" %} has-error has-feedback{% endif %}">
-            <label for="current_password">Confirm changes with current password:</label>
-            <input type="password" name="current_password" class="form-control" minlength=6 {%if not errors.current_password %}value="{{ params.current_password }}"{% endif %} required>
-            {% if errors.current_password and params.action=="update_password" %}<span class="glyphicon glyphicon-remove form-control-feedback"></span>{% endif %}
-          </div>
-          <div class="form-group{% if (errors.password or errors.password_confirm) and params.action=="update_password" %} has-error has-feedback{% endif %}">
-            <label for="password">New Password:</label>
-            <input type="password" name="password" class="form-control" minlength=6 {%if not (errors.password or errors.password_confirm) %}value="{{ params.password }}"{% endif %}>
-            {% if (errors.password or errors.password_confirm) and params.action=="update_password" %}<span class="glyphicon glyphicon-remove form-control-feedback"></span>{% endif %}
-          </div>
-          <div class="form-group{% if errors.password_confirm and params.action=="update_password" %} has-error has-feedback{% endif %}">
-            <label for="password_confirm">New Password (confirm):</label>
-            <input type="password" name="password_confirm" class="form-control" {%if not (errors.password or errors.password_confirm) %}value="{{ params.password_confirm }}"{% endif %}>
-            {% if errors.password_confirm and params.action=="update_password" %}<span class="glyphicon glyphicon-remove form-control-feedback"></span>{% endif %}
-          </div>
-          <input type="submit" class="btn btn-primary" value="Update Password"/>
-        </form>
-      </div>
-      <br>
-      <button type="" class="btn btn-primary" value="change_profile_picture">Change Profile Picture</button>
+  {% if errors %}
+    <div class="alert alert-danger">
+      <strong>{{ "Email" if params.action=="update_email" else "Password" }} update failed:</strong>
+      {% for fields, message in errors %}
+        <div>{{ message }}</div>
+      {% endfor %}
     </div>
+  {% endif %}
+  {% if updated == 1 %}
+    <div class="alert alert-success">
+      <strong>{{ "Email" if params.action=="update_email" else "Password" }} updated successfully</strong>
+    </div>
+  {% endif %}
+
+   {# action="/create?_method=PUT"#}
+  <br>
+  <div style="padding: 0 15px">
+    <div class="col-xs-12 col-md-6">
+      <form method="post" role="form">
+        {{ csrfField | safe }}
+        <input type="hidden" name="action" value="update_email" />
+        <div class="form-group{% if errors.current_password and params.action=="update_email" %} has-error has-feedback{% endif %}">
+          <label for="current_password">Confirm changes with current password:</label>
+          <input type="password" name="current_password" class="form-control" minlength=6 {%if not errors.current_password %}value="{{ params.current_password }}"{% endif %} required>
+          {% if errors.current_password and params.action=="update_email" %}<span class="glyphicon glyphicon-remove form-control-feedback"></span>{% endif %}
+        </div>
+        <div class="form-group{%if errors.email and params.action=="update_email" %} has-error has-feedback{% endif %}">
+          <label for="update_email">New Email:</label>
+          <input type="email" name="email" class="form-control" value="{{ params.email }}">
+          {% if errors.email and params.action=="update_email" %}<span class="glyphicon glyphicon-remove form-control-feedback"></span>{% endif %}
+        </div>
+        <input type="submit" class="btn btn-primary" value="Update Email"/>
+      </form>
+    </div>
+    <div class="col-xs-12 col-md-6">
+      <form method="post" role="form">
+        {{ csrfField | safe }}
+        <input type="hidden" name="action" value="update_password" />
+        <div class="form-group{% if errors.current_password and params.action=="update_password" %} has-error has-feedback{% endif %}">
+          <label for="current_password">Confirm changes with current password:</label>
+          <input type="password" name="current_password" class="form-control" minlength=6 {%if not errors.current_password %}value="{{ params.current_password }}"{% endif %} required>
+          {% if errors.current_password and params.action=="update_password" %}<span class="glyphicon glyphicon-remove form-control-feedback"></span>{% endif %}
+        </div>
+        <div class="form-group{% if (errors.password or errors.password_confirm) and params.action=="update_password" %} has-error has-feedback{% endif %}">
+          <label for="password">New Password:</label>
+          <input type="password" name="password" class="form-control" minlength=6 {%if not (errors.password or errors.password_confirm) %}value="{{ params.password }}"{% endif %}>
+          {% if (errors.password or errors.password_confirm) and params.action=="update_password" %}<span class="glyphicon glyphicon-remove form-control-feedback"></span>{% endif %}
+        </div>
+        <div class="form-group{% if errors.password_confirm and params.action=="update_password" %} has-error has-feedback{% endif %}">
+          <label for="password_confirm">New Password (confirm):</label>
+          <input type="password" name="password_confirm" class="form-control" {%if not (errors.password or errors.password_confirm) %}value="{{ params.password_confirm }}"{% endif %}>
+          {% if errors.password_confirm and params.action=="update_password" %}<span class="glyphicon glyphicon-remove form-control-feedback"></span>{% endif %}
+        </div>
+        <input type="submit" class="btn btn-primary" value="Update Password"/>
+      </form>
+    </div>
+    <br>
+    <button type="" class="btn btn-primary" value="change_profile_picture">Change Profile Picture</button>
+  </div>
 {% endblock %}

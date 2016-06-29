@@ -40,6 +40,7 @@ class UserController {
 
   *user_edit_save(request, response) {
     const params = request.all();
+    let updated = 0;
     //const user = request.currentUser; //user direct din session
     if(params.action === 'update_email') {
       const rules = {
@@ -74,17 +75,21 @@ class UserController {
       }
 
       if(!_(errors).isEmpty()) {
-        const view = yield response.view('user_edit', {action: 'update', params: params, errors: errors});
+        const view = yield response.view('user_edit', {action: 'update_email', params: params, errors: errors});
         return response.badRequest(view)
       }
+      else{
 
+        const addr = addrs.parseOneAddress(params.email);
+        const profile_name = addr.local;
 
-      const addr = addrs.parseOneAddress(params.email);
-      const profile_name = addr.local;
-
-      request.currentUser.profile_name = profile_name;
-      request.currentUser.email = params.email;
-      yield request.currentUser.save();
+        request.currentUser.profile_name = profile_name;
+        request.currentUser.email = params.email;
+        yield request.currentUser.save();
+        updated = 1;
+        const view = yield response.view('user_edit', {params: params,updated: updated});
+        return response.send(view);
+      }
 
     } else if(params.action === 'update_password') {
 
@@ -113,14 +118,20 @@ class UserController {
       }
 
       if(!_(errors).isEmpty()) {
-        const view = yield response.view('user_edit', {action: 'update', params: params, errors: errors});
+        const view = yield response.view('user_edit', {action: 'update_password', params: params, errors: errors});
         return response.badRequest(view)
       }
 
-      const hashedPassword = yield Hash.make(params.password);
+      else{
 
-      request.currentUser.password = hashedPassword;
-      yield request.currentUser.save();
+        const hashedPassword = yield Hash.make(params.password);
+
+        request.currentUser.password = hashedPassword;
+        yield request.currentUser.save();
+        updated = 1;
+        const view = yield response.view('user_edit', {params: params,updated: updated});
+        return response.send(view);
+      }
     }
 
     yield response.sendView('user_edit');
