@@ -8,7 +8,6 @@ class Express {
 
     request.body = request.post();
 
-
     response.setHeader = response.header;
 
     //in express, statusCode is a value, but in Adonis it's a function, so we call the function before response.end()
@@ -20,7 +19,7 @@ class Express {
       this.oldEnd();
     };
 
-    yield next
+    yield next; // tells the middleware to move to the next layer, whenever we pass the request to the next handler
   }
 }
 

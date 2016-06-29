@@ -15,6 +15,10 @@ module.exports = {
     password_confirm : {
       required: "Password Confirm is required.",
       same: "Passwords don't match."
+    },
+    current_password : {
+      required : "Insert current password to authorize change.",
+      matches: "Current password is incorrect."
     }
   }
 };

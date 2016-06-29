@@ -3,7 +3,13 @@
 const Anime = use('App/Model/Anime');
 const Recommendation = use("Recommendation");
 const _ = require('lodash');
-
+const Validator = use('Validator');
+const User = use('App/Model/User');
+const Hash = use('Hash');
+const Config = use('Config');
+const co = require('co');
+const addrs = require("email-addresses");
+const passport = require('passport');
 
 const statusTypes = {
   planning: "Planning",
@@ -15,7 +21,7 @@ const statusTypes = {
 };
 
 
-class LibraryController {
+class UserController {
   *user_profile(request, response) {
     const userAnime = yield request.currentUser.anime().fetch();
     const watching = userAnime.filter(function (anime) {
@@ -25,6 +31,99 @@ class LibraryController {
       return anime._pivot_status === 'completed';
     });
     yield response.sendView('user_profile', {completed: completed.value(), watching: watching.value(), user_anime: userAnime.value()})
+  }
+
+  *user_edit(request, response) {
+
+    yield response.sendView('user_edit');
+  }
+
+  *user_edit_save(request, response) {
+    const params = request.all();
+    //const user = request.currentUser; //user direct din session
+    if(params.action === 'update_email') {
+      const rules = {
+        current_password: 'required',
+        email : 'required|email'
+      };
+
+      const validation = yield Validator.validateAll(rules, params);
+      const validationMessages = Config.get('messages.validation');
+      let errors = {};
+      if (validation.fails()) {
+        errors = _(validation.messages())
+          .groupBy('field')
+          .mapValues(function(value) {return new _(value).first().validation})
+          .mapValues(function(value, key) {return validationMessages[key][value]})
+          .value();
+      }
+
+      if(!errors.current_password) {
+        const matches = yield Hash.verify(params.current_password, request.currentUser.password)
+        if (!matches) {
+          errors.current_password = validationMessages.current_password.matches;
+        }
+      }
+
+      if(!errors.email) {
+        //Check if email is available
+        const user = yield User.query().where('email', params.email).first();
+        if(user) {
+          errors.email = validationMessages.email.unique;
+        }
+      }
+
+      if(!_(errors).isEmpty()) {
+        const view = yield response.view('user_edit', {action: 'update', params: params, errors: errors});
+        return response.badRequest(view)
+      }
+
+
+      const addr = addrs.parseOneAddress(params.email);
+      const profile_name = addr.local;
+
+      request.currentUser.profile_name = profile_name;
+      request.currentUser.email = params.email;
+      yield request.currentUser.save();
+
+    } else if(params.action === 'update_password') {
+
+      const rules = {
+        current_password: 'required',
+        password : 'required|min:6',
+        password_confirm: 'required|same:password'
+      };
+
+      const validation = yield Validator.validateAll(rules, params);
+      const validationMessages = Config.get('messages.validation');
+      let errors = {};
+      if (validation.fails()) {
+        errors = _(validation.messages())
+          .groupBy('field')
+          .mapValues(function(value) {return new _(value).first().validation})
+          .mapValues(function(value, key) {return validationMessages[key][value]})
+          .value();
+      }
+
+      if(!errors.current_password) {
+        const matches = yield Hash.verify(params.current_password, request.currentUser.password)
+        if (!matches) {
+          errors.current_password = validationMessages.current_password.matches;
+        }
+      }
+
+      if(!_(errors).isEmpty()) {
+        const view = yield response.view('user_edit', {action: 'update', params: params, errors: errors});
+        return response.badRequest(view)
+      }
+
+      const hashedPassword = yield Hash.make(params.password);
+
+      request.currentUser.password = hashedPassword;
+      yield request.currentUser.save();
+    }
+
+    yield response.sendView('user_edit');
   }
 
 
@@ -79,4 +178,4 @@ class LibraryController {
   }
 }
 
-module.exports = LibraryController;
+module.exports = UserController;

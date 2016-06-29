@@ -11,6 +11,7 @@ const Middleware = use('Middleware')
 | inside below array.
 |
 */
+// global provider list, added Express Manually
 const globalMiddleware = [
   'Adonis/Middleware/Cors',
   'Adonis/Middleware/BodyParser',

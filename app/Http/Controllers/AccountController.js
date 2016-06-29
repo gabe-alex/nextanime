@@ -22,6 +22,7 @@ passport.use('facebook', new FacebookStrategy(
     return co(function* () {
       let user = yield User.query().where('fb_id', profile.id).first();
 
+      
       if (!user) {
         user = new User();
         user.profile_name = profile.displayName;
@@ -57,6 +58,8 @@ function login_callback (err, user, err_info, request, response) {
 
 
 class AccountController {
+
+
   *view_login (request, response) {
     yield response.sendView('login');
   }
@@ -114,10 +117,9 @@ class AccountController {
       response.redirect(redirect_url);
 
     } else {
-
       try {
         yield request.auth.attempt(params.email, params.password);
-
+        
         const redirect_url = yield request.session.get('redirect_url', '/');
         yield request.session.forget('redirect_url');
         response.redirect(redirect_url);

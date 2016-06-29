@@ -51,12 +51,13 @@ $(document).ready(function()
     });
 		$("#topimage").fadeTo("slow",1);
 	},1000*5); //5 secunde
-  
-	function clearFiels(){
+
+	/*function clearFiels(){
 		document.getElementById("login_form").reset();
 		document.getElementById("signup_form").reset();
   	}
-  
+  */
+
 });
 
 
