@@ -20,7 +20,7 @@
  }
 
 .social_spacing{
-  margin-top : 20px;
+  margin-top : 10px;
   margin-bottom: 10px;
 }
 
@@ -111,5 +111,18 @@ body
 
 .social_button {
   padding-top: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 10px
+}
+
+.brand_white{
+  color: white;
+}
+
+.brand_red{
+  color: red;
+}
+
+.fb_iframe_widget span
+{
+  vertical-align: baseline !important;
 }

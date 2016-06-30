@@ -26,6 +26,7 @@ Route.get('/animedatabase', 'AnimeController.animedatabase');
 Route.get('/login', 'AccountController.view_login');
 Route.post('/login', 'AccountController.local_login');
 Route.get('/login_fb', 'AccountController.login_fb');
+Route.get('/login_tw', 'AccountController.login_tw');
 Route.get('/logout', 'AccountController.do_logout');
 
 Route.group('middlewares', function () {

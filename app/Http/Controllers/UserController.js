@@ -34,7 +34,6 @@ class UserController {
   }
 
   *user_edit(request, response) {
-
     yield response.sendView('user_edit');
   }
 
@@ -60,7 +59,7 @@ class UserController {
       }
 
       if(!errors.current_password) {
-        const matches = yield Hash.verify(params.current_password, request.currentUser.password)
+        const matches = yield Hash.verify(params.current_password, request.currentUser.password);
         if (!matches) {
           errors.current_password = validationMessages.current_password.matches;
         }
@@ -76,7 +75,7 @@ class UserController {
 
       if(!_(errors).isEmpty()) {
         const view = yield response.view('user_edit', {action: 'update_email', params: params, errors: errors});
-        return response.badRequest(view)
+        return response.badRequest(view);
       }
       else{
 
@@ -111,7 +110,7 @@ class UserController {
       }
 
       if(!errors.current_password) {
-        const matches = yield Hash.verify(params.current_password, request.currentUser.password)
+        const matches = yield Hash.verify(params.current_password, request.currentUser.password);
         if (!matches) {
           errors.current_password = validationMessages.current_password.matches;
         }

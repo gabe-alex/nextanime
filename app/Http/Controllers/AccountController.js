@@ -9,25 +9,45 @@ const co = require('co');
 const addrs = require("email-addresses");
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
-
+const TwitterStrategy = require('passport-twitter').Strategy;
 
 //Prepare facebook login strategy
 passport.use('facebook', new FacebookStrategy(
   {
-    clientID        : Config.get('fb.appID'),
-    clientSecret    : Config.get('fb.appSecret'),
-    callbackURL     : Config.get('fb.callbackUrl')
+    clientID        : Config.get('social.fb.appID'),
+    clientSecret    : Config.get('social.fb.appSecret'),
+    callbackURL     : Config.get('social.fb.callbackUrl')
   },
   function(access_token, refresh_token, profile, done) {
     return co(function* () {
       let user = yield User.query().where('fb_id', profile.id).first();
 
-      
       if (!user) {
         user = new User();
         user.profile_name = profile.displayName;
         user.fb_id = profile.id;
-        user.fb_access_token = access_token;
+        yield user.save();
+      }
+      return done(null, user);
+    });
+  }
+));
+
+//Prepare facebook login strategy
+passport.use('twitter', new TwitterStrategy(
+  {
+    consumerKey     : Config.get('social.tw.appID'),
+    consumerSecret  : Config.get('social.tw.appSecret'),
+    callbackURL     : Config.get('social.tw.callbackUrl')
+  },
+  function(token, tokenSecret, profile, done) {
+    return co(function* () {
+      let user = yield User.query().where('tw_id', profile.id).first();
+
+      if (!user) {
+        user = new User();
+        user.profile_name = profile.displayName;
+        user.tw_id = profile.id;
         yield user.save();
       }
       return done(null, user);
@@ -119,7 +139,7 @@ class AccountController {
     } else {
       try {
         yield request.auth.attempt(params.email, params.password);
-        
+
         const redirect_url = yield request.session.get('redirect_url', '/');
         yield request.session.forget('redirect_url');
         response.redirect(redirect_url);
@@ -141,6 +161,12 @@ class AccountController {
 
   *login_fb (request, response) {
     passport.authenticate('facebook', function(err, user, err_info) {
+      return login_callback(err, user, err_info, request, response);
+    })(request, response);
+  }
+
+  *login_tw (request, response) {
+    passport.authenticate('twitter', function(err, user, err_info) {
       return login_callback(err, user, err_info, request, response);
     })(request, response);
   }
