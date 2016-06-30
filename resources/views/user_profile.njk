@@ -13,9 +13,15 @@
 
       <div class = "col-xs-3">
         <img src="images/noraNOPE.png" class="img-responsive" alt="Image Not available"><br>
+
+        {% if currentUser.role == 'admin' %}
+          <p>You are an admin. Con-FUCKING-gratulations!</p>
+        {% endif %}
+
         <button type="button" onclick="addToFriendList()" class="userProfBtn"><span class="glyphicon glyphicon-plus"></span> Friend Request</button>
         <button type="button" onclick="sendMessage()" class="userProfBtn"><span class="glyphicon glyphicon-envelope"></span> Message</button>
         <button type="button" onclick="recFriend()" class="userProfBtn"><span class="glyphicon glyphicon-hand-right"></span> Recommend Friend</button>
+
         <h4>Friends</h4>
         {% for friend in friendsList %}
           <a href="#"><img src="images/noraNOPE.png" class="iconImage" alt="Image Not available" title={{ friend }}></a>
