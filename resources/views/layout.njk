@@ -50,7 +50,10 @@
         <li><a href="/recommendations">Recommendations</a></li>
         <li><a href="/recommendations">Top</a></li>
         <li><a href="/recommendations">New</a></li>
-        <li><a href="/animedatabase">Anime Library</a></li>
+        <li><a href="/animedatabase">Anime Database</a></li>
+        {% if currentUser.role == 'admin' %}
+          <li><a href="/administration"><span class="glyphicon glyphicon-alert"></span> Administration</a></li>
+        {% endif %}
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {% if currentUser %}
@@ -86,7 +89,7 @@
 <div class="row spacing">
   <footer class="align_to_center">
     <a href="https://www.facebook.com/"><img src="/images/facebook-logo.jpg" name="facebook_picture" class="social_media_logo" alt="Image Not available"></a>
-    <a href="https://www.gmail.com/"><img src="/images/google+-logo.png" name="gmail_picture" class="social_media_logo" alt="Image Not available"></a>
+    <a href="https://www.gmail.com/"><img src="/images/twitter-logo.png" name="twitter_picture" class="social_media_logo" alt="Image Not available"></a>
     <a href="https://www.reddit.com/"><img src="/images/redditisfun.jpeg" name="reddit_picture" class="social_media_logo" alt="Image Not available"></a>
     <br>
     <p>NextAnime.net is a property of Alecu&Onete, @2016 All Rights Reserved</p>

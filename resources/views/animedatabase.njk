@@ -3,6 +3,7 @@
 {% extends 'layout' %}
 
 {% block content %}
+  {# <!---->
   <table class="table table-striped">
     <thead>
       <tr class="align_to_center">
@@ -14,7 +15,7 @@
       </tr>
     </thead>
     <tbody>
-    {% for a in anime %}
+    {% for a in anime.value() %}
       <tr class="align_to_center">
         <td><a href="/anime/{{ a.id }}">{{ a.id }}</a></td>
         <td><a href="/anime/{{ a.id }}"><img src="//nextanime.net/media/anime_covers/{{ a.id }}.jpg" class="img-responsive" alt="Image Not available" /></a></td>
@@ -25,4 +26,109 @@
     {% endfor %}
     </tbody>
   </table>
+#}
+
+
+  {% for a in anime.value() %}
+    <div class="row anime_db_row">
+      <div class="col-xs-2">
+        <a href="/anime/{{ a.id }}">
+          <img src="//nextanime.net/media/anime_covers/{{ a.id }}.jpg" class="img-responsive" alt="Image Not available" />
+        </a>
+      </div>
+      <div class="col-xs-5">
+        <a href="/anime/{{ a.id }}">{{ a | display_title }}</a>
+      </div>
+      <div class="col-xs-3">
+        Studio: {{ a.relations.studio.name }}
+      </div>
+      <div class="col-xs-2">
+        {{ a.nr_episodes }} episodes
+      </div>
+    </div>
+  {% endfor %}
+
+  <nav class="align_to_center">
+    <ul class="pagination">
+      {% if anime.meta.currentPage > 3 %}
+        <li>
+          <a href="/animedatabase/1" aria-label="First">
+            <span aria-hidden="true">&laquo; First</span>
+          </a>
+        </li>
+      {% endif %}
+
+      {% if anime.meta.currentPage > 1 %}
+        <li>
+          <a href="/animedatabase/{{ anime.meta.currentPage-1 }}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+      {% endif %}
+
+      {% if anime.meta.currentPage > 2 %}
+        <li>
+          <a href="/animedatabase/{{ anime.meta.currentPage-2 }}">
+            {{ anime.meta.currentPage-2 }}
+          </a>
+        </li>
+      {% endif %}
+
+      {% if anime.meta.currentPage > 1 %}
+        <li>
+          <a href="/animedatabase/{{ anime.meta.currentPage-1 }}">
+            {{ anime.meta.currentPage-1 }}
+          </a>
+        </li>
+      {% endif %}
+
+      <li class="active">
+        <a href="#">{{ anime.meta.currentPage }}</a>
+      </li>
+
+      {% if anime.meta.currentPage < anime.meta.lastPage %}
+        <li>
+          <a href="/animedatabase/{{ anime.meta.currentPage+1 }}">
+            {{ anime.meta.currentPage+1 }} <span class="sr-only">(current)</span>
+          </a>
+        </li>
+      {% endif %}
+
+      {% if anime.meta.currentPage < anime.meta.lastPage-1 %}
+        <li>
+          <a href="/animedatabase/{{ anime.meta.currentPage+2 }}">
+            {{ anime.meta.currentPage+2 }}
+          </a>
+        </li>
+      {% endif %}
+
+
+      {% if anime.meta.currentPage < anime.meta.lastPage %}
+        <li>
+          <a href="/animedatabase/{{ anime.meta.currentPage+1 }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      {% endif %}
+
+      {% if anime.meta.currentPage < anime.meta.lastPage-2 %}
+        <li>
+          <a href="/animedatabase/{{ anime.meta.lastPage }}" aria-label="Last">
+            <span aria-hidden="true">Last &raquo;</span>
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+  {#
+  <div class="row align_to_center">
+    {% if anime.meta.currentPage > 1 %}
+      <a href="/animedatabase/{{ anime.meta.currentPage-1 }}" class="lateral_spacing"><span class="glyphicon glyphicon-menu-left"></span> Previous Page </a>
+      <a href="/animedatabase/1" class="lateral_spacing"><span class="glyphicon glyphicon-menu-left"></span> First Page </a>
+    {% endif %}
+
+    {% if anime.meta.currentPage < anime.meta.lastPage %}
+      <a href="/animedatabase/{{ anime.meta.currentPage+1 }}" class="lateral_spacing"> Next Page <span class="glyphicon glyphicon-menu-right"></span></a>
+    {% endif %}
+  </div>#}
 {% endblock %}

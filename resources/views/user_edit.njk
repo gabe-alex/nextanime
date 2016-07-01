@@ -42,7 +42,7 @@
     <div class="col-xs-12 col-md-6">
       <form method="post" role="form">
         {{ csrfField | safe }}
-        <input type="hidden" name="action" value="update_password" />
+        <input type="hidden" name="action" value="update_password"/>
         <div class="form-group{% if errors.current_password and params.action=="update_password" %} has-error has-feedback{% endif %}">
           <label for="current_password">Confirm changes with current password:</label>
           <input type="password" name="current_password" class="form-control" minlength=6 {%if not errors.current_password %}value="{{ params.current_password }}"{% endif %} required>

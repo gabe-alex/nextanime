@@ -19,6 +19,11 @@
    margin-bottom: 20px;
  }
 
+.lateral_spacing{
+  margin-left : 5px;
+  margin-right: 5px;
+}
+
 .social_spacing{
   margin-top : 10px;
   margin-bottom: 10px;
@@ -125,4 +130,8 @@ body
 .fb_iframe_widget span
 {
   vertical-align: baseline !important;
+}
+
+.anime_db_row {
+  padding: 10px 0;
 }
