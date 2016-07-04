@@ -9,7 +9,7 @@ class AnimeController {
     const animeId = request.param('id');
     let anime;
     if(request.currentUser) {
-      const userAnime = yield request.currentUser.anime().fetch();
+      const userAnime = yield request.currentUser.anime().with('studio').fetch(); // don't frget .with('studio')
       anime = userAnime.find(['id', parseInt(animeId)]);
     }
     if (!anime) {
