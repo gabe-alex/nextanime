@@ -46,7 +46,5 @@ Route.group('middlewares', function () {
 
   Route.get('/useredit', 'UserController.user_edit');
   Route.post('/useredit', 'UserController.user_edit_save');
-
-
-
+  
 }).middleware('auth');

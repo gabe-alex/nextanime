@@ -10,6 +10,7 @@ const Config = use('Config');
 const co = require('co');
 const addrs = require("email-addresses");
 const passport = require('passport');
+const Helpers = use('Helpers');
 
 const statusTypes = {
   planning: "Planning",
@@ -23,6 +24,7 @@ const statusTypes = {
 
 class UserController {
   *user_profile(request, response) {
+
     const userAnime = yield request.currentUser.anime().fetch();
     const watching = userAnime.filter(function (anime) {
       return anime._pivot_status === 'watching';
@@ -30,7 +32,13 @@ class UserController {
     const completed = userAnime.filter(function (anime) {
       return anime._pivot_status === 'completed';
     });
-    yield response.sendView('user_profile', {completed: completed.value(), watching: watching.value(), user_anime: userAnime.value()})
+    
+    /*
+    const friends = user(function (anime) {
+      return anime._pivot_status === 'completed';
+    });*/
+
+    yield response.sendView('user_profile', {completed: completed.value(), watching: watching.value(), user_anime: userAnime.value()/*,friend: friends.value()*/})
   }
 
   *user_edit(request, response) {
@@ -40,7 +48,6 @@ class UserController {
   *user_edit_save(request, response) {
     const params = request.all();
     let updated = 0;
-    //const user = request.currentUser; //user direct din session
     if(params.action === 'update_email') {
       const rules = {
         current_password: 'required',
@@ -131,6 +138,30 @@ class UserController {
         const view = yield response.view('user_edit', {params: params,updated: updated});
         return response.send(view);
       }
+    }
+
+    if(params.action === 'update_avatar') {
+      // getting file instance
+      const avatar = request.file('avatar_photo', {
+        maxSize: '2mb',
+        allowedExtensions: ['jpg', 'png', 'jpeg']
+      })
+
+      const userId = request.param('id')
+      const user = yield User.findOrFail(userId)
+      console.log(avatar.extension());
+      console.log(user);
+      /*const fileName = `${userId}.${avatar.extension()}`
+
+       yield avatar.move(Helpers.storagePath('/images'), fileName)
+       if (!avatar.moved()) {
+       response.badRequest(avatar.errors())
+       return
+       }
+       response.send('Avatar updated successfully');*/
+      updated = 1;
+      const view = yield response.view('user_edit', {updated: updated});
+      return response.send(view);
     }
 
     yield response.sendView('user_edit');

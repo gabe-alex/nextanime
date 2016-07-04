@@ -33,12 +33,14 @@ passport.use('facebook', new FacebookStrategy(
   }
 ));
 
-//Prepare facebook login strategy
+//Prepare twitter login strategy
 passport.use('twitter', new TwitterStrategy(
   {
     consumerKey     : Config.get('social.tw.appID'),
     consumerSecret  : Config.get('social.tw.appSecret'),
-    callbackURL     : Config.get('social.tw.callbackUrl')
+    callbackURL     : Config.get('social.tw.callbackUrl'),
+    token           : Config.get('social.tw.token'),
+    token_secret    : Config.get('social.tw.token_secret')
   },
   function(token, tokenSecret, profile, done) {
     return co(function* () {
@@ -48,6 +50,9 @@ passport.use('twitter', new TwitterStrategy(
         user = new User();
         user.profile_name = profile.displayName;
         user.tw_id = profile.id;
+        console.log(user.profile_name , " " , user.tw_id);
+        var t = { kind: 'oauth', token: token, attributes: { tokenSecret: tokenSecret } };
+        user.tokens.push(t);
         yield user.save();
       }
       return done(null, user);
@@ -65,7 +70,7 @@ function login_callback (err, user, err_info, request, response) {
 
     if (!user) {
       const view = yield response.view('login', {action: 'login', params: request.all(), errors: err_info});
-      return response.unauthorized(view)
+      return response.unauthorized(view);
     }
 
     yield request.auth.login(user);

@@ -15,6 +15,8 @@ module.exports = {
   tw: {
     appID: Env.get('TW_APPID'),
     appSecret: Env.get('TW_APPSECRET'),
+    token: Env.get('TW_ACCESS_TOKEN'),
+    token_secret: Env.get('TW_ACCESS_TOKEN_SECRET'),
     callbackUrl : 'http://'+public_host+(public_port==='80' && '' || ':'+public_port)+'/login_tw'
   },
   hb: {

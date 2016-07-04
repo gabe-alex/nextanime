@@ -6,9 +6,9 @@ class QueueHandler {
   constructor(recInstance) {
     this.recInstance = recInstance;
 
-    this.NUM_CONCURRENT = 10;
-    this.MIN_INTERVAL = 60;
-    this.delayed = [];
+    this.NUM_CONCURRENT = 10; //max requests done at the same time
+    this.MIN_INTERVAL = 60; //secs
+    this.delayed = []; 
     this.queue = [];
     this.running = 0;
     this.last_ran = {};

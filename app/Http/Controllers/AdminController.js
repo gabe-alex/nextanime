@@ -8,7 +8,7 @@ const User = use('App/Model/User');
 const Hash = use('Hash');
 const Config = use('Config');
 const co = require('co');
-const addrs = require("email-addresses");
+//const addrs = require("email-addresses");
 const passport = require('passport');
 const Helpers = use('Helpers');
 
@@ -28,7 +28,7 @@ class AdminController {
       allowedExtensions: ['xml', 'txt', 'json'],
       hash: true //for checking data integrity for db uploads
       //multiple : false , was set globally to not allow uploading of multiple files, preventing DoS's
-    })
+    });
 
     if(!db.exists()){
       response.send("Unable to upload file");
@@ -49,17 +49,17 @@ class AdminController {
         //result.report.item si apoi for id in item
 
 
-          let items = result.report.item; //toate animeurile din xml
+          let items = result.report.item; //all xml anime
 
           const ann_ids = _(items).map(function(item) {
             return parseInt(item.id[0]);
-          }).value();// lista de id-uri din xml
+          }).value();//xml anime id list
 
           console.log('initial xml ids count ', items.length);
-          const animeList = yield Anime.query().whereIn('ann_id', ann_ids).fetch(); //cauta toate animeurile din baza fata de cele din xml, dupa ann_id
-          const animeIds = animeList.map('ann_id').value(); //or _map(animeList,'ann_id') //aici gasim cele existente in ambele
+          const animeList = yield Anime.query().whereIn('ann_id', ann_ids).fetch(); //searches all common anime between the db and xml , by ann_id
+          const animeIds = animeList.map('ann_id').value(); //or _map(animeList,'ann_id') //identified all common or existing anime
           console.log('num matched anime ids', animeIds.length);
-          const removed = _.remove(items, function(item) { //aici filtram si scoatem din xml cele deja existente
+          const removed = _.remove(items, function(item) { //filter and remove from xml all existing anime
             return _(animeIds).includes(parseInt(item.id[0]));
           });
           console.log('new xml ids count ', items.length);
