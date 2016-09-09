@@ -33,7 +33,7 @@
     <div class="row anime_db_row">
       <div class="col-xs-2">
         <a href="/anime/{{ a.id }}">
-          <img src="//nextanime.net/media/anime_covers/{{ a.id }}.jpg" class="img-responsive" alt="Image Not available" />
+          {{ a | cover | safe }}
         </a>
       </div>
       <div class="col-xs-5">

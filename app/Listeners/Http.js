@@ -49,12 +49,16 @@ Http.handleError = function * (error, request, response) {
  * starting http server.
  */
 Http.onStart = function () {
+  View.filter('date', function (date_str) {
+    var d = new Date(date_str);
+    return d.toLocaleDateString('en-US');
+  });
+
   View.filter('display_title', function (anime) {
     return anime.romaji_title || anime.english_title || anime.title;
   });
 
-  View.filter('date', function (date_str) {
-    var d = new Date(date_str);
-    return d.toLocaleDateString('en-US');
+  View.filter('cover', function (anime, callback) {
+    return '<img src="//nextanime.net/media/anime_covers/'+anime.id+'.jpg" class="img-responsive" onerror="this.src =\'/images/cover_placeholder.png\';">';
   });
 };
