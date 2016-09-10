@@ -33,6 +33,7 @@ Route.get('/administration', 'AdminController.admin_edit');
 Route.post('/administration', 'AdminController.admin_edit_save');
 
 Route.group('middlewares', function () {
+  Route.get('/search/:query', 'AnimeController.search');
 
   Route.get('/userprofile', 'UserController.user_profile');
 
@@ -46,5 +47,5 @@ Route.group('middlewares', function () {
 
   Route.get('/useredit', 'UserController.user_edit');
   Route.post('/useredit', 'UserController.user_edit_save');
-  
+
 }).middleware('auth');

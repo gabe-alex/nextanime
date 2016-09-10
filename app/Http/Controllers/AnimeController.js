@@ -37,6 +37,16 @@ class AnimeController {
 
     yield response.sendView('animedatabase', {anime: anime})
   }
+
+  *search (request, response) {
+    const query = request.param('query');
+
+    const foundAnime = yield Anime.query().where('title', 'like', query+'%').orWhere('romaji_title', 'like', query+'%').orWhere('english_title', 'like', query+'%').fetch();
+    const userAnime = yield request.currentUser.anime().fetch();
+    const availableAnime = foundAnime.differenceBy(userAnime.value(), 'id');
+
+    response.json(availableAnime.value());
+  }
 }
 
 module.exports = AnimeController;

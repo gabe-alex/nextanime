@@ -12,11 +12,9 @@
       <div class="form-group">
         <label class="col-sm-2 control-label" for="anime">Anime</label>
         <div class="col-sm-10">
-          <select class="form-control" id="anime" name="anime" required>
-            {% for a in available_anime %}
-              <option value="{{ a.id }}">{{ a | display_title }}</option>
-            {% endfor %}
-          </select>
+          <input class="form-control" id="anime_name" name="anime_name" type="text" autocomplete="off">
+          <div id="live_search"></div>
+          <input type="hidden" id="anime" name="anime" requred>
         </div>
       </div>
     {% endif %}
@@ -45,3 +43,33 @@
     <input class="btn btn-primary" type="submit" name="save" value='{{ "Save Changes" if current_anime.title else "Add" }}'>
   </div>
 </form>
+
+<script>
+  function selectAnime(id, name) {
+    $("#anime_name").prop('disabled', true);
+    $('#live_search').html('');
+    $('#anime_name').val(name);
+    $('#anime').val(id);
+  }
+
+  $('#anime_name').keyup(function(){
+    var searchQuery = $('#anime_name').val();
+    if(searchQuery.length > 0) {
+      $.getJSON('/search/' + encodeURIComponent(searchQuery), function (data) {
+        var output = '<ul>';
+        $.each(data, function (key, val) {
+          var name = val.romaji_title || val.english_title || val.title;
+          output += '<li>';
+          output += '<a href="javascript:selectAnime(' + val.id + ', \'' + name + '\');">';
+          output += name;
+          output += '</a>';
+          output += '</li>';
+        });
+        output += '</ul>';
+        $('#live_search').html(output);
+      });
+    } else {
+      $('#live_search').html('');
+    }
+  });
+</script>

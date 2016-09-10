@@ -32,7 +32,7 @@ class UserController {
     const completed = userAnime.filter(function (anime) {
       return anime._pivot_status === 'completed';
     });
-    
+
     /*
     const friends = user(function (anime) {
       return anime._pivot_status === 'completed';
@@ -180,9 +180,6 @@ class UserController {
   *library_edit_view(request, response) {
     const userAnime = yield request.currentUser.anime().fetch();
 
-    const allAnime = yield Anime.all();
-    const availableAnime = allAnime.differenceBy(userAnime.value(), 'id');
-
     let currentAnime, newAnime;
     const animeId = request.param('id');
     if (animeId) {
@@ -193,7 +190,6 @@ class UserController {
     }
 
     yield response.sendView('library_edit', {
-      available_anime: availableAnime.value(),
       status_types: statusTypes,
       current_anime: currentAnime
     })
