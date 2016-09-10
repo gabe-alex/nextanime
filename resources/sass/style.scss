@@ -163,6 +163,12 @@ body
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 8px;
+  padding: 6px 0;
+}
+
+.tt-suggestion {
+  padding: 0 12px;
+  cursor: pointer;
 }
 
 .tt-suggestion:hover {

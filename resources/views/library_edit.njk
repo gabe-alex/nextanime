@@ -58,7 +58,10 @@
     }
   });
 
-  $('#anime_name').typeahead(null, {
+  $('#anime_name').typeahead({
+      highlight: true
+    },
+    {
     name: 'anime-options',
     display: function(val) {
       return val.romaji_title || val.english_title || val.title;
