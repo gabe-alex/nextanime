@@ -33,7 +33,7 @@ Route.get('/administration', 'AdminController.admin_edit');
 Route.post('/administration', 'AdminController.admin_edit_save');
 
 Route.group('middlewares', function () {
-  Route.get('/search/:query', 'AnimeController.search');
+  Route.get('/search', 'AnimeController.search');
 
   Route.get('/userprofile', 'UserController.user_profile');
 

@@ -39,9 +39,9 @@ class AnimeController {
   }
 
   *search (request, response) {
-    const query = request.param('query');
+    const query = request.input('query');
 
-    const foundAnime = yield Anime.query().where('title', 'like', query+'%').orWhere('romaji_title', 'like', query+'%').orWhere('english_title', 'like', query+'%').limit(20).fetch();
+    const foundAnime = yield Anime.query().where('title', 'like', '%'+query+'%').orWhere('romaji_title', 'like', '%'+query+'%').orWhere('english_title', 'like', '%'+query+'%').limit(20).fetch();
     const userAnime = yield request.currentUser.anime().fetch();
     const availableAnime = foundAnime.differenceBy(userAnime.value(), 'id');
 

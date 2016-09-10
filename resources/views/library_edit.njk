@@ -48,7 +48,7 @@
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     remote: {
-      url: '/search/%QUERY',
+      url: '/search?query=%QUERY',
       wildcard: '%QUERY'
     },
     transform: function(response) {
@@ -71,32 +71,4 @@
     $("#anime_name").prop('disabled', true);
     $('#anime').val(selected.id);
   });
-
-  /*function selectAnime(id, name) {
-    $("#anime_name").prop('disabled', true);
-    $('#live_search').html('');
-    $('#anime_name').val(name);
-    $('#anime').val(id);
-  }
-
-  $('#anime_name').keyup(function(){
-    var searchQuery = $('#anime_name').val();
-    if(searchQuery.length > 0) {
-      $.getJSON('/search/' + encodeURIComponent(searchQuery), function (data) {
-        var output = '<ul>';
-        $.each(data, function (key, val) {
-          var name = val.romaji_title || val.english_title || val.title;
-          output += '<li>';
-          output += '<a href="javascript:selectAnime(' + val.id + ', \'' + name + '\');">';
-          output += name;
-          output += '</a>';
-          output += '</li>';
-        });
-        output += '</ul>';
-        $('#live_search').html(output);
-      });
-    } else {
-      $('#live_search').html('');
-    }
-  });*/
 </script>
