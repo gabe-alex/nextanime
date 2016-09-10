@@ -15,6 +15,8 @@ const Helpers = use('Helpers');
 const fs = require('fs');
 const parseString = require('xml2js').parseString;
 
+const gutil = require( 'gulp-util' );
+
 class AdminController {
 
   *admin_edit(request, response) {
@@ -45,9 +47,11 @@ class AdminController {
       //console.log(contents);
       parseString(contents, function (err, result) {
         return co(function*(){
-        //console.log(result);
-        //result.report.item si apoi for id in item
+          gutil.log('Database import init');
 
+          fs.unlink(db.tmpPath()); //delete file after extracting contents
+
+          //result.report.item si apoi for id in item
 
           let items = result.report.item; //all xml anime
 
@@ -55,39 +59,30 @@ class AdminController {
             return parseInt(item.id[0]);
           }).value();//xml anime id list
 
-          console.log('initial xml ids count ', items.length);
+
+          gutil.log('initial xml ids count ', items.length);
           const animeList = yield Anime.query().whereIn('ann_id', ann_ids).fetch(); //searches all common anime between the db and xml , by ann_id
           const animeIds = animeList.map('ann_id').value(); //or _map(animeList,'ann_id') //identified all common or existing anime
-          console.log('num matched anime ids', animeIds.length);
+          gutil.log('num matched anime ids', animeIds.length);
           const removed = _.remove(items, function(item) { //filter and remove from xml all existing anime
             return _(animeIds).includes(parseInt(item.id[0]));
           });
-          console.log('new xml ids count ', items.length);
+          gutil.log('new xml ids count ', items.length);
 
-          for(let item of items) {
+          for(let i=items.length-1; i>=0; i--) {
+            const item = items[i];
             //console.log(item.id[0]);
             //console.log(item.name[0]);
             //console.log(item.type[0]);
 
-            const ann_id = item.id[0];
-            const ann_name = item.name[0];
-            const ann_type = item.type[0];
-
-            const anime = yield Anime.query().where('ann_id', ann_id).first();
-            if(!anime) {
-              const anime = new Anime();
-
-              anime.ann_id = ann_id;
-              anime.english_title = ann_name;
-              anime.type = ann_type.toLowerCase();
-
-              yield anime.save();
-            }
+            const anime = new Anime();
+            anime.ann_id = item.id[0];
+            anime.english_title = item.name[0];
+            anime.type = item.type[0].toLowerCase();
+            yield anime.save();  //anime has been saved!
           }
 
-          console.log('Added new entries');
-
-          fs.unlink(db.tmpPath()); //delete file after extracting everything
+          gutil.log('Finished import');
         });
       });
     });

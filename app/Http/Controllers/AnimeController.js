@@ -33,7 +33,6 @@ class AnimeController {
     const page = request.param('page', '1'); //parameters are seen as string
 
     const anime = yield Anime.query().with("studio").paginate(parseInt(page),limit); // with BEFORE paginate...gj adonis...G.J.
-    console.log(anime.meta.total);
 
     yield response.sendView('animedatabase', {anime: anime})
   }
