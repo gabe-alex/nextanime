@@ -12,9 +12,8 @@
       <div class="form-group">
         <label class="col-sm-2 control-label" for="anime">Anime</label>
         <div class="col-sm-10">
-          <input class="form-control" id="anime_name" name="anime_name" type="text" autocomplete="off">
-          <div id="live_search"></div>
-          <input type="hidden" id="anime" name="anime" requred>
+          <input class="form-control" id="anime_name" name="anime_name" type="text">
+          <input type="hidden" id="anime" name="anime" required>
         </div>
       </div>
     {% endif %}
@@ -45,7 +44,35 @@
 </form>
 
 <script>
-  function selectAnime(id, name) {
+  var animeSearch = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    remote: {
+      url: '/search/%QUERY',
+      wildcard: '%QUERY'
+    },
+    transform: function(response) {
+      $.map(response, function (val, key) {
+        return [val.romaji_title, val.english_title, val.title];
+      });
+    }
+  });
+
+  $('#anime_name').typeahead(null, {
+    name: 'anime-options',
+    display: function(val) {
+      return val.romaji_title || val.english_title || val.title;
+    },
+    source: animeSearch
+  });
+
+  $('#anime_name').bind('typeahead:select', function(ev, selected) {
+    $('#anime_name').typeahead('destroy');
+    $("#anime_name").prop('disabled', true);
+    $('#anime').val(selected.id);
+  });
+
+  /*function selectAnime(id, name) {
     $("#anime_name").prop('disabled', true);
     $('#live_search').html('');
     $('#anime_name').val(name);
@@ -71,5 +98,5 @@
     } else {
       $('#live_search').html('');
     }
-  });
+  });*/
 </script>

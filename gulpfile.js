@@ -32,7 +32,8 @@ gulp.task('css', function () {
 gulp.task('js', function(){
   return gulp.src([
     config.bowerDir + '/bootstrap-sass/assets/javascripts/bootstrap.min.js',
-    config.bowerDir + '/jquery/dist/jquery.min.js'
+    config.bowerDir + '/jquery/dist/jquery.min.js',
+    config.bowerDir + '/typeahead.js/dist/typeahead.bundle.min.js'
   ])
     .pipe(gulp.dest(config.assetsDir+'/js'))
 });

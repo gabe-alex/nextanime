@@ -26,6 +26,7 @@
     "bootstrap-sass": "^3.3.6",
     "jquery": "^1.9.1",
     "bootstrap-social": "^5.0.0",
-    "font-awesome": "^4.5"
+    "font-awesome": "^4.5",
+    "typeahead.js": "^0.11.1"
   }
 }
