@@ -1,5 +1,7 @@
 {% set title = 'Anime DB' %}
 
+{% from 'macros.anime_cover' import anime_cover %}
+
 {% extends 'layout' %}
 
 {% block content %}
@@ -33,7 +35,7 @@
     <div class="row anime_db_row">
       <div class="col-xs-2">
         <a href="/anime/{{ a.id }}">
-          {{ a | cover | safe }}
+          {{ anime_cover(a) }}
         </a>
       </div>
       <div class="col-xs-5">

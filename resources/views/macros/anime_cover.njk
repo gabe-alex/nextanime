@@ -1,0 +1,6 @@
+
+{% macro anime_cover(anime) %}
+  <div class="anime-cover">
+    <img src="//nextanime.net/media/anime_covers/{{ anime.id }}.jpg" onerror="this.src ='/images/cover_placeholder.png';">
+  </div>
+{% endmacro %}

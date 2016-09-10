@@ -1,5 +1,7 @@
 {# resources/views/index.html #}
 
+{% from 'macros.anime_cover' import anime_cover %}
+
 {% extends 'layout' %}
 
 {% block content %}
@@ -12,7 +14,7 @@
           {% for a in recs %}
             <div class="row">
              <div class="col-xs-4">
-                <a href="/anime/{{ a.id }}">{{ a | cover | safe }}</a>
+                <a href="/anime/{{ a.id }}">{{ anime_cover(a) }}</a>
              </div>
               <div class="col-xs-8 col-md-8">
                 <p><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></p>
@@ -44,7 +46,7 @@
         {% for a in top %}
           <div class="row">
             <div class="col-xs-4">
-                <a href="/anime/{{ a.id }}">{{ a | cover | safe }}</a>
+                <a href="/anime/{{ a.id }}">{{ anime_cover(a) }}</a>
             </div>
             <div class="col-xs-8">
                 <p><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></p>
@@ -64,7 +66,7 @@
         {% for a in new %}
           <div class="row">
             <div class="col-xs-4">
-                <a href="/anime/{{ a.id }}">{{ a | cover | safe }}</a>
+                <a href="/anime/{{ a.id }}">{{ anime_cover(a) }}</a>
             </div>
             <div class="col-xs-8">
                 <p><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></p>

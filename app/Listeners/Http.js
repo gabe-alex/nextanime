@@ -57,10 +57,4 @@ Http.onStart = function () {
   View.filter('display_title', function (anime) {
     return anime.romaji_title || anime.english_title || anime.title;
   });
-
-  View.filter('cover', function (anime, callback) {
-    return '<div class="anime-cover">' +
-      '<img src="//nextanime.net/media/anime_covers/'+anime.id+'.jpg" onerror="this.src =\'/images/cover_placeholder.png\';">' +
-      '</div>';
-  });
 };

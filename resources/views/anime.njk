@@ -2,6 +2,8 @@
 
 {% set title = anime | display_title %}
 
+{% from 'macros.anime_cover' import anime_cover %}
+
 {% extends 'layout' %}
 
 {# lista genuri , in progress #}
@@ -35,7 +37,7 @@
   <div class="col-xs-9">
     <div class = "row">
       <div class = "col-xs-4">
-        {{ anime | cover | safe }}
+        {{ anime_cover(anime) }}
      </div>
       <div class = "col-xs-8">
         <h3>Details</h3>
