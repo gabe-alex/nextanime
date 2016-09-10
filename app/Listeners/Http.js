@@ -59,6 +59,8 @@ Http.onStart = function () {
   });
 
   View.filter('cover', function (anime, callback) {
-    return '<img src="//nextanime.net/media/anime_covers/'+anime.id+'.jpg" class="img-responsive" onerror="this.src =\'/images/cover_placeholder.png\';">';
+    return '<div class="anime-cover">' +
+      '<img src="//nextanime.net/media/anime_covers/'+anime.id+'.jpg" onerror="this.src =\'/images/cover_placeholder.png\';">' +
+      '</div>';
   });
 };
