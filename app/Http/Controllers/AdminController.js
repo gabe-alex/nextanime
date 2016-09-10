@@ -71,14 +71,28 @@ class AdminController {
 
           for(let i=items.length-1; i>=0; i--) {
             const item = items[i];
-            //console.log(item.id[0]);
-            //console.log(item.name[0]);
-            //console.log(item.type[0]);
 
             const anime = new Anime();
+
             anime.ann_id = item.id[0];
             anime.english_title = item.name[0];
             anime.type = item.type[0].toLowerCase();
+
+            if(item.vintage) {
+              const dates_matched = item.vintage[0].match(/\d{4}-\d{2}-\d{2}/g);
+              if (dates_matched) {
+                anime.air_start = dates_matched[0];
+                if (dates_matched.length > 1) {
+                  anime.air_end = dates_matched[1];
+                }
+              } else {
+                const dates_matched = item.vintage[0].match(/^\d{4}/);
+                if (dates_matched) {
+                  anime.air_start = dates_matched[0]+'-01-01';
+                }
+              }
+            }
+
             yield anime.save();  //anime has been saved!
           }
 
