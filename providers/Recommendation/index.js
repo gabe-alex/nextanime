@@ -105,28 +105,25 @@ class Recommendation {
     return sum_ratings/num_rated;
   }
 
-  updateRedisRating(userId, itemId, status, rating, userMean) {
-    const context = this;
-    return co(function*() {  //need this because async expects it in a specific format(?)
-      switch (status) {
-        case 'watching':
-        case 'completed':
-          if (!rating || rating >= userMean) {
-            yield context.addLike(userId, itemId, true);
-          } else {
-            yield context.addDislike(userId, itemId, true);
-          }
-          break;
-        case 'ignored':
-        case 'dropped':
-          yield context.addDislike(userId, itemId, true);
-          break;
-        case 'planning':
-        default:
-          yield context.removeRating(userId, itemId, true);
-      }
-      yield context.updateItem(itemId);
-    });
+  *updateRedisRating(userId, itemId, status, rating, userMean) {
+     switch (status) {
+       case 'watching':
+       case 'completed':
+         if (!rating || rating >= userMean) {
+           yield this.addLike(userId, itemId, true);
+         } else {
+           yield this.addDislike(userId, itemId, true);
+         }
+         break;
+       case 'ignored':
+       case 'dropped':
+         yield this.addDislike(userId, itemId, true);
+         break;
+       case 'planning':
+       default:
+         yield this.removeRating(userId, itemId, true);
+     }
+     yield this.updateItem(itemId);
   }
 
   *rebuildRecommendations(user) {
@@ -135,7 +132,7 @@ class Recommendation {
 
     const context = this;
     yield async.forEach(userAnime.value(), function*(item) {
-      yield context.updateRedisRating(user.id, item.id, item._pivot_status, item._pivot_rating, mean);
+      yield co.wrap(context.updateRedisRating).call(context, user.id, item.id, item._pivot_status, item._pivot_rating, mean);
     });
   }
 

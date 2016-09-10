@@ -37,17 +37,16 @@ class QueueHandler {
   }
 
   execQueued() {
-    const context = this;
-    async.run(function*() {
-      const user_id = context.queue.shift();
-      context.last_ran[user_id] = Date.now();
-      context.running++;
-      yield context.recInstance.updateUser(user_id);
-      context.running--;
-      if(context.queue.length > 0) {
-        context.execQueued();
+    async.fn(function*() {
+      const user_id = this.queue.shift();
+      this.last_ran[user_id] = Date.now();
+      this.running++;
+      yield this.recInstance.updateUser(user_id);
+      this.running--;
+      if(this.queue.length > 0) {
+        this.execQueued();
       }
-    })
+    }).call(this);
   }
 }
 
