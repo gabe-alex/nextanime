@@ -56,6 +56,7 @@
     "passport-facebook": "^2.1.1",
     "passport-twitter": "^1.0.4",
     "raccoon": "git+https://github.com/gabe-alex/recommendationRaccoon.git#private",
+    "request": "^2.74.0",
     "xml2js": "^0.4.16",
     "youch": "^1.0.0"
   }

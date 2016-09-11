@@ -1,21 +1,11 @@
 'use strict';
 
-const Anime = use('App/Model/Anime');
-const Recommendation = use("Recommendation");
-const _ = require('lodash');
-const Validator = use('Validator');
-const User = use('App/Model/User');
-const Hash = use('Hash');
-const Config = use('Config');
 const co = require('co');
-//const addrs = require("email-addresses");
-const passport = require('passport');
-const Helpers = use('Helpers');
-
-const fs = require('fs');
+const _ = require('lodash');
 const parseString = require('xml2js').parseString;
-
-const gutil = require( 'gulp-util' );
+const gutil = require('gulp-util');
+const Anime = use('App/Model/Anime');
+const AnnApi = use('App/Utils/AnnApi');
 
 class AdminController {
 
@@ -23,49 +13,26 @@ class AdminController {
     yield response.sendView('administration');
   }
 
-  *admin_edit_save(request, response) {
-    //const db = request.file('db');
-    const db = request.file('database_file', {
-      maxSize: '2mb', // prevents uploads of big files, which are not necessary, also good against DoS's
-      allowedExtensions: ['xml', 'txt', 'json'],
-      hash: true //for checking data integrity for db uploads
-      //multiple : false , was set globally to not allow uploading of multiple files, preventing DoS's
-    });
-
-    if(!db.exists()){
-      response.send("Unable to upload file");
-    }
-    db.clientSize(); // for testing
-    db.extension();
-    db.tmpPath();
-
-    //console.log(db.clientSize());
-    //console.log(db.extension());
-    //console.log(db.tmpPath());
-
-    fs.readFile(db.tmpPath(), 'utf8', function(err, contents) {
-      //console.log(contents);
-      parseString(contents, function (err, result) {
+  *import_list(request, response) {
+    gutil.log('Database import start');
+    gutil.log('Downloading anime list...');
+    AnnApi.getAllAnime((downloaded) => {
+      gutil.log('List obtained.');
+      parseString(downloaded, (err, decoded) => {
         return co(function*(){
-          gutil.log('Database import init');
-
-          fs.unlink(db.tmpPath()); //delete file after extracting contents
-
           //result.report.item si apoi for id in item
 
-          let items = result.report.item; //all xml anime
+          let items = decoded.report.item; //all xml anime
+          gutil.log('initial xml ids count ', items.length);
 
           const ann_ids = _(items).map(function(item) {
             return parseInt(item.id[0]);
           }).value();//xml anime id list
 
-
-          gutil.log('initial xml ids count ', items.length);
-          const animeList = yield Anime.query().whereIn('ann_id', ann_ids).fetch(); //searches all common anime between the db and xml , by ann_id
-          const animeIds = animeList.map('ann_id').value(); //or _map(animeList,'ann_id') //identified all common or existing anime
-          gutil.log('num matched anime ids', animeIds.length);
+          const existingAnnIds = yield Anime.query().whereIn('ann_id', ann_ids).pluck('ann_id');
+          gutil.log('num matched anime ids', existingAnnIds.length);
           const removed = _.remove(items, function(item) { //filter and remove from xml all existing anime
-            return _(animeIds).includes(parseInt(item.id[0]));
+            return _(existingAnnIds).includes(parseInt(item.id[0]));
           });
           gutil.log('new xml ids count ', items.length);
 
@@ -101,7 +68,39 @@ class AdminController {
       });
     });
 
-    yield response.sendView('administration');
+    response.redirect('back');
+  }
+
+  *import_details(request, response) {
+    const annIdList = yield Anime.query().whereNotNull('ann_id').pluck('ann_id');
+    console.log('Adding descriptions...');
+    for(const annId of annIdList) {
+      AnnApi.getTitleDetails(annId, (res) => {
+        console.log('current ann_id: ' + annId);
+
+        parseString(res, (err, result) => {
+          co(function*() {
+            const db_anime = yield Anime.query().where('ann_id', annId).first();
+
+            const xml_amine = result.ann.anime[0];
+            const infoList = xml_amine.info;
+            for (const info of infoList) {
+              //console.log(info.$.type, info._);
+              switch (info.$.type) {
+                case "Plot Summary":
+                  //console.log(info._);
+                  db_anime.description = info._;
+                  break;
+              }
+            }
+
+            yield db_anime.save();
+          });
+        });
+      });
+    }
+
+    response.redirect('back');
   }
 
 }
