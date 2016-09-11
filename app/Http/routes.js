@@ -29,10 +29,7 @@ Route.get('/login_fb', 'AccountController.login_fb');
 Route.get('/login_tw', 'AccountController.login_tw');
 Route.get('/logout', 'AccountController.do_logout');
 
-Route.get('/administration', 'AdminController.admin_edit');
-Route.post('/administration', 'AdminController.admin_edit_save');
-
-Route.group('middlewares', function () {
+Route.group('auth', function () {
   Route.get('/search', 'AnimeController.search');
 
   Route.get('/userprofile', 'UserController.user_profile');
@@ -47,5 +44,9 @@ Route.group('middlewares', function () {
 
   Route.get('/useredit', 'UserController.user_edit');
   Route.post('/useredit', 'UserController.user_edit_save');
-
 }).middleware('auth');
+
+Route.group('admin', function () {
+  Route.get('/administration', 'AdminController.admin_edit');
+  Route.post('/administration', 'AdminController.admin_edit_save');
+}).middleware('auth', 'admin');
