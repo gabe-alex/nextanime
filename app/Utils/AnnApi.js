@@ -63,6 +63,10 @@ class AnnApi {
     return this.request(this.BASE_REPORTS_URL+'?id=155&type=anime&nlist=all', callback);
   }
 
+  static getLatestAnime(callback) {
+    return this.request(this.BASE_REPORTS_URL+'?id=155&type=anime&nlist=50', callback);
+  }
+
   static getTitleDetails(title_id, callback) {
     return this.request(this.BASE_DETAILS_URL+'?title='+title_id , callback);
   }

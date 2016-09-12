@@ -48,6 +48,6 @@ Route.group('auth', function () {
 
 Route.group('admin', function () {
   Route.get('/administration', 'AdminController.admin_edit');
-  Route.get('/administration/import_list', 'AdminController.import_list');
-  Route.get('/administration/import_details', 'AdminController.import_details');
+  Route.post('/administration/import_list', 'AdminController.import_list');
+  Route.post('/administration/import_details', 'AdminController.import_details');
 }).middleware('auth', 'admin');
