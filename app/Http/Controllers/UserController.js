@@ -1,7 +1,7 @@
 'use strict';
 
 const Anime = use('App/Model/Anime');
-const Recommendation = use("Recommendation");
+const RecommendationService = make("App/Services/RecommendationService");
 const _ = require('lodash');
 const Validator = use('Validator');
 const User = use('App/Model/User');
@@ -209,7 +209,7 @@ class UserController {
       yield request.currentUser.anime().attach({[animeId]: {status: params.status, rating: params.rating}});
     }
     yield request.currentUser.update();
-    yield Recommendation.rebuildRecommendations(request.currentUser);
+    yield RecommendationService.updateCompatibility(request.currentUser);
 
     response.redirect('/library')
   }

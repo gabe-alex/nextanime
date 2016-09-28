@@ -30,8 +30,7 @@ const providers = [
   'adonis-lucid/providers/LucidProvider',
   'adonis-middleware/providers/AppMiddlewareProvider',
   'adonis-auth/providers/AuthManagerProvider',
-  'adonis-validation-provider/providers/ValidatorProvider',
-  path.join(__dirname,'../providers/RecommendationProvider.js')
+  'adonis-validation-provider/providers/ValidatorProvider'
 ];
 
 /*
@@ -78,8 +77,7 @@ const aliases = {
   Lucid: 'Adonis/Src/Lucid',
   Command: 'Adonis/Src/Command',
   View: 'Adonis/Src/View',
-  Validator: 'Adonis/Addons/Validator',
-  Recommendation: 'App/Recommendation'
+  Validator: 'Adonis/Addons/Validator'
 };
 
 /*

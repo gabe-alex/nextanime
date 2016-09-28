@@ -1,11 +1,11 @@
 'use strict';
 
-const Recommendation = use("Recommendation");
+const RecommendationService = make("App/Services/RecommendationService");
 
 
 class RecommendationsController {
   *index(request, response) {
-    const recs = yield Recommendation.getRecommendations(request.currentUser, 30);
+    const recs = yield RecommendationService.getRecommendations(request.currentUser);
     yield response.sendView('recommendations', {anime: recs.value()})
   }
 }

@@ -1,18 +1,19 @@
 'use strict';
 
 const Anime = use('App/Model/Anime');
-const Recommendation = use("Recommendation");
+const RecommendationService = make("App/Services/RecommendationService");
 
 class HomeController {
   *index (request, response) {
     let recs;
     if(request.currentUser) {
-      recs = (yield Recommendation.getRecommendations(request.currentUser, 5)).value();
+      recs = (yield RecommendationService.getRecommendations(request.currentUser)).value();
     }
-    const top = yield Recommendation.getTopAnime(5);
+    //const top = (yield Recommendation.getTopAnime(5)).value();
+    const top = [];
     const newAnime = yield Anime.query().orderBy('created_at','desc').limit(5).fetch();
 
-    yield response.sendView('home', {recs: recs, top: top.value(), new: newAnime.value()});
+    yield response.sendView('home', {recs: recs, top: top, new: newAnime.value()});
   }
 }
 
