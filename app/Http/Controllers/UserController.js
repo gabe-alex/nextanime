@@ -209,7 +209,7 @@ class UserController {
       yield request.currentUser.anime().attach({[animeId]: {status: params.status, rating: params.rating}});
     }
     yield request.currentUser.save();
-    yield RecommendationService.update(request.currentUser);
+    yield RecommendationService.update(request.currentUser, yield Anime.find(animeId));
 
     response.redirect('/library')
   }

@@ -53,7 +53,8 @@ class RecommendationService {
     yield anime.save();
   }
 
-  *update(user) {
+  *update(user, anime) {
+    yield this.updateAnime(anime);
 
     const similarUserList = yield user.similar().fetch();
     for(const similarUser of similarUserList) {
@@ -99,12 +100,16 @@ class RecommendationService {
     user.max_rating = userAnimeList.maxBy('_pivot_rating')._pivot_rating;
 
     for(const userAnime of userAnimeList) {
-      const normalized_rating = 1+9*(userAnime._pivot_rating - user.min_rating)/(user.max_rating - user.min_rating);
-      console.log(userAnime._pivot_rating, user.max_rating, user.min_rating, normalized_rating);
+      if(userAnime._pivot_rating && user.min_rating && user.max_rating && user.max_rating - user.min_rating) {
+        const normalized_rating = 1 + 9 * (userAnime._pivot_rating - user.min_rating) / (user.max_rating - user.min_rating);
+        console.log(userAnime._pivot_rating, user.max_rating, user.min_rating, normalized_rating);
 
-      yield user.anime().detach([userAnime.id]);
-      yield user.anime().attach({[userAnime.id]: {status: userAnime._pivot_status, rating: userAnime._pivot_rating, normalized_rating: normalized_rating}});
-      yield this.updateAnime(userAnime);
+        yield user.anime().detach([userAnime.id]);
+        yield user.anime().attach({
+          [userAnime.id]: {status: userAnime._pivot_status, rating: userAnime._pivot_rating, normalized_rating: normalized_rating}
+        });
+        yield this.updateAnime(userAnime);
+      }
     }
 
     yield user.save();
@@ -112,11 +117,6 @@ class RecommendationService {
 
   getReccomendedAnime(userId, numReccomendations) {
     numReccomendations = numReccomendations || 10;
-
-    const ratingLimitsQuery = Database.select('user_id').min('rating as min_rating').max('rating as max_rating')
-      .from('users_anime')
-      .groupBy('user_id')
-      .as('rating_limits');
 
     const userAnimeQuery = Database.select('anime_id')
       .from('users_anime')
@@ -130,10 +130,10 @@ class RecommendationService {
       .limit(RecommendationService.MAX_NUM_SIMILAR_USERS)
       .as('similar_users');
 
-    return Database.select('users_anime.anime_id', Database.raw('avg(1.0*users_anime.rating/(rating_limits.max_rating - rating_limits.min_rating)) as avg_rating')).count('users_anime.anime_id as nr_appearances')
+    return Database.select('users_anime.anime_id', 'anime.rating as avg_rating').count('users_anime.anime_id as nr_appearances')
       .from('users_anime')
-      .innerJoin(ratingLimitsQuery, 'users_anime.user_id', 'rating_limits.user_id')
       .innerJoin(similarUsersQuery, 'users_anime.user_id', 'similar_users.other_user_id')
+      .innerJoin('anime', 'users_anime.anime_id', 'anime.id')
       .whereNotIn('users_anime.anime_id', userAnimeQuery)
       .andWhere('users_anime.status', 'in', RecommendationService.WATCHED_STATUS_LIST)
       .groupBy('users_anime.anime_id')
