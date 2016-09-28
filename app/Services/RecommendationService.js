@@ -31,6 +31,7 @@ class RecommendationService {
           .andOn('ua2.user_id', '!=', 'ua1.user_id')
           .andOn('ua1.user_id', '=', userId)
       })
+      .groupBy('other_user_id')
       .having('common_anime_nr', '>=', RecommendationService.MIN_COMMON_SERIES);
   }
 
