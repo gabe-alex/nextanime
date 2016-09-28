@@ -2,7 +2,7 @@
 <form class="form-horizontal" method="post" action="/library/edit" role="form">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
-    <h4 class="modal-title">{{ "Edit " if current_anime._pivot_status else "Add" }} {{ current_anime | display_title if current_anime.title else ""}}</h4>
+    <h4 class="modal-title">{{ "Edit " if current_anime._pivot_status else "Add" }} {{ current_anime | display_title if current_anime.id else ""}}</h4>
   </div>
   <div class="modal-body">
     {{ csrfField | safe }}

@@ -7,10 +7,9 @@ class HomeController {
   *index (request, response) {
     let recs;
     if(request.currentUser) {
-      recs = (yield RecommendationService.getRecommendations(request.currentUser)).value();
+      recs = (yield RecommendationService.getRecommendations(request.currentUser, 5)).value();
     }
-    //const top = (yield Recommendation.getTopAnime(5)).value();
-    const top = [];
+    const top = (yield RecommendationService.getTopAnime(5)).value();
     const newAnime = yield Anime.query().orderBy('created_at','desc').limit(5).fetch();
 
     yield response.sendView('home', {recs: recs, top: top, new: newAnime.value()});

@@ -11,7 +11,6 @@ class RecommendationService {
   static get WATCHED_STATUS_LIST() {
     return ['watching', 'completed', 'on_hold'];
   }
-
   static get MIN_COMMON_SERIES() {
     return 3;
   }
@@ -19,9 +18,6 @@ class RecommendationService {
     return 0.5;
   }
   static get MAX_NUM_SIMILAR_USERS() {
-    return 10;
-  }
-  static get MAX_NUM_RECCOMENDATIONS() {
     return 10;
   }
 
@@ -50,12 +46,19 @@ class RecommendationService {
       });
   }
 
-  *updateCompatibility(user) {
+  *updateAnime(anime) {
+    anime.rating = (yield anime.users().fetch()).meanBy('_pivot_normalized_rating');
+    console.log(anime.rating);
+    yield anime.save();
+  }
+
+  *update(user) {
+
     const similarUserList = yield user.similar().fetch();
     for(const similarUser of similarUserList) {
       yield user.similar().detach([similarUser.id]);
       yield similarUser.similar().detach([user.id]);
-      yield similarUser.update();
+      yield similarUser.save();
     }
 
     const userCommonAnimeList = yield this.getUsersCommonAnimeCount(user.id);
@@ -86,14 +89,29 @@ class RecommendationService {
         const otherUser = yield User.findOrFail(otherUserId);
         yield user.similar().attach({[otherUser.id]: {common_series_nr: commonAnimeNr, rating_similarity: pearsonSimilarity}});
         yield otherUser.similar().attach({[user.id]: {common_series_nr: commonAnimeNr, rating_similarity: pearsonSimilarity}});
-        yield otherUser.update();
+        yield otherUser.save();
       }
     }
 
-    yield user.update();
+    const userAnimeList = yield user.anime().fetch();
+    user.min_rating = userAnimeList.minBy('_pivot_rating')._pivot_rating;
+    user.max_rating = userAnimeList.maxBy('_pivot_rating')._pivot_rating;
+
+    for(const userAnime of userAnimeList) {
+      const normalized_rating = 1+9*(userAnime._pivot_rating - user.min_rating)/(user.max_rating - user.min_rating);
+      console.log(userAnime._pivot_rating, user.max_rating, user.min_rating, normalized_rating);
+
+      yield user.anime().detach([userAnime.id]);
+      yield user.anime().attach({[userAnime.id]: {status: userAnime._pivot_status, rating: userAnime._pivot_rating, normalized_rating: normalized_rating}});
+      yield this.updateAnime(userAnime);
+    }
+
+    yield user.save();
   }
 
-  getReccomendedAnime(userId) {
+  getReccomendedAnime(userId, numReccomendations) {
+    numReccomendations = numReccomendations || 10;
+
     const ratingLimitsQuery = Database.select('user_id').min('rating as min_rating').max('rating as max_rating')
       .from('users_anime')
       .groupBy('user_id')
@@ -120,11 +138,11 @@ class RecommendationService {
       .groupBy('users_anime.anime_id')
       .orderBy('nr_appearances', 'desc')
       .orderBy('avg_rating', 'desc')
-      .limit(RecommendationService.MAX_NUM_RECCOMENDATIONS);
+      .limit(numReccomendations);
   }
 
-  *getRecommendations(user) {
-    const reccomendedAnimeList = yield this.getReccomendedAnime(user.id);
+  *getRecommendations(user, numReccomendations) {
+    const reccomendedAnimeList = yield this.getReccomendedAnime(user.id, numReccomendations);
     console.log(reccomendedAnimeList);
     const reccomendedAnimeIdList = _.map(reccomendedAnimeList, 'anime_id');
     const reccomendedAnime = yield Anime.query().whereIn('id', reccomendedAnimeIdList).fetch();
@@ -134,6 +152,12 @@ class RecommendationService {
     return reccomendedAnime
       .orderBy((anime) => reccomendedAnimeListKeyed[anime.id].nr_appearances, 'desc')
       .orderBy((anime) => reccomendedAnimeListKeyed[anime.id].avg_rating, 'desc');
+  }
+
+  *getTopAnime(numTop) {
+    numTop = numTop || 10;
+
+    return yield Anime.query().where('rating', '>=', 5).orderBy('rating', 'desc').limit(numTop).fetch();
   }
 }
 

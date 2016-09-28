@@ -18,11 +18,7 @@
              </div>
               <div class="col-xs-8 col-md-8">
                 <p><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></p>
-                <p>Nr of eps : {{ a.nr_episodes }}</p>
-                <p>Date aired : {{ a.air_start | date }}</p>
-                {#<p>Rating</p>#}
-                {#<button type="button" class="btn btn-primary">Add</button>
-                <button type="button" class="btn btn-danger">X</button>#}
+                <a class="btn btn-primary" data-id="{{ a.id }}" data-toggle="modal" data-target="#add">Add</a>
               </div>
             </div><br>
           {% else %}
@@ -50,9 +46,7 @@
             </div>
             <div class="col-xs-8">
                 <p><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></p>
-                <p>Nr of eps : {{ a.nr_episodes }}</p>
-                <p>Date aired : {{ a.air_start | date }}</p>
-              {#<<p>Rating</p>#}
+                <p>Rating: {{ a.rating }}</p>
             </div>
            </div><br>
         {% endfor %}
@@ -70,9 +64,7 @@
             </div>
             <div class="col-xs-8">
                 <p><a href="/anime/{{ a.id }}">{{ a | display_title }}</a></p>
-                <p>Nr of eps : {{ a.nr_episodes }}</p>
-                <p>Date to air : {{ a.air_start | date }}</p>
-                {#<p>Rating</p>#}
+                <p>Air Date : {{ a.air_start | date }}</p>
             </div>
           </div><br>
         {% endfor %}
@@ -81,4 +73,21 @@
   </div>
 
 
+  <div id="add" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    $('#add').on('show.bs.modal', function(e) {
+      //get data-id attribute of the clicked element
+      var entryId = $(e.relatedTarget).data('id');
+      $('#add .modal-content').load('/library/edit/'+entryId);
+    });
+  </script>
 {% endblock %}

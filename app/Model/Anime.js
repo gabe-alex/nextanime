@@ -36,7 +36,7 @@ class Anime extends Lucid {
     return this.hasMany('App/Model/AnimeRelation', 'anime_from_id');
   }
   users () {
-    return this.belongsToMany('App/Model/User', 'users_anime');
+    return this.belongsToMany('App/Model/User', 'users_anime').withPivot( 'status', 'rating','normalized_rating');
   }
 }
 
